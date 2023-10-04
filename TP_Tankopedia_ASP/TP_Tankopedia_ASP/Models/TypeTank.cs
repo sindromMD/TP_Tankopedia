@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace TP_Tankopedia_ASP.Models
 {
-    public class Type
+    public class TypeTank
     {
         public int Id { get; set; }
 

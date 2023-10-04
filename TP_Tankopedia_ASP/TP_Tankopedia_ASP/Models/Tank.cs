@@ -23,25 +23,21 @@ namespace TP_Tankopedia_ASP.Models
         public virtual Nation Nation { get; set; }
 
         [JsonIgnore]
-        public virtual List<Module> Module { get; set; }
+        public virtual List<TankModule> TankModules { get; set; }
 
-        [ForeignKey(nameof(Type))]
+        [ForeignKey(nameof(TypeTank))]
         [Required]
         public int TypeID { get; set; }
 
         [JsonIgnore]
-        public virtual Type Type { get; set; }
+        public virtual TypeTank TypeTank { get; set; }
 
-        [ForeignKey(nameof(Role))]
+        [ForeignKey(nameof(StrategicRole))]
         [Required]
-        public int RoleId { get; set; }
+        public int StrategicRoleId { get; set; }
 
         [JsonIgnore]
-        public virtual Role Role { get; set; }
-
-        [ForeignKey(nameof(Characteristics))]
-        [Required]
-        public int CharacteristicsId { get; set; }
+        public virtual StrategicRole StrategicRole { get; set; }
 
         [JsonIgnore]
         public virtual Characteristics Characteristics { get; set; }
