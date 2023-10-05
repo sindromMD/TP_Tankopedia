@@ -17,7 +17,9 @@ namespace TP_Tankopedia_ASP.Data
 
         //parcourir toutes les entités et leurs propriétés pour trouver toutes les propriétés décimales et les définir (6,2)
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
+        {          
+            base.OnModelCreating(modelBuilder);
+
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
                 foreach (var property in entityType.GetProperties())
@@ -28,6 +30,9 @@ namespace TP_Tankopedia_ASP.Data
                     }
                 }
             }
+
+            //Générer des données de départ
+            modelBuilder.GenerateData();
         }
     }
 }
