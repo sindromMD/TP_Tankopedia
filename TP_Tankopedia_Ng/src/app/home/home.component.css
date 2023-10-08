@@ -1,0 +1,6 @@
+.bg-image{
+    background-image: url(src\assets\image\bg\bg_dark_wt.jpg);
+}
+.mask{
+    background-color: rgba(58, 49, 49, 0.1);
+}
