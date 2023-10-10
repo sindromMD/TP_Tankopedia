@@ -5,7 +5,7 @@
             <div class="nation mt-4">
                 <ul class="nation-list">
                     <li class="nation-list_item positionRelative" *ngFor="let nation of nations">
-                        <a href="" class="nation-list_holder">
+                        <a [routerLink]="['/list-of-tanks-by-nation/', nation.id]" class="nation-list_holder">
                             <div class="nation-list_img-holder">
                                 <img class="nation-list_img img-fluid" src="assets\image\usa_small.png" alt="">
                             </div>
@@ -43,7 +43,7 @@
               <div class="tank-type">
                   <ul class="type-list">
                       <li class="type-list_item positionRelative" *ngFor="let type of typeTanks">
-                          <a href="" class="nation-list_holder">
+                          <a [routerLink]="['/list-of-tanks-by-type/', type.id]" class="nation-list_holder">
                               <div class="type-list_link">
                                   <img class="type-list_img img-fluid" src="assets\image\heavytank.png" alt="">
                               </div>

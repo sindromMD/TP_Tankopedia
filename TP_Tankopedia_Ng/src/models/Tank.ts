@@ -12,10 +12,13 @@ export class Tank {
         public description : string,
         public yearOfCreation: Date,
         public imageURL : string,
-        public nation : Nation,
+        public nationID : number,
+        public typeID: number,
+        public strategicRoleId:number,
         public tankModules : TankModule[] = [],
-        public typeTank : TypeTank,
-        public strategicRole : StrategicRole,
-        public characteristics : Characteristics
+        public nation ?: Nation,
+        public typeTank ?: TypeTank,
+        public strategicRole ?: StrategicRole,
+        public characteristics ?: Characteristics
     ){}
   }

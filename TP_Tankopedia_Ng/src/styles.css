@@ -181,9 +181,9 @@ h4 {
 /* You can add global styles to this file, and also import other style files */
 body {
     background-image: url('assets\image\bg\bg_stone.png');;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: top, bottom;
+    background-size:auto;
+
+    background-position: center;
     background-color: rgb(31, 30, 29);
 }
 .btn-menu{
