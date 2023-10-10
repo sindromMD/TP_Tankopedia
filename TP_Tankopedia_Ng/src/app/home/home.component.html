@@ -1,0 +1,70 @@
+<div class="d-flex flex-column justify-content-center align-items-center text-center bg-image">
+        <div class="text-white marginTop row d-block">
+          <h1 class="mb-3 mt-5 h0" >Tankopedia</h1><br>
+          <h4 class="d-inline ">Nations</h4> <a href="" class="margeZero"><i class="fa-solid fa-circle-plus fa-sm" style="color: #3caa3e;"></i></a>
+            <div class="nation mt-4">
+                <ul class="nation-list">
+                    <li class="nation-list_item positionRelative" *ngFor="let nation of nations">
+                        <a href="" class="nation-list_holder">
+                            <div class="nation-list_img-holder">
+                                <img class="nation-list_img img-fluid" src="assets\image\usa_small.png" alt="">
+                            </div>
+                            <span class="">{{nation.name}}</span>
+                        </a>
+                        <div class="dropdown btn-edit-card-position_nation">
+                            <button
+                                class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-mdb-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                <li><a class="dropdown-item" href="#">Delete</a></li>
+                            </ul>
+                            </div>
+                    </li>
+                </ul>
+            </div>
+            <!-- <div class="m-3">
+           <input type="text" id="inputSearch" class="form-control form-control-lg" /> 
+          </div>
+          <button 
+            class=" btn bouton-parents btn-light btn-lg m-2"
+            role="button"
+            rel="nofollow"
+            target="_blank" translate>home.button_search <i class="fa-solid fa-magnifying-glass fa-lg" style="color: #000000;"></i></button> -->
+        </div>
+        <div class="text-white marginTop row d-block">
+            <h3 class=" d-inline">Tank Types</h3><a href="" class="margeZero"><i class="fa-solid fa-circle-plus fa-sm" style="color: #3caa3e;"></i></a>
+              <div class="tank-type">
+                  <ul class="type-list">
+                      <li class="type-list_item positionRelative" *ngFor="let type of typeTanks">
+                          <a href="" class="nation-list_holder">
+                              <div class="type-list_link">
+                                  <img class="type-list_img img-fluid" src="assets\image\heavytank.png" alt="">
+                              </div>
+                              <span class="">{{type.name}}</span>
+                          </a>
+                          <div class="dropdown btn-edit-card-position_type">
+                            <button
+                                class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-mdb-toggle="dropdown"
+                                aria-expanded="false"
+                            >
+                                
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                <li><a class="dropdown-item" href="#">Delete</a></li>
+                            </ul>
+                            </div>
+                      </li>
+                  </ul>
+              </div>
+      </div>
