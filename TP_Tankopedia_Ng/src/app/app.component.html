@@ -12,7 +12,7 @@
         <div class="col-sm-4 col-md-3 col-lg-2 col-xl-2 d-none d-md-block">
             <h2 class="d-md-inline title animated-text">TANKOPEDIA</h2>
         </div>
-        <div class="col-sm-10 col-md-5 col-lg-6 col-xl-6">    
+        <div class="col-sm-10 col-md-4 col-lg-6 col-xl-6">    
         
           <button
             class="navbar-toggler "
@@ -23,7 +23,7 @@
             aria-expanded="false"
             aria-label="Toggle navigation"
           >
-            <i class="fas fa-bars"></i>
+            <i class="fas fa-bars" style="color: #ffffff;"></i>
           </button>
             <div class="collapse navbar-collapse " id="navbar01">
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -31,38 +31,39 @@
                   <a class="header-text btn-menu" aria-current="page" [routerLink]="['home']" translate>HOME</a>
                 </li>
                 <li class="nav-item">
-                  <a class="header-text btn-menu" [routerLink]="['favorite-books']" translate>ALL TANKS</a>
+                  <a class="header-text btn-menu" [routerLink]="" translate>ALL TANKS</a>
                 </li>
                 <li class="nav-item">
-                  <a class="header-text btn-menu" [routerLink]="['about']" translate>ABOUT</a>
+                  <a class="header-text btn-menu" [routerLink]="" translate>ABOUT</a>
                 </li>
                 <button class="btn btn-dark buttonLang" translate >app.button_lang <i class="fa-solid fa-language fa-bounce fa-2xl ms-2" style="color: #dbd41f;"></i></button>
               </ul>
             </div>
         
         </div>
-        <div class="col-md-2 col-lg-3 col-xl-4 d-none d-md-block">
+        <div class="col-md-4 col-lg-4 col-xl-3 d-none d-md-block ">
           <!-- <div class="d6">
               <input type="search" (keydown.enter)="onKeyDownEvent($event)" id="inputSearch" placeholder="Rechercher ici..." [(ngModel)]="inputSearch">
               <button ></button>
             </div> -->
+            <ul class="me-auto mb-2 mb-lg-0">
+                <li class="nav-item login">
+                <a class=" btn-menu p1" id="register" [routerLink]="">Register</a>
+            </li>
+            <li class="nav-item login">
+                <a class="btn-menu p1" id="login"  [routerLink]="">
+                    IN
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    </a>
+            </li>
+        </ul>
+            
         </div> 
   
     </nav>
     <!-- Navbar -->
   </header>
   <main >
-    <!-- <h1 class="h0">Test me !</h1>
-    <h1>Test me !</h1>
-    
-    <h2>Test me !</h2>
-    <h3>Test me !</h3>
-    <h4>Test me !</h4>
-    <p class="p1">Test me !</p>
-    <p class="p2">Test me !</p>
-    <p class="p3">Test me !</p>
-    <p class="p4">Test me !</p> -->
-
     <router-outlet></router-outlet>
   
     <div class="progress-wrap">
@@ -71,7 +72,7 @@
       </svg>
   </div>
   </main>
-  <footer class="text-center text-white" style="background-color: #f1f1f1;">
+  <footer class="text-center text-white" >
     <!-- Grid container -->
     <div class="container pt-4">
       <!-- Section: Social media -->
@@ -79,7 +80,7 @@
   
         <!-- Linkedin -->
         <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
+          class="btn btn-dark  btn-floating btn-lg text-light m-1"
           href="https://www.linkedin.com/in/alexei-culaxiz/"
           role="button"
           data-mdb-ripple-color="dark"
@@ -87,7 +88,7 @@
         ></a>
         <!-- Github -->
         <a
-          class="btn btn-link btn-floating btn-lg text-dark m-1"
+          class="btn btn-dark btn-floating btn-lg text-light m-1"
           href="https://github.com/sindromMD"
           role="button"
           data-mdb-ripple-color="dark"
@@ -99,12 +100,12 @@
     <!-- Grid container -->
   
     <!-- Copyright -->
-    <div class="text-center text-dark p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    <div class="text-secondary  p-3 p2" style="background-color: rgba(0, 0, 0, 0.2);">
       Projet réalisé par:
       <br>
-      <a class="text-dark" href="https://github.com/sindromMD">Culaxiz Alexei</a>
+      <a class="p1 " href="https://github.com/sindromMD">Culaxiz Alexei</a>
      
-      <p>© 2023 Cégep Édouard-Montpetit</p>
+      <p class="p2">© 2023 Cégep Édouard-Montpetit</p>
     </div>
   
     <!-- Copyright -->
