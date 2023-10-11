@@ -10,7 +10,7 @@ export class Tank {
         public id : number,
         public name : string,
         public description : string,
-        public yearOfCreation: Date,
+        public yearOfCreation: number,
         public imageURL : string,
         public nationID : number,
         public typeID: number,

@@ -18,7 +18,7 @@ import { DatePipe } from '@angular/common';
     DateFormattingPipe,
     HomeComponent,
     ListOfTanksComponent,
-    DateFormattingPipe
+    DateFormattingPipe,
   ],
   imports: [
     BrowserModule,

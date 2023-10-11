@@ -35,12 +35,12 @@ export class DataApiService {
     }))
   }
   getListOfTanksByType(typeId:number):Observable<TypeTank>{
-    return this.http.get<TypeTank>(`https://localhost:7246/api/TypeTanks/GetTypeTank/`+typeId).pipe(map(t => {
+    return this.http.get<TypeTank>(`http://localhost:5145/api/TypeTanks/GetTypeTank/`+typeId).pipe(map(t => {
       return this.typeTank = t;
     }))
   }
   getAllTanks():Observable<Tank[]>{
-    return this.http.get<Tank[]>(`https://localhost:7246/api/Tanks/GetTanks`).pipe(map(t=>{
+    return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanks`).pipe(map(t=>{
     return this.tanks = t;
     }))
   }

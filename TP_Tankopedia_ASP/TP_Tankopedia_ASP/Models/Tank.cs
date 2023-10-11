@@ -12,7 +12,7 @@ namespace TP_Tankopedia_ASP.Models
         [StringLength(25, MinimumLength = 0, ErrorMessage = "ValidationMaxMin")]
         public string Name { get; set; }
         public string Description { get; set; }
-        public DateTime? YearOfCreation { get; set; }
+        public int? YearOfCreation { get; set; }
         public string? ImageURL { get; set; }
 
         [ForeignKey(nameof(Nation))]
