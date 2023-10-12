@@ -12,6 +12,7 @@ import { ListOfTanksComponent } from './list-of-tanks/list-of-tanks.component';
 import { DateFormattingPipe } from './pipes/date-formatting.pipe';
 import { DatePipe } from '@angular/common';
 import { TankDetailsComponent } from './tank-details/tank-details.component';
+import { LoginRegisterComponent } from './login-register/login-register.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { TankDetailsComponent } from './tank-details/tank-details.component';
     ListOfTanksComponent,
     DateFormattingPipe,
     TankDetailsComponent,
+    LoginRegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,9 @@ import { TankDetailsComponent } from './tank-details/tank-details.component';
       {path: "list-of-tanks-by-nation/:nationId", component: ListOfTanksComponent },
       {path: "list-of-tanks-by-type/:typeId", component: ListOfTanksComponent },
       {path: "list-of-all-tanks", component: ListOfTanksComponent },
-      {path: "tank-details/:tankId", component: TankDetailsComponent}
+      {path: "tank-details/:tankId", component: TankDetailsComponent},
+      {path: "app-register/:register", component: LoginRegisterComponent},
+      {path: "app-login/:login", component: LoginRegisterComponent}
     ])
   ],
   providers: [
