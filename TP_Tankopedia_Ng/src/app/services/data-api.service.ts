@@ -16,7 +16,7 @@ export class DataApiService {
   typeTank?:TypeTank;
   typeTanks :TypeTank[] = [];
   tanks:Tank[]=[];
- 
+  tank ?: Tank;
 
   getNations():Observable<Nation[]>{
     return this.http.get<Nation[]>(`http://localhost:5145/api/Nations/GetNations`).pipe(map(x => {
@@ -27,21 +27,26 @@ export class DataApiService {
   getTankTypes():Observable<TypeTank[]>{
     return this.http.get<TypeTank[]>(`http://localhost:5145/api/TypeTanks/GetTypeTanks`).pipe(map(x => {
       return this.typeTanks = x;
-    }))
+    }));
   }
   getListOfTanksByNation(nationId:number):Observable<Nation>{
     return this.http.get<Nation>(`http://localhost:5145/api/Nations/GetNation/`+ nationId).pipe(map(t =>{
       return this.nation = t;
-    }))
+    }));
   }
   getListOfTanksByType(typeId:number):Observable<TypeTank>{
     return this.http.get<TypeTank>(`http://localhost:5145/api/TypeTanks/GetTypeTank/`+typeId).pipe(map(t => {
       return this.typeTank = t;
-    }))
+    }));
   }
   getAllTanks():Observable<Tank[]>{
     return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanks`).pipe(map(t=>{
     return this.tanks = t;
-    }))
+    }));
+  }
+  getTankById(tankId:number):Observable<Tank>{
+    return this.http.get<Tank>(`http://localhost:5145/api/Tanks/GetTank/` + tankId).pipe(map(t => {
+      return this.tank = t;
+    }));
   }
 }

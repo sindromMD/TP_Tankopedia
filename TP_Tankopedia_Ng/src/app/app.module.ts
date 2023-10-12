@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { ListOfTanksComponent } from './list-of-tanks/list-of-tanks.component';
 import { DateFormattingPipe } from './pipes/date-formatting.pipe';
 import { DatePipe } from '@angular/common';
+import { TankDetailsComponent } from './tank-details/tank-details.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { DatePipe } from '@angular/common';
     HomeComponent,
     ListOfTanksComponent,
     DateFormattingPipe,
+    TankDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +33,7 @@ import { DatePipe } from '@angular/common';
       {path: "list-of-tanks-by-nation/:nationId", component: ListOfTanksComponent },
       {path: "list-of-tanks-by-type/:typeId", component: ListOfTanksComponent },
       {path: "list-of-all-tanks", component: ListOfTanksComponent },
+      {path: "tank-details/:tankId", component: TankDetailsComponent}
     ])
   ],
   providers: [

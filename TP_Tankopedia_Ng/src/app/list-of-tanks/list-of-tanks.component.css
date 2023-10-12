@@ -5,13 +5,7 @@
 .marginBot{
     margin-bottom: 140px;
 }
-.divider-1{
-    background: linear-gradient(90deg,#F22248 0%,rgba(242,242,242,0) 100% );
-    margin-right: 0px;
-    width: auto;
-    height: 3px; 
-    position: relative; 
-}
+
 caption{
     caption-side: top;
     text-align: end;

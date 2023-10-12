@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;900&display=swap');
 
-.col,
+/* .col,
 .col-1,
 .col-2,
 .col-3,
@@ -78,7 +78,7 @@
 
 .row {
   border: 1px solid rgb(39, 255, 93);
-} 
+}   */
 /*----------------Style de police-------------*/
  /* H0 Montserrat 48*/
  /* font-family: 'Gabarito', cursive;
@@ -181,9 +181,8 @@ h4 {
 /* You can add global styles to this file, and also import other style files */
 body {
     background-image: url('assets\image\bg\bg_stone.png');;
-    background-size:auto;
-
-    background-position: center;
+    background-size:initial;
+    background-position: top;
     background-color: rgb(31, 30, 29);
 }
 .btn-menu{
@@ -220,4 +219,14 @@ body {
     left
     no-repeat; 
     background-size:100% 3px ;
+}
+.chevron{
+    width: 30px;
+  }
+  .divider-1{
+    background: linear-gradient(90deg,#F22248 0%,rgba(242,242,242,0) 100% );
+    margin-right: 0px;
+    width: auto;
+    height: 3px; 
+    position: relative; 
 }

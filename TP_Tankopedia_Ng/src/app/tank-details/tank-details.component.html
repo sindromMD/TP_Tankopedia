@@ -1,0 +1,205 @@
+
+  
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="page-content">
+
+          <!-- ***** Banner Start ***** -->
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="main-profile ">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <img src="assets\image\tanks\T-62A.png" alt="" style="border-radius: 23px;">
+                    <div class="row justify-content-center ">
+                            <div class="col-lg-10">
+                                <div class="right-info ">
+                                  <ul>
+                                    <li><i class="fa-solid fa-flag ms-2 ps-1"></i> &nbsp; Nation :  {{tank.nation?.name}}</li>
+                                    <li> <img src="assets\image\typeTank\{{tank.typeID}}_type.png" alt="" class="chevron"> Type : {{tank.typeTank?.name}} </li>
+                                    <li><img src="assets\image\role\support.svg" alt="" class="chevronRole ms-2"> &nbsp; Role : {{tank.strategicRole?.name}}</li>
+                                  </ul>
+                                </div>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="col-lg-4 align-self-top">
+                    <div class="main-info header-text ">
+                        <div class="row">
+                            <div class="col-10">
+                                <h4 class="d-inline">{{tank.name}}</h4>
+                                <div class="divider-1 mb-3 "></div>
+                            </div>
+                            <div class="col-2">
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
+                                        type="button"
+                                        id="dropdownMenuButton"
+                                        data-mdb-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: white;">
+                                        <li><a class="dropdown-item" href="#">Edit</a></li>
+                                        <li><a class="dropdown-item" href="#">Delete</a></li>
+                                    </ul>
+                                    </div>
+                            </div>
+                        </div>
+                      
+                      <p>{{tank.description}}</p>
+                      <!-- <div class="main-border-button">
+                        <a href="#">Start Live Stream</a>
+                      </div> -->
+                    </div>
+                  </div>
+                  <div class="col-lg-4 align-self-center">
+                    <ul>
+                      <li >Weight<span>{{tank.characteristics?.weight}} t</span></li>
+                      <li>EnginePower <span>{{tank.characteristics?.enginePower}} hp</span></li>
+                      <li>TopSpeed <span>{{tank.characteristics?.topSpeed}} km/h</span></li>
+                      <li>HullArmor <span>{{tank.characteristics?.hullArmor}} mm</span></li>
+                      <li>AmoCapacity <span>{{tank.characteristics?.amoCapacity}} pcs</span></li>
+                      <li>ReloadTime <span>{{tank.characteristics?.reloadTime}} s</span></li>
+                      <li>AimingTime <span>{{tank.characteristics?.aimingTime}} s</span></li>
+                      <li>RateOfFire <span>{{tank.characteristics?.rateOfFire}} round/min</span></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-lg-12">
+                    <div class="clips">
+                      <div class="row justify-content-around text-center">
+                        <div class="col-lg-12">
+                          <div class="heading-section">
+                            <h4><em>{{tank.name}}</em> MODULES</h4>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-6" *ngFor="let module of tank.tankModules">
+                          <div class="item">
+                            <div class="thumb">
+                              <img src="assets\image\vehicle{{module.typeModule | lowercase}}.png" alt="" style="border-radius: 23px; width: 70px;">
+                            </div>
+                            <div class="down-content">
+                              <h4 class="titleModule">{{module.typeModule}}</h4>
+                            </div>
+                            <div class="down-content">
+                                <p>
+                                    <!-- <span><i class="fa-solid fa-diamond"></i></span>  -->
+                                    {{module.name}}</p>
+                              </div>
+                          </div>
+                        </div>
+                        <!-- <div class="col-lg-2 col-sm-6">
+                          <div class="item">
+                            <div class="thumb">
+                              <img src="assets\image\vehicleengine.png" alt="" style="border-radius: 23px;width: 70px;">
+                            </div>
+                            <div class="down-content">
+                              <h4>Engine</h4>
+                            </div>
+                            <div class="down-content">
+                                <p><span><i class="fa-solid fa-diamond"></i></span> 250</p>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-6">
+                          <div class="item">
+                            <div class="thumb">
+                              <img src="assets\image\vehicleradio.png" alt="" style="border-radius: 23px;width: 70px;">
+                            </div>
+                            <div class="down-content">
+                              <h4>Radio</h4>
+                            </div>
+                            <div class="down-content">
+                                <p><span><i class="fa-solid fa-diamond"></i></span> 250</p>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-6">
+                          <div class="item">
+                            <div class="thumb">
+                              <img src="assets\image\vehicleturret.png" alt="" style="border-radius: 23px;width: 70px;">
+                            </div>
+                            <div class="down-content">
+                              <h4>Turret</h4>
+                            </div>
+                            <div class="down-content">
+                                <p><span><i class="fa-solid fa-diamond"></i></span> 250</p>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-6">
+                            <div class="item">
+                              <div class="thumb">
+                                <img src="assets\image\vehiclegun.png" alt="" style="border-radius: 23px;width: 70px;">
+                              </div>
+                              <div class="down-content">
+                                <h4>Gun</h4>
+                              </div>
+                              <div class="down-content">
+                                <p><span><i class="fa-solid fa-diamond"></i></span> 250</p>
+                              </div>
+                            </div>
+                          </div>-->
+                        <div class="col-lg-12">
+                          <div class="main-button">
+                            <a [routerLink]="['/list-of-all-tanks/']">List of Tanks</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ***** Banner End ***** -->
+
+          <!-- ***** Gaming Library Start ***** -->
+          <!-- <div class="gaming-library profile-library">
+            <div class="col-lg-12">
+              <div class="heading-section">
+                <h4><em>Your Gaming</em> Library</h4>
+              </div>
+              <div class="item">
+                <ul>
+                  <li><img src="assets/images/game-01.jpg" alt="" class="templatemo-item"></li>
+                  <li><h4>Dota 2</h4><span>Sandbox</span></li>
+                  <li><h4>Date Added</h4><span>24/08/2036</span></li>
+                  <li><h4>Hours Played</h4><span>634 H 22 Mins</span></li>
+                  <li><h4>Currently</h4><span>Downloaded</span></li>
+                  <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
+                </ul>
+              </div>
+              <div class="item">
+                <ul>
+                  <li><img src="assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
+                  <li><h4>Fortnite</h4><span>Sandbox</span></li>
+                  <li><h4>Date Added</h4><span>22/06/2036</span></li>
+                  <li><h4>Hours Played</h4><span>745 H 22 Mins</span></li>
+                  <li><h4>Currently</h4><span>Downloaded</span></li>
+                  <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
+                </ul>
+              </div>
+              <div class="item last-item">
+                <ul>
+                  <li><img src="assets/images/game-03.jpg" alt="" class="templatemo-item"></li>
+                  <li><h4>CS-GO</h4><span>Sandbox</span></li>
+                  <li><h4>Date Added</h4><span>21/04/2022</span></li>
+                  <li><h4>Hours Played</h4><span>632 H 46 Mins</span></li>
+                  <li><h4>Currently</h4><span>Downloaded</span></li>
+                  <li><div class="main-border-button border-no-active"><a href="#">Donwloaded</a></div></li>
+                </ul>
+              </div>
+            </div>
+          </div> -->
+          <!-- ***** Gaming Library End ***** -->
+        </div>
+      </div>
+    </div>
+  </div>

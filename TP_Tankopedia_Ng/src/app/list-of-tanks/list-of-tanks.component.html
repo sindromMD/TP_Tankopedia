@@ -38,25 +38,25 @@
                                         <div class="">
                                             <a [routerLink]="['', tank.id]">
                                                 <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
-                                                <img src="assets\image\usa_small.png" alt="test"style="width: 40px;">
+                                                <img src="assets\image\nation\usa_small.png" alt="test"style="width: 40px;">
                                             </a>
                                         </div>
                                     </td>
                                     <td>
                                         <a [routerLink]="['', tank.id]" class="">
-                                            {{tank.typeID}}
+                                            <img src="assets\image\typeTank\{{tank.typeID}}_type.png" alt="" class="chevron">{{tank.typeID}}
                                         </a>
                                    </td>
                                    <td class="">
                                         <div class="">
-                                            <a [routerLink]="['', tank.id]">
+                                            <a [routerLink]="['/tank-details/', tank.id]">
                                                 <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
                                                 <img src="assets\image\tanks\T-62A.png" alt="test" style="width: 100px;">
                                             </a>
                                         </div>
                                     </td>
                                    <td>
-                                        <a [routerLink]="['', tank.id]" class="">
+                                        <a [routerLink]="['/tank-details/', tank.id]" class="">
                                             {{tank.name}}
                                         </a>
                                     </td>
@@ -73,14 +73,28 @@
                                     </td>
                                    <td class="text-start">{{ tank.description | slice:0:250}}
                                         <span *ngIf="tank.description != undefined && tank.description.length > 250">
-                                            <a [routerLink]="['', tank.id]">Lire plus...</a>
+                                            <a [routerLink]="['/tank-details/', tank.id]">More...</a>
                                         </span>
                                    </td>
                                    <td class="td_special">
                                       <!-- Button trigger modal -->
-                                        <button translate type="button" class="btn btn-danger " >
-                                            test &nbsp; <i class="fa-solid fa-trash fa-sm"></i>
-                                        </button>
+                                      <div class="col-2">
+                                        <div class="dropdown">
+                                            <button
+                                                class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
+                                                type="button"
+                                                id="dropdownMenuButton"
+                                                data-mdb-toggle="dropdown"
+                                                aria-expanded="false"
+                                            >
+                                                
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: white;">
+                                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                <li><a class="dropdown-item" href="#">Delete</a></li>
+                                            </ul>
+                                            </div>
+                                    </div>
                                    </td>
                                 </tr>                
                         </tbody>
@@ -91,25 +105,25 @@
                                         <div class="">
                                             <a [routerLink]="['', tank.id]">
                                                 <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
-                                                <img src="assets\image\usa_small.png" alt="test"style="width: 40px;">
+                                                <img src="assets\image\nation\usa_small.png" alt="test"style="width: 40px;">
                                             </a>
                                         </div>
                                     </td>
                                     <td>
                                         <a [routerLink]="['', tank.id]" class="">
-                                            {{tank.typeID}}
+                                            <img src="assets\image\typeTank\{{tank.typeID}}_type.png" alt="" class="chevron">{{tank.typeID}}
                                         </a>
                                     </td>
                                     <td class="">
                                         <div class="">
-                                            <a [routerLink]="['', tank.id]">
+                                            <a [routerLink]="['/tank-details/', tank.id]">
                                                 <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
                                                 <img src="assets\image\tanks\T-62A.png" alt="test" style="width: 100px;">
                                             </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <a [routerLink]="['', tank.id]" class="">
+                                        <a [routerLink]="['/tank-details/', tank.id]" class="">
                                             {{tank.name}}
                                         </a>
                                     </td>
@@ -127,14 +141,28 @@
                                     </td>
                                     <td class="text-start">{{ tank.description | slice:0:250}}
                                         <span *ngIf="tank.description != undefined && tank.description.length > 250">
-                                            <a [routerLink]="['', tank.id]">Lire plus...</a>
+                                            <a [routerLink]="['/tank-details/', tank.id]">More...</a>
                                         </span>
                                     </td>
                                     <td class="td_special">
                                     <!-- Button trigger modal -->
-                                        <button translate type="button" class="btn btn-danger " >
-                                            test &nbsp; <i class="fa-solid fa-trash fa-sm"></i>
-                                        </button>
+                                    <div class="col-2">
+                                        <div class="dropdown">
+                                            <button
+                                                class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
+                                                type="button"
+                                                id="dropdownMenuButton"
+                                                data-mdb-toggle="dropdown"
+                                                aria-expanded="false"
+                                            >
+                                                
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: white;">
+                                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                <li><a class="dropdown-item" href="#">Delete</a></li>
+                                            </ul>
+                                            </div>
+                                    </div>
                                     </td>
                                 </tr>                
                             </tbody> 
@@ -145,31 +173,31 @@
                                             <div class="">
                                                 <a [routerLink]="['', tank.id]">
                                                     <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
-                                                    <img src="assets\image\usa_small.png" alt="test"style="width: 40px;">
+                                                    <img src="assets\image\nation\usa_small.png" alt="test"style="width: 40px;">
                                                 </a>
                                             </div>
                                         </td>
                                         <td>
                                             <a [routerLink]="['', tank.id]" class="">
-                                                {{tank.typeID}}
+                                                <img src="assets\image\typeTank\{{tank.typeID}}_type.png" alt="" class="chevron">{{tank.typeID}}
                                             </a>
                                         </td>
                                         <td class="">
                                             <div class="">
-                                                <a [routerLink]="['', tank.id]">
+                                                <a [routerLink]="['/tank-details/', tank.id]">
                                                     <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
                                                     <img src="assets\image\tanks\T-62A.png" alt="test" style="width: 100px;">
                                                 </a>
                                             </div>
                                         </td>
                                         <td>
-                                            <a [routerLink]="['', tank.id]" class="">
+                                            <a [routerLink]="['/tank-details/', tank.id]" class="">
                                                 {{tank.name}}
                                             </a>
                                         </td>
                                         <td>
                                             <a [routerLink]="['', tank.id]" class="">
-                                                {{tank.strategicRoleId}}
+                                               {{tank.strategicRoleId}}
                                             </a>
                                         </td>
                                         <td>
@@ -180,14 +208,28 @@
                                         </td>
                                         <td class="text-start">{{ tank.description | slice:0:250}}
                                             <span *ngIf="tank.description != undefined && tank.description.length > 250">
-                                                <a [routerLink]="['', tank.id]">Lire plus...</a>
+                                                <a [routerLink]="['/tank-details/', tank.id]">More...</a>
                                             </span>
                                         </td>
                                         <td class="td_special">
                                         <!-- Button trigger modal -->
-                                            <button translate type="button" class="btn btn-danger " >
-                                                test &nbsp; <i class="fa-solid fa-trash fa-sm"></i>
-                                            </button>
+                                        <div class="col-2">
+                                            <div class="dropdown">
+                                                <button
+                                                    class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
+                                                    type="button"
+                                                    id="dropdownMenuButton"
+                                                    data-mdb-toggle="dropdown"
+                                                    aria-expanded="false"
+                                                >
+                                                    
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: white;">
+                                                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                                                </ul>
+                                                </div>
+                                        </div>
                                         </td>
                                     </tr>                
                                 </tbody> 
