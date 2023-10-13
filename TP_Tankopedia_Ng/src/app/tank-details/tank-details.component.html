@@ -1,7 +1,7 @@
 
   
 
-  <div class="container">
+  <div class="container" *ngIf="tank">
     <div class="row">
       <div class="col-lg-12">
         <div class="page-content">
@@ -15,11 +15,11 @@
                     <img src="assets\image\tanks\T-62A.png" alt="" style="border-radius: 23px;">
                     <div class="row justify-content-center ">
                             <div class="col-lg-10">
-                                <div class="right-info ">
+                                <div class="right-info" >
                                   <ul>
-                                    <li><i class="fa-solid fa-flag ms-2 ps-1"></i> &nbsp; Nation :  {{tank.nation?.name}}</li>
-                                    <li> <img src="assets\image\typeTank\{{tank.typeID}}_type.png" alt="" class="chevron"> Type : {{tank.typeTank?.name}} </li>
-                                    <li><img src="assets\image\role\support.svg" alt="" class="chevronRole ms-2"> &nbsp; Role : {{tank.strategicRole?.name}}</li>
+                                    <li *ngIf="tank.nation"><i class="fa-solid fa-flag ms-2 ps-1"></i> &nbsp; Nation :  {{tank.nation.name}}</li>
+                                    <li *ngIf="tank.typeTank" > <img src="assets\image\typeTank\{{tank.typeID}}_type.png" alt="" class="chevron"> Type : {{tank.typeTank.name}} </li>
+                                    <li *ngIf="tank.strategicRole" ><img src="assets\image\role\support.svg" alt="" class="chevronRole ms-2"> &nbsp; Role : {{tank.strategicRole.name}}</li>
                                   </ul>
                                 </div>
                               </div>
@@ -44,9 +44,74 @@
                                         
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: white;">
-                                        <li><a class="dropdown-item" href="#">Edit</a></li>
+                                       <!-- Button trigger modal EDIT -->
+                                        <li><button type="button" class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#tankEditModal" >Edit</button></li>
                                         <li><a class="dropdown-item" href="#">Delete</a></li>
                                     </ul>
+                                    </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="tankEditModal" tabindex="-1" aria-labelledby="tankEditModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="tankEditModalLabel">Edit : {{tank.name}}</h5>
+                                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <form>
+                                              <!-- Name input -->
+                                              <div class="mb-4">
+                                                <!-- class="form-outline  -->
+                                                <label class="form-label" for="name">Name</label>
+                                                <input type="text" name="name" id="name" class="form-control" [(ngModel)]="tank.name"/>
+                                              </div>
+                                            
+                                              <!-- description input -->
+                                              <div class="mb-4">
+                                                <label class="form-label" for="description">Description</label>
+                                                <textarea name="description" id="description" class="form-control" [(ngModel)]="tank.description"></textarea>
+                                              </div>    
+                                              <!-- Year input -->
+                                              <div class="mb-4">
+                                                <label class="form-label" for="yearOfCreation">Year of creation</label>
+                                                <input type="number" name="yearOfCreation" id="yearOfCreation" class="form-control" [(ngModel)]="tank.yearOfCreation"/>
+                                              </div>
+                                            <!--  select list Nation -->
+                                            <div class="mb-4">
+                                                <label class="form-label" for="nationID">Nation</label>
+                                                <select name="nationID" id="nationID" class="form-select" [(ngModel)]="tank.nationID">
+                                                  <option value="0">-- Select a nation --</option>
+                                                  <option *ngFor="let nation of allNations" [value]="nation.id">{{nation.name}}</option>
+                                                </select>
+                                              </div>
+                                              <!--  select list Type -->
+                                              <div class="mb-4">
+                                                <label class="form-label" for="typeID">Type </label>
+                                                <select name="typeID" id="typeID" class="form-select" [(ngModel)]="tank.typeID">
+                                                  <option value="0">-- Select a tank type --</option>
+                                                  <option *ngFor="let type of allTypesOfTanks" [value]="type.id">{{type.name}}</option>
+                                                </select>
+                                              </div>
+                                                <!--  select list Strategic role -->
+                                                <div class="mb-4">
+                                                  <label class="form-label" for="strategicRoleId">Strategic role </label>
+                                                  <select name="strategicRoleId" id="strategicRoleId" class="form-select" [(ngModel)]="tank.strategicRoleId">
+                                                    <option value="0">-- Select the strategic role of the tank --</option>
+                                                    <option *ngFor="let role of allStrategicRoles" [value]="role.id">{{role.name}}</option>
+                                                  </select>
+                                                </div>
+                                              <!-- Submit button -->
+                                              <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Send</button> -->
+                                            </form>  
+                                          
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                                            <button type="button" type="submit" class="btn btn-primary"  (click)="ConfirmUpdate()" data-mdb-dismiss="modal">Save changes</button>
+                                          </div>
+                                        </div>
+                                      </div>
                                     </div>
                             </div>
                         </div>

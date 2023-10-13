@@ -62,7 +62,7 @@ namespace TP_Tankopedia_ASP.Migrations
                     b.HasIndex("TankId")
                         .IsUnique();
 
-                    b.ToTable("Characteristics");
+                    b.ToTable("Characteristics", (string)null);
 
                     b.HasData(
                         new
@@ -241,7 +241,7 @@ namespace TP_Tankopedia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Nations");
+                    b.ToTable("Nations", (string)null);
 
                     b.HasData(
                         new
@@ -319,7 +319,7 @@ namespace TP_Tankopedia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StrategicRoles");
+                    b.ToTable("StrategicRoles", (string)null);
 
                     b.HasData(
                         new
@@ -439,7 +439,7 @@ namespace TP_Tankopedia_ASP.Migrations
 
                     b.HasIndex("TypeID");
 
-                    b.ToTable("Tanks");
+                    b.ToTable("Tanks", (string)null);
 
                     b.HasData(
                         new
@@ -589,7 +589,7 @@ namespace TP_Tankopedia_ASP.Migrations
 
                     b.HasIndex("TankId");
 
-                    b.ToTable("TankModules");
+                    b.ToTable("TankModules", (string)null);
 
                     b.HasData(
                         new
@@ -1011,7 +1011,7 @@ namespace TP_Tankopedia_ASP.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TypeTanks");
+                    b.ToTable("TypeTanks", (string)null);
 
                     b.HasData(
                         new
