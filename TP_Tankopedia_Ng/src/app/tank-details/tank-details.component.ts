@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataApiService } from '../services/data-api.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router} from '@angular/router';
 import { Tank } from 'src/models/Tank';
 import { Nation } from 'src/models/Nation';
 import { TypeTank } from 'src/models/TypeTank';
@@ -13,7 +13,7 @@ import { StrategicRole } from 'src/models/StrategicRole';
 })
 export class TankDetailsComponent implements OnInit{
 
-  tank! : Tank
+  tank ?: Tank
   tankId?: number;
   allNations: Nation[] = [];
   allTypesOfTanks: TypeTank[] = [];
@@ -21,6 +21,7 @@ export class TankDetailsComponent implements OnInit{
   // isModalOpen : boolean = false; 
 
   constructor(public route: ActivatedRoute,
+    public router : Router,
     private dataApiService: DataApiService){}
 
   async ngOnInit(): Promise<void> {
@@ -60,6 +61,20 @@ export class TankDetailsComponent implements OnInit{
       console.log('Edited tank :', t);
       this.ngOnInit();
     })
+  }
+
+  async confirmDeleteTank(){
+    if(this.tankId != null)
+    {
+      await this.dataApiService.deleteTank(this.tankId).subscribe(t=>{
+        console.log('You\'ve deleted the tank:: ', t);
+        this.navigateToListOfAllTanks();
+      })
+    }
+  }
+  navigateToListOfAllTanks(): void {
+    
+    this.router.navigate(['/list-of-all-tanks/']);
   }
 
   ConfirmUpdate(){

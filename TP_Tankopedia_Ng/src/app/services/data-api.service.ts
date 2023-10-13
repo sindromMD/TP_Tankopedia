@@ -58,6 +58,11 @@ export class DataApiService {
   }
   //Edit
   editTank(tankId:number, editedTank:Tank):Observable<Tank>{
-    return this.http.put<Tank>(`http://localhost:5145/api/Tanks/PutTank/`+ tankId, editedTank)
+    return this.http.put<Tank>(`http://localhost:5145/api/Tanks/PutTank/`+ tankId, editedTank);
+  }
+
+  //Delete
+  deleteTank(tankId:number):Observable<Tank>{
+    return this.http.delete<Tank>(`http://localhost:5145/api/Tanks/DeleteTank/`+tankId);
   }
 }

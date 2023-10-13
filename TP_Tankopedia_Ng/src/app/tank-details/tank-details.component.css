@@ -322,4 +322,12 @@ section {
 .titleModule{
     color:#c7b789;
 }
-
+.pInput{
+    font-family: 'Gabarito', cursive;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    color: #2c2b2b;
+    text-decoration: none;
+}
