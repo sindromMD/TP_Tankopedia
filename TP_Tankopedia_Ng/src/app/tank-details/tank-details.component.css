@@ -331,3 +331,7 @@ section {
     color: #2c2b2b;
     text-decoration: none;
 }
+.img-module{
+  border-radius: 23px; 
+  width: 70px;
+}

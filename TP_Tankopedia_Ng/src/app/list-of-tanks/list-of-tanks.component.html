@@ -15,7 +15,7 @@
     </div>
 <div class="row justify-content-around marginBot">
     <div class="col-10">
-        <div class="table-responsive-sm">
+        <div class="table-responsive-sm" *ngIf="counter != 0; else messageSection">
             <table class="table table-dark table-striped align-middle text-center" >
                 <caption class=""><i class="fa-solid fa-circle-info fa-flip " style="color: #c5452e;"></i> 
                     FOUND   <span class="h4 mx-2">{{counter}}</span>  Tanks!
@@ -237,6 +237,13 @@
                         </ng-template>
             
             </table>
-        </div>   
+        </div>
+        <ng-template #messageSection>
+                <div class="text-center " style="margin-top: 200px; ;">
+                  <h2 class="zoom-area h1"><b></b><br>
+                    Unfortunately, our library does not currently contain tanks for this category.</h2>
+                  <button [routerLink]="['/home/']" class="btn btn-dark p1 m-5">Back to home</button>
+                </div>
+        </ng-template>
     </div>
 </div>

@@ -27,7 +27,7 @@ namespace TP_Tankopedia_ASP.Controllers
         {
           if (_context.Tanks == null)
           {
-              return NotFound();
+              return StatusCode(StatusCodes.Status404NotFound, new {Message = "We couldn't find any tanks in our library!" });
           }
             return await _context.Tanks.ToListAsync();
         }
@@ -38,15 +38,14 @@ namespace TP_Tankopedia_ASP.Controllers
         {
           if (_context.Tanks == null)
           {
-              return NotFound();
-          }
+                return StatusCode(StatusCodes.Status404NotFound, new { Message = "We couldn't find any tanks in our library!" });
+            }
             var tank = await _context.Tanks.FindAsync(id);
 
             if (tank == null)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status404NotFound, new { Message = $"Well, we tried to summon the tank with id-{id}, but it seems it\'s playing hide and seek in the Error 404 camouflage mode. Tactical difficulties, you know!'" });
             }
-
             return tank;
         }
 
@@ -57,7 +56,7 @@ namespace TP_Tankopedia_ASP.Controllers
         {
             if (id != tank.Id)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status400BadRequest, new { Message = "Tank ID doesn't match the requested ID." });
             }
 
             _context.Entry(tank).State = EntityState.Modified;
@@ -70,7 +69,7 @@ namespace TP_Tankopedia_ASP.Controllers
             {
                 if (!TankExists(id))
                 {
-                    return NotFound();
+                    return StatusCode(StatusCodes.Status404NotFound, new { Message = "The tank was not found. It may have been deleted by another user." });
                 }
                 else
                 {
@@ -88,8 +87,8 @@ namespace TP_Tankopedia_ASP.Controllers
         {
           if (_context.Tanks == null)
           {
-              return Problem("Entity set 'TankopediaDbContext.Tanks'  is null.");
-          }
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Entity set 'TankopediaDbContext.Tanks' is null." });
+            }
             _context.Tanks.Add(tank);
             await _context.SaveChangesAsync();
 
@@ -102,18 +101,18 @@ namespace TP_Tankopedia_ASP.Controllers
         {
             if (_context.Tanks == null)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status404NotFound, new { Message = "We couldn't find any tanks in our library!" });
             }
             var tank = await _context.Tanks.FindAsync(id);
             if (tank == null)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status404NotFound, new { Message = $"We couldn't delete the tank with ID {id} , because it doesn't exist in our library!" });
             }
 
             _context.Tanks.Remove(tank);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return StatusCode(StatusCodes.Status204NoContent, new { Message = "The tank has been successfully deleted." });
         }
 
         private bool TankExists(int id)

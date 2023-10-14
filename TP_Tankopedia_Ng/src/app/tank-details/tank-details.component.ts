@@ -18,7 +18,7 @@ export class TankDetailsComponent implements OnInit{
   allNations: Nation[] = [];
   allTypesOfTanks: TypeTank[] = [];
   allStrategicRoles : StrategicRole[] = [];
-  // isModalOpen : boolean = false; 
+  errorMessage: string='';
 
   constructor(public route: ActivatedRoute,
     public router : Router,
@@ -27,10 +27,22 @@ export class TankDetailsComponent implements OnInit{
   async ngOnInit(): Promise<void> {
     this.route.params.subscribe(async(params:Params)=>{
       this.tankId = params['tankId'];
-      await this.dataApiService.getTankById(params['tankId']).subscribe(t =>{
+      
+      await this.dataApiService.getTankById(params['tankId']).subscribe(
+        {next:(t) =>{
         console.log(`Tank with id=${params['tankId']}`, t);
         this.tank = t;
-      })
+      },
+      error: (err) => {
+        console.error(err.me, err);
+        if (err && err.message) {
+          this.errorMessage = err.message;
+        } else {
+          // Si faux, un message d'erreur générique est affiché.
+          this.errorMessage = 'An error occurred during the request. Please try again later.';
+        }
+      }
+      });
       await this.getAllNationRequest();
       await this.getAllTypesOfTanksRequest();
       await this.getAllStrategicRolesRequest();
@@ -81,17 +93,7 @@ export class TankDetailsComponent implements OnInit{
     if(this.tankId != null){
       if(this.tank != null){
          this.modifyTank(this.tankId, this.tank)
-        //  this.changeOnClick();
       }
     }
   }
-  // public changeOnClick(): void{
-  //   this.isModalOpen = !this.isModalOpen;
-  // }
-//  async getTankByIdRequest(tankId:number):Promise<void> {
-//   await this.dataApiService.getTankById(tankId).subscribe(t =>{
-//     console.log(`Tank with id=${tankId}`, t);
-//     this.tank = t;
-//   });
-//  }
 }

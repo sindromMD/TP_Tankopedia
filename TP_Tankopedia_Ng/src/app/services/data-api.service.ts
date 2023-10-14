@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { Nation } from 'src/models/Nation';
 import { StrategicRole } from 'src/models/StrategicRole';
 import { Tank } from 'src/models/Tank';
@@ -49,12 +49,16 @@ export class DataApiService {
   getTankById(tankId:number):Observable<Tank>{
     return this.http.get<Tank>(`http://localhost:5145/api/Tanks/GetTank/` + tankId).pipe(map(t => {
       return this.tank = t;
-    }));
+    }),
+    catchError((error:HttpErrorResponse)=>{
+      return throwError(() => new Error(error.error.message))
+    })
+    );
   }
   getAllStrategicRoles():Observable<StrategicRole[]>{
     return this.http.get<StrategicRole[]>(`http://localhost:5145/api/StrategicRoles/GetStrategicRoles`).pipe(map(sr=>{
       return this.strategicRoles = sr;
-    }))
+    }));
   }
   //Edit
   editTank(tankId:number, editedTank:Tank):Observable<Tank>{
