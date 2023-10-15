@@ -1,24 +1,93 @@
 <div class="row justify-content-around  mb-3  marginTop">
     <div class="col col-xl-10 marge_top_titre_favoris " id="favoris">
-        <h1 *ngIf="nation; else allouTypeTanksTitle">
+        <h1 class="d-inline" *ngIf="nation; else allouTypeTanksTitle">
             Nation : {{nation.name}}
            </h1>
                 <ng-template #allouTypeTanksTitle>
-                    <h1 *ngIf="typeTank else allTanksTitle">
-                        Type: {{ typeTank.name }}</h1>
+                    <h1 class="d-inline" *ngIf="typeTank else allTanksTitle">
+                        Type : {{ typeTank.name }}</h1>
                         <ng-template #allTanksTitle>
-                            <h1>All the tanks in our library :</h1>
+                            <h1 class="d-inline">All the tanks in our library :</h1>
                         </ng-template>
                 </ng-template>
-                   
+                <a href="" class="mx-3" data-mdb-toggle="modal" data-mdb-target="#creatTankModal"><i class="fa-solid fa-circle-plus fa-2xl" style="color: #3caa3e; vertical-align: 0;"></i></a>      
         <div class="divider-1 mb-3 "></div>
+
+         <!-- Modal Edit-->
+         <form class="pInput"  method="post" (ngSubmit)="addNewTank(newTank)">
+         <div class="modal fade" id="creatTankModal" tabindex="-1" aria-labelledby="creatTankModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header bg-success bg-gradient">
+                  <h5 class="modal-title p1 text-dark" id="creatTankModalLabel">Edit : </h5>
+                  <button type="button" class="btn-close mx-2" data-mdb-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-dark">
+                  
+                    <!-- Name input -->
+                    <div class="mb-4">
+                      <!-- class="form-outline  -->
+                      <label class="form-label" for="name">Name</label>
+                      <input type="text" name="name" id="name" class="form-control" [(ngModel)]="newTank.name" required/>
+                      <div class="form-helper p3">Name is required*</div>
+                    </div>
+                  
+                    <!-- description input -->
+                    <div class="mb-4">
+                      <label class="form-label" for="description">Description</label>
+                      <textarea name="description" id="description" class="form-control" [(ngModel)]="newTank.description" required></textarea>
+                      <div class="form-helper p3">Description is required*</div>
+                    </div>    
+                    <!-- Year input -->
+                    <div class="mb-4">
+                      <label class="form-label" for="yearOfCreation">Year of creation</label>
+                      <input type="number" name="yearOfCreation" id="yearOfCreation" class="form-control" [(ngModel)]="newTank.yearOfCreation"/>
+                    </div>
+                  <!--  select list Nation -->
+                  <div class="mb-4">
+                      <label class="form-label" for="nationID">Nation</label>
+                      <select name="nationID" id="nationID" class="form-select" [(ngModel)]="newTank.nationID" required>
+                        <option value="0">-- Select a nation --</option>
+                        <option *ngFor="let nation of allNations" [value]="nation.id">{{nation.name}}</option>
+                      </select>
+                      <div class="form-helper p3">Nation is required*</div>
+                    </div>
+                    <!--  select list Type -->
+                    <div class="mb-4">
+                      <label class="form-label" for="typeID">Type </label>
+                      <select name="typeID" id="typeID" class="form-select" [(ngModel)]="newTank.typeID" required>
+                        <option value="0">-- Select a tank type --</option>
+                        <option *ngFor="let type of allTypesOfTanks" [value]="type.id">{{type.name}}</option>
+                      </select>
+                      <div class="form-helper p3" >Type of tank is required*</div>
+                    </div>
+                      <!--  select list Strategic role -->
+                      <div class="mb-4">
+                        <label class="form-label" for="strategicRoleId">Strategic role </label>
+                        <select name="strategicRoleId" id="strategicRoleId" class="form-select" [(ngModel)]="newTank.strategicRoleId" required>
+                          <option value="0">-- Select the strategic role of the tank --</option>
+                          <option *ngFor="let role of allStrategicRoles" [value]="role.id">{{role.name}}</option>
+                        </select>
+                        <div class="form-helper p3">Role is required*</div>
+                      </div>
+                    <!-- Submit button -->
+                    <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Send</button> -->
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                  <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss="modal">Create new tank</button> 
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
     </div>
 <div class="row justify-content-around marginBot">
     <div class="col-10">
         <div class="table-responsive-sm" *ngIf="counter != 0; else messageSection">
             <table class="table table-dark table-striped align-middle text-center" >
                 <caption class=""><i class="fa-solid fa-circle-info fa-flip " style="color: #c5452e;"></i> 
-                    FOUND   <span class="h4 mx-2">{{counter}}</span>  Tanks!
+                    Found   <span class="h4 mx-2">{{counter}}</span>  tanks!
                 </caption>
                     <thead class="h4">
                       <tr >

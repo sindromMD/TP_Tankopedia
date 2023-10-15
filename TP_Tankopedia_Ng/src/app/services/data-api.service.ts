@@ -69,4 +69,9 @@ export class DataApiService {
   deleteTank(tankId:number):Observable<Tank>{
     return this.http.delete<Tank>(`http://localhost:5145/api/Tanks/DeleteTank/`+tankId);
   }
+
+  //Create
+  addTank(newTank:Tank):Observable<Tank>{
+    return this.http.post<Tank>(`http://localhost:5145/api/Tanks/PostTank`, newTank);
+  }
 }

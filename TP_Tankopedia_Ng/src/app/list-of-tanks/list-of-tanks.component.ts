@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DataApiService } from '../services/data-api.service';
 import { Tank } from 'src/models/Tank';
 import { Nation } from 'src/models/Nation';
 import { TypeTank } from 'src/models/TypeTank';
+import { StrategicRole } from 'src/models/StrategicRole';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list-of-tanks',
@@ -16,30 +18,42 @@ export class ListOfTanksComponent implements OnInit {
   nation ?: Nation;
   typeTank ?: TypeTank;
   allTanks: Tank[]=[];
+  allNations: Nation[] = [];
+  allTypesOfTanks: TypeTank[] = [];
+  allStrategicRoles : StrategicRole[] = [];
   counter ?: number;
-  
+  newTank:Tank = new Tank(0,'','',0,0,0);
+  // fb=this.formBuilder.group(this.formBuilder.group({
+  //   name:['',[Validators.required,Validators.maxLength(25)]],
+  //   description:['',[Validators.required,Validators.maxLength(600)]],
+  //   nationID:[0,[Validators.required]],
+  //   strategicRoleId:[0,[Validators.required]],
+  //   typeID:[0,[Validators.required]]
+  // }));
+
   constructor(
     public route: ActivatedRoute,
-    private dataApiService: DataApiService
-  ){}
-  
+    public router: Router,
+    private dataApiService: DataApiService,
+    // private formBuilder:FormBuilder
+  ){
+    
+}
+
   async ngOnInit(): Promise<void>{
     this.route.params.subscribe(async(params : Params)=>{
-      // (params['nationId'] != null)? this.getNationWithListOfTanksRequest(params['nationId']): this.getTypeWithListOfTanksRequest(params['typeId']);
+      
       (params['nationId'] === undefined && params['typeId'] === undefined)
       ? await this.getAllTanksRequest()
       : (params['nationId'] !== undefined)
       ? await this.getNationWithListOfTanksRequest(params['nationId'])
       : await this.getTypeWithListOfTanksRequest(params['typeId']);
-      // if (params['nationId'] === undefined && params['typeId'] === undefined) {
-      //   await this.getAllTanksRequest();
-      // } else if (params['nationId'] !== undefined) {
-      //   await this.getNationWithListOfTanksRequest(params['nationId']);
-      // } else if (params['typeId'] !== undefined) {
-      //   await this.getTypeWithListOfTanksRequest(params['typeId']);
-      // }
-
+      //Récupération des données pour les 3 listes de sélection du formulaire modal CreateNewTank
+      await this.getAllNationRequest();
+      await this.getAllTypesOfTanksRequest();
+      await this.getAllStrategicRolesRequest();
     });
+    
   }
 
   async getNationWithListOfTanksRequest(nationId:number):Promise<void> {
@@ -63,5 +77,31 @@ export class ListOfTanksComponent implements OnInit {
       this.allTanks=t;
       this.counter=t.length;
     })
+  }
+  //Récupération des données pour les 3 listes de sélection du formulaire modal CreateNewTank
+  async getAllNationRequest():Promise<void>{
+    await this.dataApiService.getNations().subscribe(n=>{
+      this.allNations = n;
+    })
+  }
+  async getAllTypesOfTanksRequest():Promise<void>{
+    await this.dataApiService.getTankTypes().subscribe(tt=>{
+      this.allTypesOfTanks = tt;
+    })
+  }
+  async getAllStrategicRolesRequest():Promise<void>{
+    await this.dataApiService.getAllStrategicRoles().subscribe(sr=>{
+      this.allStrategicRoles = sr;
+    })
+  }
+
+  async addNewTank(newTank:Tank):Promise<void>{
+    await this.dataApiService.addTank(newTank).subscribe(nt =>{
+      console.log('New tank:', nt);
+      this.navigateToTankDetails(nt.id);
+    })
+  }
+  navigateToTankDetails(tankId:number):void {
+    this.router.navigate(['/tank-details', tankId])
   }
 }

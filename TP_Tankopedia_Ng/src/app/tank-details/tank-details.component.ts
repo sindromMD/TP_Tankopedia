@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { DataApiService } from '../services/data-api.service';
 import { ActivatedRoute, Params, Router} from '@angular/router';
 import { Tank } from 'src/models/Tank';
@@ -10,6 +10,9 @@ import { StrategicRole } from 'src/models/StrategicRole';
   selector: 'app-tank-details',
   templateUrl: './tank-details.component.html',
   styleUrls: ['./tank-details.component.css']
+})
+@Injectable({
+  providedIn: 'root'
 })
 export class TankDetailsComponent implements OnInit{
 
