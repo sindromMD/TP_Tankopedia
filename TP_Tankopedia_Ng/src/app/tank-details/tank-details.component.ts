@@ -5,6 +5,7 @@ import { Tank } from 'src/models/Tank';
 import { Nation } from 'src/models/Nation';
 import { TypeTank } from 'src/models/TypeTank';
 import { StrategicRole } from 'src/models/StrategicRole';
+import { Characteristics } from 'src/models/Characteristics';
 
 @Component({
   selector: 'app-tank-details',
@@ -22,6 +23,7 @@ export class TankDetailsComponent implements OnInit{
   allTypesOfTanks: TypeTank[] = [];
   allStrategicRoles : StrategicRole[] = [];
   errorMessage: string='';
+  characteristics: Characteristics = new Characteristics(0,0,0,0,0,0,0,0,0,0)
 
   constructor(public route: ActivatedRoute,
     public router : Router,
@@ -70,7 +72,7 @@ export class TankDetailsComponent implements OnInit{
       this.allStrategicRoles = sr;
     })
   }
-
+//EDIT tank
   async modifyTank(tankId:number, editedTank:Tank):Promise<void>{
     await this.dataApiService.editTank(tankId,editedTank).subscribe(
     {next:(t)=>{
@@ -89,6 +91,7 @@ export class TankDetailsComponent implements OnInit{
     })
   }
 
+//DELETE tank
   async confirmDeleteTank(){
     if(this.tankId != null)
     {
@@ -103,11 +106,31 @@ export class TankDetailsComponent implements OnInit{
     this.router.navigate(['/list-of-all-tanks/']);
   }
 
+//PUT tank
   ConfirmUpdate(){
     if(this.tankId != null){
       if(this.tank != null){
          this.modifyTank(this.tankId, this.tank)
       }
     }
+  }
+
+  async addCharacteristics(newInfo:Characteristics):Promise<void>{
+    newInfo.tankId=this.tankId?this.tankId:0;
+    console.log('char modif add :',newInfo);
+    await this.dataApiService.addTankCharacteristics(newInfo).subscribe(
+      { next:(n) =>{
+      console.log('Info :', n);
+      this.ngOnInit();
+    },
+    error:(err) => {
+      console.error('The form is not filled in correctly:',err.message);
+      if(err && err.message){
+        this.errorMessage = err.message;
+      }else{
+        this.errorMessage="Unknown error"
+      }
+    }
+    })
   }
 }

@@ -6,6 +6,7 @@ import { StrategicRole } from 'src/models/StrategicRole';
 import { Tank } from 'src/models/Tank';
 import { TypeTank } from 'src/models/TypeTank';
 import { ToastrService } from 'ngx-toastr';
+import { Characteristics } from 'src/models/Characteristics';
 
 @Injectable({
   providedIn: 'root'
@@ -70,7 +71,7 @@ export class DataApiService {
         )
       }),
       tap(() => {
-        // Afisează un mesaj de succes cu Toastr atunci când POST este finalizat cu succes
+              // Affichage d'un message de succès avec Toastr lorsque le PUT est terminé avec succès
         this.toastr.success(`Tank ${editedTank.name} edited successfully`, `Success`);
       })
     );
@@ -80,7 +81,7 @@ export class DataApiService {
   deleteTank(tankId:number):Observable<Tank>{
     return this.http.delete<Tank>(`http://localhost:5145/api/Tanks/DeleteTank/`+tankId).pipe(
       tap(() => {
-        // Afisează un mesaj de succes cu Toastr atunci când POST este finalizat cu succes
+        // Affichage d'un message de succès avec Toastr lorsque le DELETE est terminé avec succès
         this.toastr.success(`Tank deleted successfully`, `Success`);
       })
     );
@@ -95,9 +96,25 @@ export class DataApiService {
         )
       }),
       tap(() => {
-        // Afisează un mesaj de succes cu Toastr atunci când POST este finalizat cu succes
+        // Affichage d'un message de succès avec Toastr lorsque le POST est terminé avec succès
         this.toastr.success(`Tank ${newTank.name} added successfully`, `Success`);
       })
     );
   }
+
+  //Create
+addTankCharacteristics(newInfo:Characteristics):Observable<Characteristics>{
+  return this.http.post<Characteristics>(`http://localhost:5145/api/Characteristics/PostCharacteristics`, newInfo).pipe(
+    catchError((error:HttpErrorResponse)=>{
+      this.toastr.error( 'Please fill in all required fields',`Required fields omitted!`);
+      return throwError(() => new Error(error.error.message),
+      )
+    }),
+    tap(() => {
+      // Affichage d'un message de succès avec Toastr lorsque le POST est terminé avec succès
+      this.toastr.success(`Characteristics for Tank with id: ${newInfo.tankId} was added successfully`, `Success`);
+    })
+  );
+}
+
 }

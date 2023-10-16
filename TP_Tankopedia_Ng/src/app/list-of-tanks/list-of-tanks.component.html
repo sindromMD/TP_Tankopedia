@@ -14,12 +14,13 @@
         <div class="divider-1 mb-3 "></div>
 
          <!-- Modal Create-->
-         <form class="pInput"  method="post" (ngSubmit)="addNewTank(newTank)">
+         <form class="pInput" #newTankForm="ngForm" method="post" (ngSubmit)="addNewTank(newTank)">
             <div class="modal fade" id="creatTankModal" tabindex="-1" aria-labelledby="creatTankModalLabel" aria-hidden="true">
                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                  <div class="modal-content">
                    <div class="modal-header bg-success bg-gradient">
-                     <h5 class="modal-title p1 text-dark" id="creatTankModalLabel">Create tank: <i *ngIf="name.valid && description.valid && nationID.value!=0 && typeID.value!=0 && strategicRoleId.value!=0" class="fa-solid fa-circle-check fa-bounce fa-lg" style="color: #d2ebc7;"></i> </h5>
+                     <h5 class="modal-title p1 text-dark" id="creatTankModalLabel">Create tank: <i *ngIf="newTankForm.valid && nationID.value!=0 && typeID.value!=0 && strategicRoleId.value!=0" class="fa-solid fa-circle-check fa-bounce fa-lg" style="color: #d2ebc7;"></i> </h5>
+                     <!-- <h5 class="modal-title p1 text-dark" id="creatTankModalLabel">Create tank: <i *ngIf="name.valid && description.valid && nationID.value!=0 && typeID.value!=0 && strategicRoleId.value!=0" class="fa-solid fa-circle-check fa-bounce fa-lg" style="color: #d2ebc7;"></i> </h5> -->
                      <button type="button" class="btn-close mx-2" data-mdb-dismiss="modal" aria-label="Close"></button>
                    </div>
                    <div class="modal-body text-dark">
@@ -83,34 +84,14 @@
                    <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
                      <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss='modal'
-                     [disabled]="name.invalid || description.invalid  || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0" >
+                     [disabled]="newTankForm.invalid || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0" >
                      Create new tank</button>
                      <!-- data-mdb-dismiss='modal' -->
                    </div>
+                   <!-- [disabled]="name.invalid || description.invalid  || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0"  -->
                  </div>
                </div>
              </div>
-   
-            <!---->
-            <!-- <div class="modal fade" id="modalError" aria-hidden="true" aria-labelledby="modalError" tabindex="-1">
-                <div class="modal-dialog modal-dialog-centered">
-                  <div class="modal-content">
-                    <div class="modal-header bg-danger bg-gradient text-white">
-                        <h5 class="modal-title p1 " id="deleteTankModalLabel">Delete : </h5>
-                        <button type="button" class="btn-close mx-2" data-mdb-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body text-center">
-                              <div>
-                                <i class="fa-solid fa-circle-exclamation fa-beat fa-2xl m-4" style="color: #eb2d2d;">  </i><h3 class="h3"> ERROR ! </h3>
-                                <h2 class="mt-1" style="color: #474545;">Required fields must be completed.</h2>
-                              </div>          
-                      </div>
-                      <div class="modal-footer">
-                      <button class="btn btn-primary" data-mdb-target="#creatTankModal" data-mdb-toggle="modal">Back to first</button>
-                    </div>
-                  </div>
-                </div>
-              </div> -->
         </form>
     </div>
 <div class="row justify-content-around marginBot">
