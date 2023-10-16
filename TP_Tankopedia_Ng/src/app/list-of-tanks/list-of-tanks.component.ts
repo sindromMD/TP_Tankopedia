@@ -5,7 +5,7 @@ import { Tank } from 'src/models/Tank';
 import { Nation } from 'src/models/Nation';
 import { TypeTank } from 'src/models/TypeTank';
 import { StrategicRole } from 'src/models/StrategicRole';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+// import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list-of-tanks',
@@ -22,10 +22,12 @@ export class ListOfTanksComponent implements OnInit {
   allTypesOfTanks: TypeTank[] = [];
   allStrategicRoles : StrategicRole[] = [];
   counter ?: number;
+  errorMessage: string='';
   newTank:Tank = new Tank(0,'','',0,0,0);
-  // fb=this.formBuilder.group(this.formBuilder.group({
-  //   name:['',[Validators.required,Validators.maxLength(25)]],
+  // formCreate = this.formBuilder.group(this.formBuilder.group({
+  //   name:[null,[Validators.required,Validators.maxLength(25)]],
   //   description:['',[Validators.required,Validators.maxLength(600)]],
+  //   yearOfCreation:[0],
   //   nationID:[0,[Validators.required]],
   //   strategicRoleId:[0,[Validators.required]],
   //   typeID:[0,[Validators.required]]
@@ -37,7 +39,6 @@ export class ListOfTanksComponent implements OnInit {
     private dataApiService: DataApiService,
     // private formBuilder:FormBuilder
   ){
-    
 }
 
   async ngOnInit(): Promise<void>{
@@ -95,13 +96,37 @@ export class ListOfTanksComponent implements OnInit {
     })
   }
 
+  // newTankGen(form:FormGroup) {
+  //   console.log(form.valid);
+  //   console.log( form.value.name)
+  //     return new Tank(
+  //       0,
+  //       form.value.name,
+  //       form.value.description,
+  //       form.value.yearOfCreation,
+  //       form.value.nationID,
+  //       form.value.strategicRoleId,
+  //       form.value.typeID
+  //     );
+  //   } 
+  
   async addNewTank(newTank:Tank):Promise<void>{
-    await this.dataApiService.addTank(newTank).subscribe(nt =>{
+    await this.dataApiService.addTank(newTank).subscribe(
+      { next:(nt) =>{
       console.log('New tank:', nt);
       this.navigateToTankDetails(nt.id);
+    },
+    error:(err) => {
+      console.error('We have an error :',err.message);
+      if(err && err.message){
+        this.errorMessage = err.message;
+      }else{
+        this.errorMessage="Unknown error"
+      }
+    }
     })
   }
   navigateToTankDetails(tankId:number):void {
-    this.router.navigate(['/tank-details', tankId])
+    this.router.navigate(['/tank-details/', tankId])
   }
 }

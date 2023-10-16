@@ -13,73 +13,104 @@
                 <a href="" class="mx-3" data-mdb-toggle="modal" data-mdb-target="#creatTankModal"><i class="fa-solid fa-circle-plus fa-2xl" style="color: #3caa3e; vertical-align: 0;"></i></a>      
         <div class="divider-1 mb-3 "></div>
 
-         <!-- Modal Edit-->
+         <!-- Modal Create-->
          <form class="pInput"  method="post" (ngSubmit)="addNewTank(newTank)">
-         <div class="modal fade" id="creatTankModal" tabindex="-1" aria-labelledby="creatTankModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-              <div class="modal-content">
-                <div class="modal-header bg-success bg-gradient">
-                  <h5 class="modal-title p1 text-dark" id="creatTankModalLabel">Edit : </h5>
-                  <button type="button" class="btn-close mx-2" data-mdb-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body text-dark">
-                  
-                    <!-- Name input -->
-                    <div class="mb-4">
-                      <!-- class="form-outline  -->
-                      <label class="form-label" for="name">Name</label>
-                      <input type="text" name="name" id="name" class="form-control" [(ngModel)]="newTank.name" required/>
-                      <div class="form-helper p3">Name is required*</div>
-                    </div>
-                  
-                    <!-- description input -->
-                    <div class="mb-4">
-                      <label class="form-label" for="description">Description</label>
-                      <textarea name="description" id="description" class="form-control" [(ngModel)]="newTank.description" required></textarea>
-                      <div class="form-helper p3">Description is required*</div>
-                    </div>    
-                    <!-- Year input -->
-                    <div class="mb-4">
-                      <label class="form-label" for="yearOfCreation">Year of creation</label>
-                      <input type="number" name="yearOfCreation" id="yearOfCreation" class="form-control" [(ngModel)]="newTank.yearOfCreation"/>
-                    </div>
-                  <!--  select list Nation -->
-                  <div class="mb-4">
-                      <label class="form-label" for="nationID">Nation</label>
-                      <select name="nationID" id="nationID" class="form-select" [(ngModel)]="newTank.nationID" required>
-                        <option value="0">-- Select a nation --</option>
-                        <option *ngFor="let nation of allNations" [value]="nation.id">{{nation.name}}</option>
-                      </select>
-                      <div class="form-helper p3">Nation is required*</div>
-                    </div>
-                    <!--  select list Type -->
-                    <div class="mb-4">
-                      <label class="form-label" for="typeID">Type </label>
-                      <select name="typeID" id="typeID" class="form-select" [(ngModel)]="newTank.typeID" required>
-                        <option value="0">-- Select a tank type --</option>
-                        <option *ngFor="let type of allTypesOfTanks" [value]="type.id">{{type.name}}</option>
-                      </select>
-                      <div class="form-helper p3" >Type of tank is required*</div>
-                    </div>
-                      <!--  select list Strategic role -->
-                      <div class="mb-4">
-                        <label class="form-label" for="strategicRoleId">Strategic role </label>
-                        <select name="strategicRoleId" id="strategicRoleId" class="form-select" [(ngModel)]="newTank.strategicRoleId" required>
-                          <option value="0">-- Select the strategic role of the tank --</option>
-                          <option *ngFor="let role of allStrategicRoles" [value]="role.id">{{role.name}}</option>
-                        </select>
-                        <div class="form-helper p3">Role is required*</div>
+            <div class="modal fade" id="creatTankModal" tabindex="-1" aria-labelledby="creatTankModalLabel" aria-hidden="true">
+               <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                 <div class="modal-content">
+                   <div class="modal-header bg-success bg-gradient">
+                     <h5 class="modal-title p1 text-dark" id="creatTankModalLabel">Create tank: <i *ngIf="name.valid && description.valid && nationID.value!=0 && typeID.value!=0 && strategicRoleId.value!=0" class="fa-solid fa-circle-check fa-bounce fa-lg" style="color: #d2ebc7;"></i> </h5>
+                     <button type="button" class="btn-close mx-2" data-mdb-dismiss="modal" aria-label="Close"></button>
+                   </div>
+                   <div class="modal-body text-dark">
+                     
+                       <!-- Name input -->
+                       <div class="mb-4">
+                         <!-- class="form-outline  -->
+                         <label class="form-label" for="name">Name*</label>
+                         <input type="text" name="name" id="name" class="form-control" required minlength="2" maxlength="25" [(ngModel)]="newTank.name" #name="ngModel"/>
+                         <div *ngIf="name.invalid && (name.dirty || name.touched)" class="form-helper p3">Name is required*</div>
+                         <div  class="p3" *ngIf="name.errors?.['required']">A tank must have a name</div>
+                         <div class="p3" *ngIf="name.errors?.['minlength']">Name must be at least 2 characters long.</div>
+                       </div>
+                     
+                       <!-- description input -->
+                       <div class="mb-4">
+                         <label class="form-label" for="description">Description*</label>
+                         <textarea name="description" id="description" class="form-control" required minlength="10" maxlength="2500" [(ngModel)]="newTank.description" #description="ngModel"></textarea>
+                         <div *ngIf="description.invalid && (description.dirty || description.touched)" class="form-helper p3">Description is required*</div>
+                         <div  class="p3" *ngIf="description.errors?.['required']">We need description for new tank.</div>
+                         <div  class="p3" *ngIf="description.errors?.['minlength']">Description must be at least 10 characters long.</div>
+                       </div>    
+                       <!-- Year input -->
+                       <div class="mb-4">
+                         <label class="form-label" for="yearOfCreation">Year of creation</label>
+                         <input type="number" name="yearOfCreation" id="yearOfCreation" class="form-control" [(ngModel)]="newTank.yearOfCreation"/>
+                       </div>
+                     <!--  select list Nation -->
+                     <div class="mb-4">
+                         <label class="form-label" for="nationID">Nation*</label>
+                         <select name="nationID" id="nationID" class="form-select" required [(ngModel)]="newTank.nationID" #nationID="ngModel">
+                           <option value="0">-- Select a nation --</option>
+                           <option *ngFor="let nation of allNations" [value]="nation.id">{{nation.name}}</option>
+                         </select>
+                         <div *ngIf="nationID.value==0 && (nationID.dirty || nationID.touched)" class="form-helper p3">Nation is required*</div>
+                         <div  class="p3" *ngIf="nationID.value==0">You must choose a nation.</div>
+                       </div>
+                       <!--  select list Type -->
+                       <div class="mb-4">
+                         <label class="form-label" for="typeID">Type </label>
+                         <select name="typeID" id="typeID" class="form-select" required [(ngModel)]="newTank.typeID" #typeID="ngModel">
+                           <option value="0">-- Select a tank type --</option>
+                           <option *ngFor="let type of allTypesOfTanks" [value]="type.id">{{type.name}}</option>
+                         </select>
+                         <div *ngIf="typeID.value==0 && (typeID.dirty || typeID.touched)" class="form-helper p3">Type of tank is required*</div>
+                         <div  class="p3" *ngIf="typeID.value==0">You must choose a type of tank.</div>
+                       </div>
+                         <!--  select list Strategic role -->
+                         <div class="mb-4">
+                           <label class="form-label" for="strategicRoleId">Strategic role </label>
+                           <select name="strategicRoleId" id="strategicRoleId" class="form-select" required [(ngModel)]="newTank.strategicRoleId" #strategicRoleId="ngModel">
+                             <option value="0">-- Select the strategic role of the tank --</option>
+                             <option *ngFor="let role of allStrategicRoles" [value]="role.id">{{role.name}}</option>
+                           </select>
+                           <div *ngIf="strategicRoleId.value==0 && (strategicRoleId.dirty || strategicRoleId.touched)" class="form-helper p3">Role is required*</div>
+                           <div  class="p3" *ngIf="strategicRoleId.value==0">You must choose a strategic role of tank.</div>
+                         </div>
+                       <!-- Submit button -->
+                       <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Send</button> -->
+                   </div>
+                   <div class="modal-footer">
+                     <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                     <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss='modal'
+                     [disabled]="name.invalid || description.invalid  || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0" >
+                     Create new tank</button>
+                     <!-- data-mdb-dismiss='modal' -->
+                   </div>
+                 </div>
+               </div>
+             </div>
+   
+            <!---->
+            <!-- <div class="modal fade" id="modalError" aria-hidden="true" aria-labelledby="modalError" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header bg-danger bg-gradient text-white">
+                        <h5 class="modal-title p1 " id="deleteTankModalLabel">Delete : </h5>
+                        <button type="button" class="btn-close mx-2" data-mdb-dismiss="modal" aria-label="Close"></button>
                       </div>
-                    <!-- Submit button -->
-                    <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Send</button> -->
+                      <div class="modal-body text-center">
+                              <div>
+                                <i class="fa-solid fa-circle-exclamation fa-beat fa-2xl m-4" style="color: #eb2d2d;">  </i><h3 class="h3"> ERROR ! </h3>
+                                <h2 class="mt-1" style="color: #474545;">Required fields must be completed.</h2>
+                              </div>          
+                      </div>
+                      <div class="modal-footer">
+                      <button class="btn btn-primary" data-mdb-target="#creatTankModal" data-mdb-toggle="modal">Back to first</button>
+                    </div>
+                  </div>
                 </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
-                  <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss="modal">Create new tank</button> 
-                </div>
-              </div>
-            </div>
-          </div>
+              </div> -->
         </form>
     </div>
 <div class="row justify-content-around marginBot">

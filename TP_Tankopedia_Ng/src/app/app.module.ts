@@ -12,6 +12,8 @@ import { DateFormattingPipe } from './pipes/date-formatting.pipe';
 import { DatePipe } from '@angular/common';
 import { TankDetailsComponent } from './tank-details/tank-details.component';
 import { LoginRegisterComponent } from './login-register/login-register.component';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -26,9 +28,15 @@ import { LoginRegisterComponent } from './login-register/login-register.componen
   imports: [
     BrowserModule,
     FormsModule,
+    // ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    // ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 4000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    }), // ToastrModule added
     RouterModule.forRoot([
       {path: "", redirectTo : "/home", pathMatch:"full"},
       {path: "home", component: HomeComponent},

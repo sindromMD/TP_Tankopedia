@@ -37,7 +37,7 @@ export class TankDetailsComponent implements OnInit{
         this.tank = t;
       },
       error: (err) => {
-        console.error(err.me, err);
+        console.error(err.message, err);
         if (err && err.message) {
           this.errorMessage = err.message;
         } else {
@@ -72,9 +72,20 @@ export class TankDetailsComponent implements OnInit{
   }
 
   async modifyTank(tankId:number, editedTank:Tank):Promise<void>{
-    await this.dataApiService.editTank(tankId,editedTank).subscribe(t=>{
+    await this.dataApiService.editTank(tankId,editedTank).subscribe(
+    {next:(t)=>{
       console.log('Edited tank :', t);
       this.ngOnInit();
+    },
+    error:(err) => {
+      console.error(err.message, err);
+        if (err && err.message) {
+          this.errorMessage = err.message;
+        } else {
+          // Si faux, un message d'erreur générique est affiché.
+          this.errorMessage = 'An error occurred during the request. Please try again later.';
+        }   
+      }
     })
   }
 

@@ -85,7 +85,11 @@ namespace TP_Tankopedia_ASP.Controllers
         [HttpPost]
         public async Task<ActionResult<Tank>> PostTank(Tank tank)
         {
-          if (_context.Tanks == null)
+            if (!ModelState.IsValid)
+            {
+                return StatusCode(StatusCodes.Status400BadRequest, new { Message = "New tank data is invalid or required fields are not filled in. Try again but complete all the required" });
+            }
+            if (_context.Tanks == null)
           {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Entity set 'TankopediaDbContext.Tanks' is null." });
             }

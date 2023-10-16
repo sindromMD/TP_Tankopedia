@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&family=Montserrat:wght@300;400;500;600;700;900&display=swap');
 
-.col,
+/* .col,
 .col-1,
 .col-2,
 .col-3,
@@ -78,7 +78,7 @@
 
 .row {
   border: 1px solid rgb(39, 255, 93);
-}  
+}   */
 /*----------------Style de police-------------*/
  /* H0 Montserrat 48*/
  /* font-family: 'Gabarito', cursive;
@@ -365,4 +365,7 @@ body {
   line-height: 22px;
   color: #2c2b2b;
   text-decoration: none;
+}
+div.form-helper.p3 {
+  color: #BF1B39;
 }

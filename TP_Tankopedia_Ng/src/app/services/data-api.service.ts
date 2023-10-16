@@ -1,17 +1,18 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { Nation } from 'src/models/Nation';
 import { StrategicRole } from 'src/models/StrategicRole';
 import { Tank } from 'src/models/Tank';
 import { TypeTank } from 'src/models/TypeTank';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataApiService {
 
-  constructor(public http: HttpClient) { }
+  constructor(public http: HttpClient, private toastr: ToastrService) { }
   nations: Nation[] = [];
   nation?: Nation;
   typeTank?:TypeTank;
@@ -62,16 +63,41 @@ export class DataApiService {
   }
   //Edit
   editTank(tankId:number, editedTank:Tank):Observable<Tank>{
-    return this.http.put<Tank>(`http://localhost:5145/api/Tanks/PutTank/`+ tankId, editedTank);
+    return this.http.put<Tank>(`http://localhost:5145/api/Tanks/PutTank/`+ tankId, editedTank).pipe(
+      catchError((error:HttpErrorResponse)=>{
+        this.toastr.error( `Unable to edit tank with id : ${tankId}`, `Required fields not completed` );
+        return throwError(() => new Error(error.error.message),
+        )
+      }),
+      tap(() => {
+        // Afisează un mesaj de succes cu Toastr atunci când POST este finalizat cu succes
+        this.toastr.success(`Tank ${editedTank.name} edited successfully`, `Success`);
+      })
+    );
   }
 
   //Delete
   deleteTank(tankId:number):Observable<Tank>{
-    return this.http.delete<Tank>(`http://localhost:5145/api/Tanks/DeleteTank/`+tankId);
+    return this.http.delete<Tank>(`http://localhost:5145/api/Tanks/DeleteTank/`+tankId).pipe(
+      tap(() => {
+        // Afisează un mesaj de succes cu Toastr atunci când POST este finalizat cu succes
+        this.toastr.success(`Tank deleted successfully`, `Success`);
+      })
+    );
   }
 
   //Create
   addTank(newTank:Tank):Observable<Tank>{
-    return this.http.post<Tank>(`http://localhost:5145/api/Tanks/PostTank`, newTank);
+    return this.http.post<Tank>(`http://localhost:5145/api/Tanks/PostTank`, newTank).pipe(
+      catchError((error:HttpErrorResponse)=>{
+        this.toastr.error( 'Please fill in all required fields',`Required fields omitted!`);
+        return throwError(() => new Error(error.error.message),
+        )
+      }),
+      tap(() => {
+        // Afisează un mesaj de succes cu Toastr atunci când POST este finalizat cu succes
+        this.toastr.success(`Tank ${newTank.name} added successfully`, `Success`);
+      })
+    );
   }
 }

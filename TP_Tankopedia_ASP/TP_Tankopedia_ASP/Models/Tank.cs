@@ -9,8 +9,10 @@ namespace TP_Tankopedia_ASP.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(25, MinimumLength = 0, ErrorMessage = "ValidationMaxMin")]
+        [StringLength(25, MinimumLength = 2, ErrorMessage = "ValidationMaxMin")]
         public string Name { get; set; }
+        [Required]
+        [StringLength(2500, MinimumLength = 10, ErrorMessage = "ValidationMaxMin")]
         public string Description { get; set; }
         public int? YearOfCreation { get; set; }
         public string? ImageURL { get; set; }
