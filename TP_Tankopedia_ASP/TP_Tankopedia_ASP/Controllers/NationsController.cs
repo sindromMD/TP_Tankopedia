@@ -109,6 +109,11 @@ namespace TP_Tankopedia_ASP.Controllers
             {
                 return NotFound();
             }
+            var associatedTanks = _context.Tanks.Where(x => x.Id == id).Any();
+            if (associatedTanks)
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new { Message = "We can't wipe out the nation that has tanks " });
+            }
 
             _context.Nations.Remove(nation);
             await _context.SaveChangesAsync();

@@ -24,4 +24,13 @@ export class HomeComponent implements OnInit{
     console.log(this.typeTanks);
    })
   }
+
+  //DELETE nation
+  async confirmDeleteNation(nation:Nation){
+      await this.dataApiService.deleteNation(nation).subscribe(t=>{
+        console.log('You\'ve deleted the nation:: ', t);
+        this.ngOnInit();
+      })
+    }
+
 }

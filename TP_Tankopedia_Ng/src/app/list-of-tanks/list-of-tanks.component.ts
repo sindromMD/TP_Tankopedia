@@ -19,6 +19,7 @@ export class ListOfTanksComponent implements OnInit {
   typeTank ?: TypeTank;
   allTanks: Tank[]=[];
   allNations: Nation[] = [];
+  // selectedNations = this.allNations;
   allTypesOfTanks: TypeTank[] = [];
   allStrategicRoles : StrategicRole[] = [];
   counter ?: number;
@@ -79,6 +80,15 @@ export class ListOfTanksComponent implements OnInit {
       this.counter=t.length;
     })
   }
+  // toggleNationSelection(nation: Nation) {
+  //   if (this.selectedNations.includes(nation)) {
+  //     this.selectedNations = this.selectedNations.filter((n) => n !== nation);
+  //   } else {
+  //     this.selectedNations.push(nation);
+  //   }
+
+  // }
+  
   //Récupération des données pour les 3 listes de sélection du formulaire modal CreateNewTank
   async getAllNationRequest():Promise<void>{
     await this.dataApiService.getNations().subscribe(n=>{

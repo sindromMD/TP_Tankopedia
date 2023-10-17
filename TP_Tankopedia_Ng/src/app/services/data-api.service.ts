@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, tap, throwError } from 'rxjs';
+import { Observable, catchError, forkJoin, map, mergeMap, switchMap, tap, throwError } from 'rxjs';
 import { Nation } from 'src/models/Nation';
 import { StrategicRole } from 'src/models/StrategicRole';
 import { Tank } from 'src/models/Tank';
@@ -18,6 +18,7 @@ export class DataApiService {
   nation?: Nation;
   typeTank?:TypeTank;
   typeTanks :TypeTank[] = [];
+  stratecRole ?: StrategicRole;
   strategicRoles : StrategicRole[] = [];
   tanks:Tank[]=[];
   tank ?: Tank;
@@ -33,17 +34,86 @@ export class DataApiService {
       return this.typeTanks = x;
     }));
   }
-  getListOfTanksByNation(nationId:number):Observable<Nation>{
+  getStrategicRoleById(strategicRoleIdId:number):Observable<StrategicRole>{
+    return this.http.get<StrategicRole>(`http://localhost:5145/api/StrategicRoles/GetStrategicRole/`+strategicRoleIdId).pipe(map(st => {
+      return this.stratecRole = st;
+    }));
+  }
+  getNationById(nationId:number):Observable<Nation>{
     return this.http.get<Nation>(`http://localhost:5145/api/Nations/GetNation/`+ nationId).pipe(map(t =>{
       return this.nation = t;
     }));
   }
-  getListOfTanksByType(typeId:number):Observable<TypeTank>{
+  getTypeTankById(typeId:number):Observable<TypeTank>{
     return this.http.get<TypeTank>(`http://localhost:5145/api/TypeTanks/GetTypeTank/`+typeId).pipe(map(t => {
       return this.typeTank = t;
     }));
   }
+  //Sous-requêtes HTTP
+  getListOfTanksByNation(nationId: number): Observable<Nation> {
+    return this.http.get<Nation>(`http://localhost:5145/api/Nations/GetNation/` + nationId).pipe(
+      switchMap(n => {
+        let listTanksWithRole = n.tanks.map(tank => {
+          return this.getStrategicRoleById(tank.strategicRoleId).pipe(
+            map(sr => {
+              tank.strategicRole = sr;              // Ajouter un objet strategicRole à chaque tank
+              return tank;
+            })
+          );
+        });
+        return forkJoin(listTanksWithRole).pipe(        // forkJoin pour attendre toutes les demandes S.Role
+          map(tl => {
+            n.tanks = tl; // Mise à jour de la liste des tank
+            return n;
+          })
+        );
+      })
+    );
+  }
+
+   //Sous-requêtes HTTP
+  getListOfTanksByType(typeId:number):Observable<TypeTank>{
+    return this.http.get<TypeTank>(`http://localhost:5145/api/TypeTanks/GetTypeTank/`+typeId).pipe(
+      switchMap(n => {
+        let listTanksWithRole = n.tanks.map(tank => {
+          return this.getStrategicRoleById(tank.strategicRoleId).pipe(
+            map(sr => {
+              tank.strategicRole = sr;              // Ajouter un objet strategiRole à chaque tank
+              return tank;
+            })
+          );
+        });
+        return forkJoin(listTanksWithRole).pipe(        // forkJoin pour attendre toutes les demandes S.Role
+          map(tl => {
+            n.tanks = tl; // Mise à jour de la liste des tank
+            return n;
+          })
+        );
+      })
+    );
+  }
+
   getAllTanks():Observable<Tank[]>{
+    return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanks`).pipe(
+      switchMap(all => {
+      let listTanksWithRole = all.map(tank => {
+        return this.getTankById(tank.id).pipe(
+          map(t => {
+            tank = t;              // Ajouter un objet strategicRole à chaque tank
+            return tank;
+          })
+        );
+      });
+      return forkJoin(listTanksWithRole).pipe(        // forkJoin pour attendre toutes les demandes S.Role
+        map(tlmod => {
+          all = tlmod; // Mise à jour de la liste des tank
+          return all;
+        })
+      );
+    })
+  );
+}
+  getAllTanksBasic ():Observable<Tank[]>{
     return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanks`).pipe(map(t=>{
     return this.tanks = t;
     }));
@@ -83,6 +153,20 @@ export class DataApiService {
       tap(() => {
         // Affichage d'un message de succès avec Toastr lorsque le DELETE est terminé avec succès
         this.toastr.success(`Tank deleted successfully`, `Success`);
+      })
+    );
+  }
+
+    //Delete
+  deleteNation(selectedNation:Nation):Observable<Nation>{
+    return this.http.delete<Nation>(`http://localhost:5145/api/Nations/DeleteNation/`+ selectedNation.id).pipe(
+      catchError((error:HttpErrorResponse)=>{
+        this.toastr.error( `Unable to delete nation : ${selectedNation.name}`, `Forbidden: we can only wipe out nations without tanks` );
+        return throwError(() => new Error(error.error.message),
+        )
+      }),
+      tap(() => {
+        this.toastr.success(`Natiunea ${selectedNation.name} deleted successfully`, `Success`);
       })
     );
   }
