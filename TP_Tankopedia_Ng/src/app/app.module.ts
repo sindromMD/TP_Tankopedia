@@ -41,6 +41,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       {path: "", redirectTo : "/home", pathMatch:"full"},
       {path: "home", component: HomeComponent},
       {path: "list-of-tanks-by-nation/:nationId", component: ListOfTanksComponent },
+      {path: "list-of-tanks-by-nation/:nationId/:roleId", component: ListOfTanksComponent },
       {path: "list-of-tanks-by-type/:typeId", component: ListOfTanksComponent },
       {path: "list-of-all-tanks", component: ListOfTanksComponent },
       {path: "tank-details/:tankId", component: TankDetailsComponent},

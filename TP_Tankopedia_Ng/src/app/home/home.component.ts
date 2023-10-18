@@ -3,6 +3,7 @@ import { DataApiService } from '../services/data-api.service';
 import { Router } from '@angular/router';
 import { Nation } from 'src/models/Nation';
 import { TypeTank } from 'src/models/TypeTank';
+import { StrategicRole } from 'src/models/StrategicRole';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,8 @@ import { TypeTank } from 'src/models/TypeTank';
 export class HomeComponent implements OnInit{
   nations: Nation[] = []
   typeTanks : TypeTank[] = []
+  strategicRoles: StrategicRole[]=[];
+  strategicRoleId:number=0;
   constructor(public dataApiService : DataApiService, private router: Router){}
   
   ngOnInit(): void {
@@ -22,6 +25,9 @@ export class HomeComponent implements OnInit{
    this.dataApiService.getTankTypes().subscribe(y => {
     this.typeTanks = y;
     console.log(this.typeTanks);
+   });
+   this.dataApiService.getAllStrategicRoles().subscribe(sr =>{
+    this.strategicRoles = sr
    })
   }
 

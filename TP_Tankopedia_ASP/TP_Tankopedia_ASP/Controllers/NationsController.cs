@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using TP_Tankopedia_ASP.Data;
 using TP_Tankopedia_ASP.Models;
 
@@ -33,19 +34,43 @@ namespace TP_Tankopedia_ASP.Controllers
         }
 
         // GET: api/Nations/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Nation>> GetNation(int id)
-        {
-          if (_context.Nations == null)
-          {
-              return NotFound();
-          }
-            var nation = await _context.Nations.FindAsync(id);
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Nation>> GetNation(int id)
+        //{
+        //  if (_context.Nations == null)
+        //  {
+        //        return StatusCode(StatusCodes.Status404NotFound, new { Message = "Our library contains no nation" });
+        //    }
+        //    var nation = await _context.Nations.FindAsync(id);
 
+        //    if (nation == null)
+        //    {
+        //        return StatusCode(StatusCodes.Status404NotFound, new { Message = "The nation wasn't found" });
+        //    }
+
+        //    return nation;
+        //}
+        [HttpGet("{nationId}/{roleId?}")]
+        public async Task<ActionResult<Nation>> GetNation(int nationId, int? roleId)
+        {
+            if (_context.Nations == null)
+            {
+                return StatusCode(StatusCodes.Status404NotFound, new { Message = "Our library contains no nation" });
+            }
+            var nation =  await _context.Nations.FindAsync(nationId);
             if (nation == null)
             {
-                return NotFound();
+                return StatusCode(StatusCodes.Status404NotFound, new { Message = "The nation wasn't found" });
             }
+            if(_context.Tanks != null)
+            {
+                var filteredTanks = await _context.Tanks
+                 .Where(t => t.NationID == nationId && (t.StrategicRoleId == roleId))
+                 .ToListAsync();
+
+                nation.Tanks = filteredTanks;
+            }
+
 
             return nation;
         }
@@ -109,10 +134,13 @@ namespace TP_Tankopedia_ASP.Controllers
             {
                 return NotFound();
             }
-            var associatedTanks = _context.Tanks.Where(x => x.Id == id).Any();
-            if (associatedTanks)
+            if (_context.Tanks !=null)
             {
-                return StatusCode(StatusCodes.Status403Forbidden, new { Message = "We can't wipe out the nation that has tanks " });
+                var associatedTanks = _context.Tanks.Where(x => x.NationID == id).Any();
+                if (associatedTanks)
+                {
+                    return StatusCode(StatusCodes.Status403Forbidden, new { Message = "We can't wipe out the nation that has tanks " });
+                }
             }
 
             _context.Nations.Remove(nation);

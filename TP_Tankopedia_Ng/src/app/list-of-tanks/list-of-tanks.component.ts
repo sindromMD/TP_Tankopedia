@@ -19,7 +19,6 @@ export class ListOfTanksComponent implements OnInit {
   typeTank ?: TypeTank;
   allTanks: Tank[]=[];
   allNations: Nation[] = [];
-  // selectedNations = this.allNations;
   allTypesOfTanks: TypeTank[] = [];
   allStrategicRoles : StrategicRole[] = [];
   counter ?: number;
@@ -44,11 +43,11 @@ export class ListOfTanksComponent implements OnInit {
 
   async ngOnInit(): Promise<void>{
     this.route.params.subscribe(async(params : Params)=>{
-      
+      console.log('params',params['nationId'], params['typeId'], params['roleId']);
       (params['nationId'] === undefined && params['typeId'] === undefined)
       ? await this.getAllTanksRequest()
-      : (params['nationId'] !== undefined)
-      ? await this.getNationWithListOfTanksRequest(params['nationId'])
+      : (params['nationId'] !== undefined && params['roleId'] !== undefined)
+      ? await this.getNationWithListOfTanksRequest(params['nationId'], params['roleId'])
       : await this.getTypeWithListOfTanksRequest(params['typeId']);
       //Récupération des données pour les 3 listes de sélection du formulaire modal CreateNewTank
       await this.getAllNationRequest();
@@ -58,8 +57,9 @@ export class ListOfTanksComponent implements OnInit {
     
   }
 
-  async getNationWithListOfTanksRequest(nationId:number):Promise<void> {
-    await this.dataApiService.getListOfTanksByNation(nationId).subscribe(n => {
+
+  async getNationWithListOfTanksRequest(nationId:number, roleId:number):Promise<void> {
+    await this.dataApiService.getListOfTanksByNation(nationId, roleId).subscribe(n => {
       console.log('nation :',n);
       this.nation = n;
       this.counter = n.tanks.length;
