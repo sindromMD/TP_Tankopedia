@@ -12,8 +12,8 @@ using TP_Tankopedia_ASP.Data;
 namespace TP_Tankopedia_ASP.Migrations
 {
     [DbContext(typeof(TankopediaDbContext))]
-    [Migration("20231005071616_AjoutDonneesPourSeed")]
-    partial class AjoutDonneesPourSeed
+    [Migration("20231016034954_ajoutAnnotationTank")]
+    partial class ajoutAnnotationTank
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -411,7 +411,8 @@ namespace TP_Tankopedia_ASP.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2500)
+                        .HasColumnType("nvarchar(2500)");
 
                     b.Property<string>("ImageURL")
                         .HasColumnType("nvarchar(max)");
@@ -430,8 +431,8 @@ namespace TP_Tankopedia_ASP.Migrations
                     b.Property<int>("TypeID")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("YearOfCreation")
-                        .HasColumnType("datetime2");
+                    b.Property<int?>("YearOfCreation")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -452,7 +453,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 2,
                             StrategicRoleId = 4,
                             TypeID = 2,
-                            YearOfCreation = new DateTime(1961, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            YearOfCreation = 1961
                         },
                         new
                         {
@@ -462,7 +463,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 1,
                             StrategicRoleId = 10,
                             TypeID = 3,
-                            YearOfCreation = new DateTime(1957, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            YearOfCreation = 1957
                         },
                         new
                         {
@@ -472,7 +473,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 3,
                             StrategicRoleId = 5,
                             TypeID = 2,
-                            YearOfCreation = new DateTime(1965, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            YearOfCreation = 1965
                         },
                         new
                         {
@@ -482,7 +483,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 4,
                             StrategicRoleId = 12,
                             TypeID = 4,
-                            YearOfCreation = new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            YearOfCreation = 1960
                         },
                         new
                         {
@@ -492,7 +493,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 5,
                             StrategicRoleId = 15,
                             TypeID = 5,
-                            YearOfCreation = new DateTime(1960, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            YearOfCreation = 1960
                         },
                         new
                         {
@@ -511,7 +512,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 7,
                             StrategicRoleId = 7,
                             TypeID = 3,
-                            YearOfCreation = new DateTime(1939, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            YearOfCreation = 1939
                         },
                         new
                         {
@@ -521,7 +522,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 8,
                             StrategicRoleId = 9,
                             TypeID = 3,
-                            YearOfCreation = new DateTime(1950, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            YearOfCreation = 1950
                         },
                         new
                         {
@@ -531,7 +532,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 9,
                             StrategicRoleId = 13,
                             TypeID = 4,
-                            YearOfCreation = new DateTime(1971, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            YearOfCreation = 1971
                         },
                         new
                         {
@@ -541,7 +542,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 10,
                             StrategicRoleId = 8,
                             TypeID = 3,
-                            YearOfCreation = new DateTime(1950, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            YearOfCreation = 1950
                         },
                         new
                         {
@@ -560,7 +561,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 5,
                             StrategicRoleId = 2,
                             TypeID = 1,
-                            YearOfCreation = new DateTime(1964, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            YearOfCreation = 1964
                         });
                 });
 
@@ -1104,8 +1105,7 @@ namespace TP_Tankopedia_ASP.Migrations
 
             modelBuilder.Entity("TP_Tankopedia_ASP.Models.Tank", b =>
                 {
-                    b.Navigation("Characteristics")
-                        .IsRequired();
+                    b.Navigation("Characteristics");
 
                     b.Navigation("TankModules");
                 });

@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDbContext<TankopediaDbContext>(options =>
- options.UseSqlServer(builder.Configuration.GetConnectionString("TankopediaDbContext") ?? throw new InvalidOperationException("Connection string 'TankopediaDbContext' not found."))
+ options.UseSqlServer(builder.Configuration.GetConnectionString("Tankopedia") ?? throw new InvalidOperationException("Connection string 'Tankopedia' not found."))
     .UseLazyLoadingProxies());
 
 builder.Services.AddControllers();

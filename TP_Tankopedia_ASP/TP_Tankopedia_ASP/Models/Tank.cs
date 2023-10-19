@@ -9,10 +9,12 @@ namespace TP_Tankopedia_ASP.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(25, MinimumLength = 0, ErrorMessage = "ValidationMaxMin")]
+        [StringLength(25, MinimumLength = 2, ErrorMessage = "ValidationMaxMin")]
         public string Name { get; set; }
+        [Required]
+        [StringLength(2500, MinimumLength = 10, ErrorMessage = "ValidationMaxMin")]
         public string Description { get; set; }
-        public DateTime? YearOfCreation { get; set; }
+        public int? YearOfCreation { get; set; }
         public string? ImageURL { get; set; }
 
         [ForeignKey(nameof(Nation))]
@@ -20,26 +22,26 @@ namespace TP_Tankopedia_ASP.Models
         public int NationID { get; set; }
 
         [JsonIgnore]
-        public virtual Nation Nation { get; set; }
+        public virtual Nation? Nation { get; set; }
 
         [JsonIgnore]
-        public virtual List<TankModule> TankModules { get; set; }
+        public virtual List<TankModule>? TankModules { get; set; }
 
         [ForeignKey(nameof(TypeTank))]
         [Required]
         public int TypeID { get; set; }
 
         [JsonIgnore]
-        public virtual TypeTank TypeTank { get; set; }
+        public virtual TypeTank? TypeTank { get; set; }
 
         [ForeignKey(nameof(StrategicRole))]
         [Required]
         public int StrategicRoleId { get; set; }
 
         [JsonIgnore]
-        public virtual StrategicRole StrategicRole { get; set; }
+        public virtual StrategicRole? StrategicRole { get; set; }
 
         [JsonIgnore]
-        public virtual Characteristics Characteristics { get; set; }
+        public virtual Characteristics? Characteristics { get; set; }
     }
 }

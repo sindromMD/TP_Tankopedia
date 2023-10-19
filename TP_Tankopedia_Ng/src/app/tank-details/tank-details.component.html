@@ -1,0 +1,326 @@
+  <!--404 error page-->
+<div class="" *ngIf="(errorMessage && !tank) ; else showTankDetails">
+  <section class="error-container" style="margin-top: 236px;">
+    <span>4</span>
+    <span><span class="screen-reader-text">0</span></span>
+    <span>4</span>
+  </section>
+    <div class="text-center">
+      <h1 class="zoom-area h1"><b>ERROR !</b><br>
+      {{errorMessage}}</h1>
+      <button [routerLink]="['/list-of-all-tanks/']" class="btn btn-dark p1 m-5">Back to list of tanks</button>
+    </div>
+  
+</div>
+  <!--END -- 404 error page-->
+  <!----  TankDetails ----->
+<ng-template #showTankDetails>
+  <div class="container" >
+    <div class="row" *ngIf="tank">
+      <div class="col-lg-12">
+        <div class="page-content">
+          <!-- ***** Banner Start ***** -->
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="main-profile ">
+                <div class="row">
+                  <div class="col-lg-4">
+                    <img src="assets\image\tanks\T-62A.png" alt="" style="border-radius: 23px;">
+                    <div class="row justify-content-center ">
+                            <div class="col-lg-10">
+                                <div class="right-info" >
+                                  <ul>
+                                    <li *ngIf="tank.nation"><i class="fa-solid fa-flag ms-2 ps-1"></i> &nbsp; Nation :  {{tank.nation.name}}</li>
+                                    <li *ngIf="tank.typeTank" > <img src="assets\image\typeTank\{{tank.typeID}}_type.png" alt="" class="chevron"> Type : {{tank.typeTank.name}} </li>
+                                    <li *ngIf="tank.strategicRole" ><img src="assets\image\role\support.svg" alt="" class="chevronRole ms-2"> &nbsp; Role : {{tank.strategicRole.name}}</li>
+                                  </ul>
+                                </div>
+                              </div>
+                        </div>
+                  </div>
+                  <div class="col-lg-4 align-self-top">
+                    <div class="main-info header-text ">
+                        <div class="row">
+                            <div class="col-10">
+                                <h4 class="d-inline">{{tank.name}}</h4>
+                                <div class="divider-1 mb-3 "></div>
+                            </div>
+                            <div class="col-2">
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
+                                        type="button"
+                                        id="dropdownMenuButton"
+                                        data-mdb-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: white;">
+                                       <!-- Button trigger modal EDIT -->
+                                        <li><button type="button" class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#tankEditModal" >Edit</button></li>
+                                        <li><button type="button" class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#deleteTankModal" >Delete</button></li>
+                                    </ul>
+                                    </div>
+
+                                    <!-- Modal Edit-->
+                                    <form class="pInput" #tankDetailForm="ngForm" method="post" (ngSubmit)="ConfirmUpdate()">
+                                    <div class="modal fade" id="tankEditModal" tabindex="-1" aria-labelledby="tankEditModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                          <div class="modal-header bg-warning bg-gradient">
+                                            <h5 class="modal-title p1 text-dark" id="tankEditModalLabel">Edit : {{tank.name}} <i *ngIf="tankDetailForm.valid && nationID.value!=0 && typeID.value!=0 && strategicRoleId.value!=0" class="fa-solid fa-circle-check fa-bounce fa-lg" style="color: #247700;"></i> </h5>
+                                            <!-- <h5 class="modal-title p1 text-dark" id="tankEditModalLabel">Edit : {{tank.name}} <i *ngIf="name.valid && description.valid && nationID.value!=0 && typeID.value!=0 && strategicRoleId.value!=0" class="fa-solid fa-circle-check fa-bounce fa-lg" style="color: #247700;"></i> </h5> -->
+                                            <button type="button" class="btn-close mx-2" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body text-dark">
+                                              <!-- Name input -->
+                                              <div class="mb-4">
+                                                <!-- class="form-outline  -->
+                                                <label class="form-label" for="name">Name*</label>
+                                                <input type="text" name="name" id="name" class="form-control" required minlength="2" maxlength="25" [(ngModel)]="tank.name" #name="ngModel"/>
+                                                <div *ngIf="name.invalid && (name.dirty || name.touched)" class="form-helper p3">Name is required*</div>
+                                                <div  class="p3" *ngIf="name.errors?.['required']">A tank must have a name</div>
+                                                <div class="p3" *ngIf="name.errors?.['minlength']">Name must be at least 2 characters long.</div>
+                                              </div>
+                                            
+                                              <!-- description input -->
+                                              <div class="mb-4">
+                                                <label class="form-label" for="description">Description*</label>
+                                                <textarea name="description" id="description" class="form-control" required minlength="10" maxlength="2500" [(ngModel)]="tank.description" #description="ngModel"></textarea>
+                                                <div *ngIf="description.invalid && (description.dirty || description.touched)" class="form-helper p3">Description is required*</div>
+                                                <div  class="p3" *ngIf="description.errors?.['required']">We need description for new tank.</div>
+                                                <div  class="p3" *ngIf="description.errors?.['minlength']">Description must be at least 10 characters long.</div>
+                                              </div>    
+                                              <!-- Year input -->
+                                              <div class="mb-4">
+                                                <label class="form-label" for="yearOfCreation">Year of creation</label>
+                                                <input type="number" name="yearOfCreation" id="yearOfCreation" class="form-control" [(ngModel)]="tank.yearOfCreation"/>
+                                              </div>
+                                           <!--  select list Nation -->
+                                              <div class="mb-4">
+                                                <label class="form-label" for="nationID">Nation*</label>
+                                                <select name="nationID" id="nationID" class="form-select" required [(ngModel)]="tank.nationID" #nationID="ngModel">
+                                                  <option value="0">-- Select a nation --</option>
+                                                  <option *ngFor="let nation of allNations" [value]="nation.id">{{nation.name}}</option>
+                                                </select>
+                                                <div *ngIf="nationID.value==0 && (nationID.dirty || nationID.touched)" class="form-helper p3">Nation is required*</div>
+                                                <div  class="p3" *ngIf="nationID.value==0">You must choose a nation.</div>
+                                              </div>
+                                              <!--  select list Type -->
+                                              <div class="mb-4">
+                                                <label class="form-label" for="typeID">Type </label>
+                                                <select name="typeID" id="typeID" class="form-select" required [(ngModel)]="tank.typeID" #typeID="ngModel">
+                                                  <option value="0">-- Select a tank type --</option>
+                                                  <option *ngFor="let type of allTypesOfTanks" [value]="type.id">{{type.name}}</option>
+                                                </select>
+                                                <div *ngIf="typeID.value==0 && (typeID.dirty || typeID.touched)" class="form-helper p3">Type of tank is required*</div>
+                                                <div  class="p3" *ngIf="typeID.value==0">You must choose a type of tank.</div>
+                                              </div>
+                                                <!--  select list Strategic role -->
+                                                <div class="mb-4">
+                                                  <label class="form-label" for="strategicRoleId">Strategic role </label>
+                                                  <select name="strategicRoleId" id="strategicRoleId" class="form-select" required [(ngModel)]="tank.strategicRoleId" #strategicRoleId="ngModel">
+                                                    <option value="0">-- Select the strategic role of the tank --</option>
+                                                    <option *ngFor="let role of allStrategicRoles" [value]="role.id">{{role.name}}</option>
+                                                  </select>
+                                                  <div *ngIf="strategicRoleId.value==0 && (strategicRoleId.dirty || strategicRoleId.touched)" class="form-helper p3">Role is required*</div>
+                                                  <div  class="p3" *ngIf="strategicRoleId.value==0">You must choose a strategic role of tank.</div>
+                                                </div>
+                                              <!-- Submit button -->
+                                              <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Send</button> -->
+                                            
+                                          
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                                            <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss='modal'
+                                            [disabled]="tankDetailForm.invalid || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0" >
+                                            Save changes</button>                                          
+                                          </div>
+                                          <!-- [disabled]="name.invalid || description.invalid  || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0"  -->
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </form>  
+                                     <!-- Modal delete-->
+                                     <div class="modal fade" id="deleteTankModal" tabindex="-1" aria-labelledby="deleteTankModalLabel" aria-hidden="true">
+                                      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                        <div class="modal-content">
+                                          <div class="modal-header bg-danger bg-gradient text-white">
+                                            <h5 class="modal-title p1 " id="deleteTankModalLabel">Delete : {{tank.name}}</h5>
+                                            <button type="button" class="btn-close mx-2" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body text-center">
+                                                  <div>
+                                                    <i class="fa-solid fa-triangle-exclamation fa-2xl m-4" style="color: #ec0909;"></i>
+                                                    <h2 class="mt-1" style="color: #474545;">Do you really want to delete this tank?</h2>
+                                                  </div>          
+                                          </div>
+                                          <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Cancel</button>
+                                            <button type="button" type="submit" class="btn btn-danger p1" (click)="confirmDeleteTank()"  data-mdb-dismiss="modal">Confirm </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                            </div>
+                        </div>
+                      
+                      <p>{{tank.description}}</p>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 align-self-center">
+                    
+                    <ul>
+                      <li *ngIf="!tank.characteristics" style="border-bottom: 0px;"><span><a href="" data-mdb-toggle="modal" data-mdb-target="#characteristicsModal" class="margeZero text-end"><i class="fa-solid fa-circle-plus fa-lg" style="color: #3caa3e;"></i></a></span></li>
+                      <li >Weight<span>{{tank.characteristics?.weight}} t</span></li>
+                      <li>EnginePower <span>{{tank.characteristics?.enginePower}} hp</span></li>
+                      <li>TopSpeed <span>{{tank.characteristics?.topSpeed}} km/h</span></li>
+                      <li>HullArmor <span>{{tank.characteristics?.hullArmor}} mm</span></li>
+                      <li>AmoCapacity <span>{{tank.characteristics?.amoCapacity}} pcs</span></li>
+                      <li>ReloadTime <span>{{tank.characteristics?.reloadTime}} s</span></li>
+                      <li>AimingTime <span>{{tank.characteristics?.aimingTime}} s</span></li>
+                      <li>RateOfFire <span>{{tank.characteristics?.rateOfFire}} round/min</span></li>
+                    </ul>
+
+                         <!-- Modal Create-->
+                          <form class="pInput" #characteristicsForm="ngForm" method="post" (ngSubmit)="addCharacteristics(characteristics)">
+                            <div class="modal fade" id="characteristicsModal" tabindex="-1" aria-labelledby="characteristicsModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                <div class="modal-content">
+                                  <div class="modal-header bg-success bg-gradient">
+                                    <h5 class="modal-title p1 text-dark" id="characteristicsModalLabel">Add characteristics : <i *ngIf="characteristicsForm.valid" class="fa-solid fa-circle-check fa-bounce fa-lg" style="color: #d2ebc7;"></i> </h5>
+                                    <!-- <i *ngIf="weight.valid && enginePower.valid && topSpeed.valid && rateOfFire.valid && aimingTime.valid && amoCapacity.valid && reloadTime.valid && hullArmor.valid" class="fa-solid fa-circle-check fa-bounce fa-lg" style="color: #d2ebc7;"></i> -->
+                                    <button type="button" class="btn-close mx-2" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body text-dark">
+                                    
+                                      <!-- Wight input -->
+                                      <div class="mb-4">
+                                        <!-- class="form-outline  -->
+                                        <label class="form-label" for="weight">Weight*</label>
+                                        <input type="number" name="weight" id="weight" class="form-control" required min="1" [(ngModel)]="characteristics.weight" #weight="ngModel"/>
+                                        <div *ngIf="weight.invalid && (weight.dirty || weight.touched)" class="form-helper p3">Weight is required*</div>
+                                        <div  class="p3" *ngIf="weight.errors?.['required']">Tank must have weight</div>
+                                        <div class="p3" *ngIf="weight.errors?.['min']">The weight of a tank must be at least 1t</div>
+                                      </div>
+                                    
+                                      <!-- enginePower input -->
+                                      <div class="mb-4">
+                                        <label class="form-label" for="enginePower">Engine Power*</label>
+                                        <input type="number" name="enginePower" id="enginePower" class="form-control" required min="10" [(ngModel)]="characteristics.enginePower" #enginePower="ngModel"/>
+                                        <div *ngIf="enginePower.invalid && (enginePower.dirty || enginePower.touched)" class="form-helper p3">Engine power is required*</div>
+                                        <div  class="p3" *ngIf="enginePower.errors?.['required']">We need Engine power for this tank.</div>
+                                        <div  class="p3" *ngIf="enginePower.errors?.['min']">Engine Power must be at least 10hp</div>
+                                      </div>    
+                                      <!-- topSpeed input -->
+                                      <div class="mb-4">
+                                          <label class="form-label" for="topSpeed">Top Speed*</label>
+                                          <input type="number" name="topSpeed" id="topSpeed" class="form-control" required min="1" [(ngModel)]="characteristics.topSpeed" #topSpeed="ngModel"/>
+                                          <div *ngIf="topSpeed.invalid && (topSpeed.dirty || topSpeed.touched)" class="form-helper p3">Top Speed is required*</div>
+                                          <div  class="p3" *ngIf="topSpeed.errors?.['required']">We need the Top speed of this tank</div>
+                                          <div class="p3" *ngIf="topSpeed.errors?.['min']">Top speed of a tank must be at least 1km/h</div>
+                                      </div>
+                                    <!--  rateOfFire  -->
+                                        <div class="mb-4">
+                                          <label class="form-label" for="rateOfFire">Rate of Fire*</label>
+                                          <input type="number" name="rateOfFire" id="rateOfFire" class="form-control" required min="1" [(ngModel)]="characteristics.rateOfFire" #rateOfFire="ngModel"/>
+                                          <div *ngIf="rateOfFire.invalid && (rateOfFire.dirty || rateOfFire.touched)" class="form-helper p3">Rate of Fire is required*</div>
+                                          <div  class="p3" *ngIf="rateOfFire.errors?.['required']">A tank can't not shoot, add rate of fire</div>
+                                          <div class="p3" *ngIf="rateOfFire.errors?.['min']">Rate of Fire must be at least 1tours/min</div>
+                                      </div>
+                                        <!--  aimingTime  -->
+                                        <div class="mb-4">
+                                          <label class="form-label" for="aimingTime">Aiming Time*</label>
+                                          <input type="number" name="aimingTime" id="aimingTime" class="form-control" required min="1" [(ngModel)]="characteristics.aimingTime" #aimingTime="ngModel"/>
+                                          <div *ngIf="aimingTime.invalid && (aimingTime.dirty || aimingTime.touched)" class="form-helper p3">Aiming Time is required*</div>
+                                          <div  class="p3" *ngIf="aimingTime.errors?.['required']">We need this important data</div>
+                                          <div class="p3" *ngIf="aimingTime.errors?.['min']">Aiming Time must be at least 1 sec</div>
+                                      </div>
+                                          <!--  amoCapacity  -->
+                                        <div class="mb-4">
+                                          <label class="form-label" for="amoCapacity">Amo Capacity*</label>
+                                          <input type="number" name="amoCapacity" id="amoCapacity" class="form-control" required min="1" [(ngModel)]="characteristics.amoCapacity" #amoCapacity="ngModel"/>
+                                          <div *ngIf="amoCapacity.invalid && (amoCapacity.dirty || amoCapacity.touched)" class="form-helper p3">Amo Capacity is required*</div>
+                                          <div  class="p3" *ngIf="amoCapacity.errors?.['required']">We need this important data</div>
+                                          <div class="p3" *ngIf="amoCapacity.errors?.['min']">Amo Capacity must be at least 1 pcs</div>
+                                      </div>
+                                        <!--  reloadTime  -->
+                                        <div class="mb-4">
+                                          <label class="form-label" for="reloadTime">Reload Time*</label>
+                                          <input type="number" name="reloadTime" id="reloadTime" class="form-control" required min="1" [(ngModel)]="characteristics.reloadTime" #reloadTime="ngModel"/>
+                                          <div *ngIf="reloadTime.invalid && (reloadTime.dirty || reloadTime.touched)" class="form-helper p3">Reload Time is required*</div>
+                                          <div  class="p3" *ngIf="reloadTime.errors?.['required']">We need this important data</div>
+                                          <div class="p3" *ngIf="reloadTime.errors?.['min']">Reload Time must be at least 1 sec</div>
+                                      </div> 
+                                        <!--  hullArmor  -->
+                                        <div class="mb-4">
+                                          <label class="form-label" for="hullArmor">Hull Armor*</label>
+                                          <input type="number" name="hullArmor" id="hullArmor" class="form-control" required min="10" [(ngModel)]="characteristics.hullArmor" #hullArmor="ngModel"/>
+                                          <div *ngIf="hullArmor.invalid && (hullArmor.dirty || hullArmor.touched)" class="form-helper p3">Hull Armor is required*</div>
+                                          <div  class="p3" *ngIf="hullArmor.errors?.['required']">We need this important data</div>
+                                          <div class="p3" *ngIf="hullArmor.errors?.['min']">Hull Armor must be at least 10 mm</div>
+                                      </div>        
+                                      <!-- Submit button -->
+                                      <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Send</button> -->
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                                    <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss='modal'
+                                    [disabled]="characteristicsForm.invalid">
+                                    Create new tank</button>
+                                    <!-- [disabled]="weight.invalid || enginePower.invalid  || topSpeed.invalid || rateOfFire.invalid || aimingTime.invalid || amoCapacity.invalid || reloadTime.invalid || hullArmor.invalid" -->
+                                    <!-- data-mdb-dismiss='modal' -->
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </form>
+
+                  </div>
+                </div>
+                <div class="row ">
+                  <div class="col-lg-12">
+                    <div class="clips">
+                      <div class="row justify-content-around text-center">
+                        <div class="col-lg-12">
+                          <div class="heading-section">
+                            <h4><em>{{tank.name}}</em> MODULES</h4>
+                          </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-6" *ngFor="let module of tank.tankModules">
+                          <div class="item">
+                            <div class="thumb">
+                              <img class="img-module" src="assets\image\vehicle{{module.typeModule | lowercase}}.png" alt="Module image">
+                            </div>
+                            <div class="down-content">
+                              <h4 class="titleModule">{{module.typeModule}}</h4>
+                            </div>
+                            <div class="down-content">
+                                <p>
+                                    <!-- <span><i class="fa-solid fa-diamond"></i></span>  -->
+                                    {{module.name}}</p>
+                              </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-12">
+                          <div class="main-button">
+                            <a [routerLink]="['/list-of-all-tanks/']">List of Tanks</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>      
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+ 
+
