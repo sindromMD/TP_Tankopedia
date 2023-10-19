@@ -2,7 +2,53 @@
         <div class="text-white marginTop row d-block">
           <h1 class="mb-3 mt-5 h0" >Tankopedia</h1><br>
           
-          <h4 class="d-inline ">Nations</h4> <a href="" class="margeZero"><i class="fa-solid fa-circle-plus fa-sm" style="color: #3caa3e;"></i></a>
+          <h4 class="d-inline ">Nations</h4> 
+          <a href="" class="margeZero" data-mdb-toggle="modal" data-mdb-target="#createNation">
+            <i class="fa-solid fa-circle-plus fa-sm" style="color: #3caa3e;"></i>
+          </a>
+                     <!-- Modal Create-->
+         <form class="pInput text-start" #newTankForm="ngForm" method="post" (ngSubmit)="addNewNation(newNation)">
+          <div class="modal fade" id="createNation" tabindex="-1" aria-labelledby="createNationLabel" aria-hidden="true">
+             <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+               <div class="modal-content">
+                 <div class="modal-header bg-success bg-gradient">
+                   <h5 class="modal-title p1 text-dark" id="createNationLabel">
+                    Add Nation : 
+                    <i *ngIf="newTankForm.valid" class="fa-solid fa-circle-check fa-bounce fa-lg" style="color: #d2ebc7;"></i> </h5>
+                   <button type="button" class="btn-close mx-2" data-mdb-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body text-dark">
+                   
+                     <!-- Name input -->
+
+                     <div class="mb-4">
+                       <label class="form-label" for="name">Name*</label>
+                       <input type="text" name="name" id="name" class="form-control" required minlength="2" maxlength="25" [(ngModel)]="newNation.name" #name="ngModel"/>
+                       <div *ngIf="name.invalid && (name.dirty || name.touched)" class="form-helper p3">Name is required*</div>
+                       <div  class="p3" *ngIf="name.errors?.['required']">A Nation must have a name</div>
+                       <div class="p3" *ngIf="name.errors?.['minlength']">Name must be at least 2 characters long.</div>
+                     </div>
+                     <!-- Image input -->
+
+                     <div class="mb-4">
+                      <label class="form-label" for="imageURL">Image</label>
+                      <input type="text" name="imageURL" id="imageURL" class="form-control" [(ngModel)]="newNation.imageURL" #imageURL="ngModel"/>
+                    </div>
+                   
+                     <!-- Submit button -->
+                 </div>
+                 <div class="modal-footer">
+                   <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                   <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss='modal'
+                   [disabled]="newTankForm.invalid" >
+                   Add new nation</button>
+                 </div>
+                 <!-- [disabled]="name.invalid || description.invalid  || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0"  -->
+               </div>
+             </div>
+           </div>
+      </form>
+
             <div class="nation mt-4">
                 <ul class="nation-list">
                     <li class="nation-list_item positionRelative" *ngFor="let nation of nations">
@@ -24,7 +70,7 @@
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <li><a class="dropdown-item" href="#">Edit</a></li>
-                                <li><button type="button" class="dropdown-item" data-mdb-toggle="modal" [attr.data-mdb-target]="'#deleteNationModal' + nation.id" >Delete</button></li>
+                                <li><a type="button" class="dropdown-item" data-mdb-toggle="modal" [attr.data-mdb-target]="'#deleteNationModal' + nation.id" >Delete</a></li>
                             </ul>
                             </div>
                             <!-- Modal delete-->
@@ -53,17 +99,20 @@
             </div>
         </div>
         <div class="text-white marginTop row d-block">
-            <h3 class=" d-inline">Tank Types</h3><a href="" class="margeZero"><i class="fa-solid fa-circle-plus fa-sm" style="color: #3caa3e;"></i></a>
+            <h3 class=" d-inline">Tank Types</h3>
+            <!-- <a href="" class="margeZero">
+              <i class="fa-solid fa-circle-plus fa-sm" style="color: #3caa3e;"></i>
+            </a> -->
               <div class="tank-type">
                   <ul class="type-list">
                       <li class="type-list_item positionRelative" *ngFor="let type of typeTanks">
-                          <a [routerLink]="['/list-of-tanks-by-type/', type.id]" class="nation-list_holder">
+                          <a [routerLink]="['/list-of-tanks-by-type/', type.id, strategicRoleId]" class="nation-list_holder">
                               <div class="type-list_link">
                                   <img class="type-list_img img-fluid" src="assets\image\heavytank.png" alt="">
                               </div>
                               <span class="">{{type.name}}</span>
                           </a>
-                          <div class="dropdown btn-edit-card-position_type">
+                          <!-- <div class="dropdown btn-edit-card-position_type">
                             <button
                                 class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
                                 type="button"
@@ -77,7 +126,7 @@
                                 <li><a class="dropdown-item" href="#">Edit</a></li>
                                 <li><a class="dropdown-item" href="#">Delete</a></li>
                             </ul>
-                            </div>
+                            </div> -->
                       </li>
                   </ul>
               </div>

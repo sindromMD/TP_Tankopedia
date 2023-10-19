@@ -14,16 +14,14 @@ import { StrategicRole } from 'src/models/StrategicRole';
 })
 export class ListOfTanksComponent implements OnInit {
   
-  // nationId! : number;
   nation ?: Nation;
-  // typeTank ?: TypeTank;
   listOfTanksNation:Tank[]=[]
   listOfTanksType:Tank[]=[]
   allTanks: Tank[]=[];
   allNations: Nation[] = [];
   allTypesOfTanks: TypeTank[] = [];
   allStrategicRoles : StrategicRole[] = [];
-  counter ?: number;
+  counter : number=0;
   errorMessage: string='';
   newTank:Tank = new Tank(0,'','',0,0,0);
   // formCreate = this.formBuilder.group(this.formBuilder.group({
@@ -50,7 +48,7 @@ export class ListOfTanksComponent implements OnInit {
       ? await this.getAllTanksRequest()
       : (params['nationId'] !== undefined && params['roleId'] !== undefined)
       ? await this.getNationWithListOfTanksRequest(params['nationId'], params['roleId'])
-      : await this.getTypeWithListOfTanksRequest(params['typeId'], params['roleId']||0);
+      : await this.getTypeWithListOfTanksRequest(params['typeId'], params['roleId']);
       //Récupération des données pour les 3 listes de sélection du formulaire modal CreateNewTank
       await this.getAllNationRequest();
       await this.getAllTypesOfTanksRequest();
@@ -61,36 +59,49 @@ export class ListOfTanksComponent implements OnInit {
 
 
   async getNationWithListOfTanksRequest(nationId:number, roleId:number):Promise<void> {
-    await this.dataApiService.getTanksFileredByNationAndOrRole(nationId, roleId).subscribe(n => {
-      console.log('nation :',n);
-      this.listOfTanksNation = n;
-      this.counter = n.length;
+    await this.dataApiService.getTanksFileredByNationAndOrRole(nationId, roleId).subscribe(
+    {next:(n) =>{
+        console.log('nation :',n);
+        this.listOfTanksNation = n;
+        this.counter = n.length;
+    },
+    error:(err) => {
+      console.error('We have an error :'+err.error.message,err);
+      if(err && err.message){
+        this.errorMessage = err.error.message;
+      }else{
+        this.errorMessage="Unknown error"
+      }
+    }
     })
   }
 
   async getTypeWithListOfTanksRequest(typeId:number, roleId:number):Promise<void> {
- 
-    await this.dataApiService.getTanksFileredByTypeAndOrRole(typeId, roleId).subscribe(t => {
-      console.log('type : ',t);
-      this.listOfTanksType = t;
-      this.counter = t.length;
-    })
-  }
+    await this.dataApiService.getTanksFileredByTypeAndOrRole(typeId, roleId).subscribe(
+    {next:(t) =>{
+          console.log('List of tanks 2 or 1 param : ',t);
+          this.listOfTanksType = t;
+          this.counter = t.length;
+      },
+      error:(err) => {
+        console.error('We have an error :'+err.error.message,err);
+        if(err && err.message){
+          this.errorMessage = err.error.message;
+        }else{
+          this.errorMessage="Unknown error"
+        }
+      }
+      })
+    }
+  
+  
   async getAllTanksRequest():Promise<void>{
     await this.dataApiService.getAllTanks().subscribe(t=>{
       console.log('alltanks: ',t);
       this.allTanks=t;
       this.counter=t.length;
     })
-  }
-  // toggleNationSelection(nation: Nation) {
-  //   if (this.selectedNations.includes(nation)) {
-  //     this.selectedNations = this.selectedNations.filter((n) => n !== nation);
-  //   } else {
-  //     this.selectedNations.push(nation);
-  //   }
-
-  // }
+  }  
   
   //Récupération des données pour les 3 listes de sélection du formulaire modal CreateNewTank
   async getAllNationRequest():Promise<void>{
@@ -130,9 +141,9 @@ export class ListOfTanksComponent implements OnInit {
       this.navigateToTankDetails(nt.id);
     },
     error:(err) => {
-      console.error('We have an error :',err.message);
+      console.error('We have an error :'+err.error.message,err);
       if(err && err.message){
-        this.errorMessage = err.message;
+        this.errorMessage = err.error.message;
       }else{
         this.errorMessage="Unknown error"
       }

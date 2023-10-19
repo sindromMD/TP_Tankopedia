@@ -15,6 +15,8 @@ export class HomeComponent implements OnInit{
   typeTanks : TypeTank[] = []
   strategicRoles: StrategicRole[]=[];
   strategicRoleId:number=0;
+  errorMessage: string='';
+  newNation:Nation = new Nation(0,'')
   constructor(public dataApiService : DataApiService, private router: Router){}
   
   ngOnInit(): void {
@@ -36,7 +38,23 @@ export class HomeComponent implements OnInit{
       await this.dataApiService.deleteNation(nation).subscribe(t=>{
         console.log('You\'ve deleted the nation:: ', t);
         this.ngOnInit();
-      })
+      });
     }
-
+  //CREATE Nation
+  async addNewNation(newNation:Nation):Promise<void>{
+    await this.dataApiService.addNation(newNation).subscribe(
+      { next:(n) =>{
+      console.log('New nation:', n);
+      this.ngOnInit();
+    },
+    error:(err) => {
+      console.error('We have an error :',err.message);
+      if(err && err.message){
+        this.errorMessage = err.message;
+      }else{
+        this.errorMessage="Unknown error"
+      }
+    }
+    });
+  } 
 }

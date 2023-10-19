@@ -91,6 +91,9 @@ a:active{
     bottom: 5px;
     right: 0px;
 }
+.p3{
+    color: #4d4d4d;
+}
 
   /* Height for devices larger than 992px */
   @media (min-width: 992px) {

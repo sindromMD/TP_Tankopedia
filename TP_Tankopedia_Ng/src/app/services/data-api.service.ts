@@ -49,27 +49,6 @@ export class DataApiService {
       return this.typeTank = t;
     }));
   }
-  //Sous-requêtes HTTP
-  // getListOfTanksByNation(nationId: number): Observable<Nation> {
-  //   return this.http.get<Nation>(`http://localhost:5145/api/Nations/GetNation/` + nationId).pipe(
-  //     switchMap(n => {
-  //       let listTanksWithRole = n.tanks.map(tank => {
-  //         return this.getStrategicRoleById(tank.strategicRoleId).pipe(
-  //           map(sr => {
-  //             tank.strategicRole = sr;              // Ajouter un objet strategicRole à chaque tank
-  //             return tank;
-  //           })
-  //         );
-  //       });
-  //       return forkJoin(listTanksWithRole).pipe(        // forkJoin pour attendre toutes les demandes S.Role
-  //         map(tl => {
-  //           n.tanks = tl; // Mise à jour de la liste des tank
-  //           return n;
-  //         })
-  //       );
-  //     })
-  //   );
-  // }
     //Sous-requêtes HTTP + 2 parametre
     getTanksFileredByNationAndOrRole(nationId: number, roleId:number): Observable<Tank[]> {
       return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanksFileredByNationAndRole/${nationId}/${roleId}`).pipe(
@@ -111,32 +90,9 @@ export class DataApiService {
                 })
               );
             })
-          );
+          )
         }
-    
-
-   //Sous-requêtes HTTP
-  // getListOfTanksByType(typeId:number):Observable<TypeTank>{
-  //   return this.http.get<TypeTank>(`http://localhost:5145/api/Tanks/GetTanksFileredByTypeTankAndRole/`+typeId).pipe(
-  //     switchMap(n => {
-  //       let listTanksWithRole = n.tanks.map(tank => {
-  //         return this.getTankById(tank.id).pipe(
-  //           map(t => {
-  //             tank = t;              // Ajouter un objet strategicRole à chaque tank
-  //             return tank;
-  //           })
-  //         );
-  //       });
-  //       return forkJoin(listTanksWithRole).pipe(        // forkJoin pour attendre toutes les demandes S.Role
-  //         map(tl => {
-  //           n.tanks = tl; // Mise à jour de la liste des tank
-  //           return n;
-  //         })
-  //       );
-  //     })
-  //   );
-  // }
-
+        //Sous-requêtes HTTP
   getAllTanks():Observable<Tank[]>{
     return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanks`).pipe(
       switchMap(all => {
@@ -146,6 +102,12 @@ export class DataApiService {
             tank = t;              // Ajouter un objet strategicRole à chaque tank
             return tank;
           })
+          // ,
+          // catchError((error:HttpErrorResponse)=>{
+          //   this.toastr.error( error.error.message ,error.statusText );
+          //   return throwError(() => new Error(error.error),
+          //   )
+          // })
         );
       });
       return forkJoin(listTanksWithRole).pipe(        // forkJoin pour attendre toutes les demandes S.Role
@@ -205,21 +167,35 @@ export class DataApiService {
   deleteNation(selectedNation:Nation):Observable<Nation>{
     return this.http.delete<Nation>(`http://localhost:5145/api/Nations/DeleteNation/`+ selectedNation.id).pipe(
       catchError((error:HttpErrorResponse)=>{
-        this.toastr.error( `Unable to delete nation : ${selectedNation.name}`, `Forbidden: we can only wipe out nations without tanks` );
+        this.toastr.error( error.error.message ,error.statusText );
         return throwError(() => new Error(error.error.message),
         )
       }),
       tap(() => {
-        this.toastr.success(`Natiunea ${selectedNation.name} deleted successfully`, `Success`);
+        this.toastr.success(`Nation ${selectedNation.name} deleted successfully`, `Success`);
       })
     );
   }
 
+    //Create
+    addNation(newNation:Nation):Observable<Nation>{
+      return this.http.post<Nation>(`http://localhost:5145/api/Nations/PostNation`, newNation).pipe(
+        catchError((error:HttpErrorResponse)=>{
+          this.toastr.error( error.error.message ,error.statusText);
+          return throwError(() => new Error(error.error.message),
+          )
+        }),
+        tap(() => {
+          // Affichage d'un message de succès avec Toastr lorsque le POST est terminé avec succès
+          this.toastr.success(`Tank ${newNation.name} added successfully`, `Success`);
+        })
+      );
+    }
   //Create
   addTank(newTank:Tank):Observable<Tank>{
     return this.http.post<Tank>(`http://localhost:5145/api/Tanks/PostTank`, newTank).pipe(
       catchError((error:HttpErrorResponse)=>{
-        this.toastr.error( 'Please fill in all required fields',`Required fields omitted!`);
+        this.toastr.error( error.error.message ,error.statusText );
         return throwError(() => new Error(error.error.message),
         )
       }),
@@ -234,7 +210,7 @@ export class DataApiService {
 addTankCharacteristics(newInfo:Characteristics):Observable<Characteristics>{
   return this.http.post<Characteristics>(`http://localhost:5145/api/Characteristics/PostCharacteristics`, newInfo).pipe(
     catchError((error:HttpErrorResponse)=>{
-      this.toastr.error( 'Please fill in all required fields',`Required fields omitted!`);
+      this.toastr.error( error.error.message ,error.statusText );
       return throwError(() => new Error(error.error.message),
       )
     }),

@@ -29,7 +29,7 @@ namespace TP_Tankopedia_ASP.Controllers
           {
               return NotFound();
           }
-            return await _context.StrategicRoles.ToListAsync();
+            return await _context.StrategicRoles.OrderBy(sr=>sr.Name).ToListAsync();
         }
 
         // GET: api/StrategicRoles/5

@@ -1,16 +1,22 @@
 <div class="row justify-content-around  mb-3  marginTop">
     <div class="col col-xl-10 marge_top_titre_favoris " id="favoris">
-        <h1 class="d-inline" *ngIf="listOfTanksNation; else allTanksTypeTanks">
+        <h1 class="d-inline" *ngIf="listOfTanksNation.length>0; else allTanksTypeTanks">
             Nation : {{listOfTanksNation[0].nation?.name}}
            </h1>
                 <ng-template #allTanksTypeTanks>
-                    <h1 class="d-inline" *ngIf="listOfTanksType else allTanksTitle">
+                    <h1 class="d-inline" *ngIf="listOfTanksType.length>0 else allTanksTitle">
                         Type : {{ listOfTanksType[0].typeTank?.name }}</h1>
                         <ng-template #allTanksTitle>
-                            <h1 class="d-inline">All the tanks in our library :</h1>
+                            <h1 class="d-inline" *ngIf="allTanks.length>0 else errorTitle">All the tanks in our library :</h1>
+                            <ng-template #errorTitle>
+                                <h1 class="d-inline">Tanks :</h1>
+                            </ng-template>
                         </ng-template>
                 </ng-template>
-                <a href="" class="mx-3" data-mdb-toggle="modal" data-mdb-target="#creatTankModal"><i class="fa-solid fa-circle-plus fa-2xl" style="color: #3caa3e; vertical-align: 0;"></i></a>      
+
+                <!--triggerModalCreate-->
+                <a href="" class="mx-3" data-mdb-toggle="modal" data-mdb-target="#creatTankModal">
+                    <i class="fa-solid fa-circle-plus fa-2xl" style="color: #3caa3e; vertical-align: 0;"></i></a>      
         <div class="divider-1 mb-3 "></div>
         
          <!-- Modal Create-->
@@ -26,8 +32,8 @@
                    <div class="modal-body text-dark">
                      
                        <!-- Name input -->
+
                        <div class="mb-4">
-                         <!-- class="form-outline  -->
                          <label class="form-label" for="name">Name*</label>
                          <input type="text" name="name" id="name" class="form-control" required minlength="2" maxlength="25" [(ngModel)]="newTank.name" #name="ngModel"/>
                          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="form-helper p3">Name is required*</div>
@@ -42,12 +48,14 @@
                          <div *ngIf="description.invalid && (description.dirty || description.touched)" class="form-helper p3">Description is required*</div>
                          <div  class="p3" *ngIf="description.errors?.['required']">We need description for new tank.</div>
                          <div  class="p3" *ngIf="description.errors?.['minlength']">Description must be at least 10 characters long.</div>
-                       </div>    
+                       </div>  
+
                        <!-- Year input -->
                        <div class="mb-4">
                          <label class="form-label" for="yearOfCreation">Year of creation</label>
                          <input type="number" name="yearOfCreation" id="yearOfCreation" class="form-control" [(ngModel)]="newTank.yearOfCreation"/>
                        </div>
+
                      <!--  select list Nation -->
                      <div class="mb-4">
                          <label class="form-label" for="nationID">Nation*</label>
@@ -58,6 +66,7 @@
                          <div *ngIf="nationID.value==0 && (nationID.dirty || nationID.touched)" class="form-helper p3">Nation is required*</div>
                          <div  class="p3" *ngIf="nationID.value==0">You must choose a nation.</div>
                        </div>
+
                        <!--  select list Type -->
                        <div class="mb-4">
                          <label class="form-label" for="typeID">Type </label>
@@ -68,6 +77,7 @@
                          <div *ngIf="typeID.value==0 && (typeID.dirty || typeID.touched)" class="form-helper p3">Type of tank is required*</div>
                          <div  class="p3" *ngIf="typeID.value==0">You must choose a type of tank.</div>
                        </div>
+
                          <!--  select list Strategic role -->
                          <div class="mb-4">
                            <label class="form-label" for="strategicRoleId">Strategic role </label>
@@ -78,15 +88,14 @@
                            <div *ngIf="strategicRoleId.value==0 && (strategicRoleId.dirty || strategicRoleId.touched)" class="form-helper p3">Role is required*</div>
                            <div  class="p3" *ngIf="strategicRoleId.value==0">You must choose a strategic role of tank.</div>
                          </div>
+                         
                        <!-- Submit button -->
-                       <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Send</button> -->
                    </div>
                    <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
                      <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss='modal'
                      [disabled]="newTankForm.invalid || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0" >
                      Create new tank</button>
-                     <!-- data-mdb-dismiss='modal' -->
                    </div>
                    <!-- [disabled]="name.invalid || description.invalid  || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0"  -->
                  </div>
@@ -96,6 +105,7 @@
     </div>
 <div class="row justify-content-around marginBot">
     <div class="col-10">
+        <!--Table Tanks-->
         <div class="table-responsive-sm" *ngIf="counter != 0; else messageSection">
             <table class="table table-dark table-striped align-middle text-center" >
                 <caption class=""><i class="fa-solid fa-circle-info fa-flip " style="color: #c5452e;"></i> 
@@ -104,16 +114,16 @@
                     <thead class="h4">
                       <tr >
                           <th>Nation</th>
-                          <th class="" translate>Type</th>
-                          <th class="" translate>Image</th>
-                          <th class="th_special" translate>Tank name</th>
+                          <th class="" >Type</th>
+                          <th class="" >Image</th>
+                          <th class="th_special" >Tank name</th>
                           <th >Role</th>
                           <th >Created</th>
                           <th >Description</th>
                           <th><!--btn retirer--></th>
                       </tr>
                     </thead>
-                        <tbody class="p1" *ngIf="listOfTanksNation; else typeTankTable">
+                        <tbody class="p1" *ngIf="listOfTanksNation.length>0; else typeTankTable">
                                <tr *ngFor="let tank of listOfTanksNation">
                                     <td class="w-20">
                                         <div class="">
@@ -158,29 +168,14 @@
                                         </span>
                                    </td>
                                    <td class="td_special">
-                                      <!-- Button trigger modal -->
-                                      <div class="col-2">
-                                        <div class="dropdown">
-                                            <button
-                                                class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
-                                                type="button"
-                                                id="dropdownMenuButton"
-                                                data-mdb-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: white;">
-                                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Delete</a></li>
-                                            </ul>
-                                            </div>
-                                    </div>
+                                    <a type="button" [routerLink]="['/tank-details/', tank.id]" class="" data-mdb-ripple-color="dark">
+                                        <i class="fa-solid fa-circle-right fa-2xl"></i>
+                                    </a>
                                    </td>
                                 </tr>                
                         </tbody>
                         <ng-template #typeTankTable> 
-                            <tbody class="p1" *ngIf="listOfTanksType; else allTanksTitle">
+                            <tbody class="p1" *ngIf="listOfTanksType.length>0; else allTanksList">
                                 <tr *ngFor="let tank of listOfTanksType">
                                     <td class="w-20">
                                         <div class="">
@@ -226,28 +221,14 @@
                                         </span>
                                     </td>
                                     <td class="td_special">
-                                    <!-- Button trigger modal -->
-                                    <div class="col-2">
-                                        <div class="dropdown">
-                                            <button
-                                                class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
-                                                type="button"
-                                                id="dropdownMenuButton"
-                                                data-mdb-toggle="dropdown"
-                                                aria-expanded="false"
-                                            >
-                                                
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: white;">
-                                                <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                <li><a class="dropdown-item" href="#">Delete</a></li>
-                                            </ul>
-                                            </div>
-                                    </div>
+                                        <a type="button" [routerLink]="['/tank-details/', tank.id]" class="" data-mdb-ripple-color="dark">
+                                            <i class="fa-solid fa-circle-right fa-2xl"></i>
+                                        </a>
                                     </td>
                                 </tr>                
                             </tbody> 
-                            <ng-template #allTanksTitle> 
+                            <!--All Tank List-->
+                            <ng-template #allTanksList> 
                                 <tbody class="p1">
                                     <tr *ngFor="let tank of allTanks">
                                         <td class="w-20">
@@ -293,24 +274,9 @@
                                             </span>
                                         </td>
                                         <td class="td_special">
-                                        <!-- Button trigger modal -->
-                                        <div class="col-2">
-                                            <div class="dropdown">
-                                                <button
-                                                    class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
-                                                    type="button"
-                                                    id="dropdownMenuButton"
-                                                    data-mdb-toggle="dropdown"
-                                                    aria-expanded="false"
-                                                >
-                                                    
-                                                </button>
-                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: white;">
-                                                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                                                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                                                </ul>
-                                                </div>
-                                        </div>
+                                            <a type="button" [routerLink]="['/tank-details/', tank.id]" class="" data-mdb-ripple-color="dark">
+                                                <i class="fa-solid fa-circle-right fa-2xl"></i>
+                                            </a>
                                         </td>
                                     </tr>                
                                 </tbody> 
@@ -319,12 +285,22 @@
             
             </table>
         </div>
-        <ng-template #messageSection>
-                <div class="text-center " style="margin-top: 200px; ;">
+        <ng-template #messageSection >
+                <div class="text-center " style="margin-top: 200px;"  *ngIf="errorMessage; else loadingPage" >
                   <h2 class="zoom-area h1"><b></b><br>
-                    Unfortunately, our library does not currently contain tanks for this category.</h2>
+                    {{errorMessage}}</h2>
                   <button [routerLink]="['/home/']" class="btn btn-dark p1 m-5">Back to home</button>
                 </div>
+                <ng-template #loadingPage>
+                    <div class="text-center " style="margin-top: 200px;">
+                        <h2 class="zoom-area h1"><b></b><br>
+                            Looking for please wait </h2>
+                          <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                          </div>
+                      </div>
+                </ng-template>
+                
         </ng-template>
     </div>
 </div>

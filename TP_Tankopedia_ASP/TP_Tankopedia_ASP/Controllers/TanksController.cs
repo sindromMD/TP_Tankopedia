@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,7 +30,7 @@ namespace TP_Tankopedia_ASP.Controllers
           {
               return StatusCode(StatusCodes.Status404NotFound, new {Message = "We couldn't find any tanks in our library!" });
           }
-            return await _context.Tanks.ToListAsync();
+            return await _context.Tanks.OrderBy(x=>x.TypeTank).ToListAsync();
         }
 
         // GET: api/Tanks/5
@@ -58,9 +59,10 @@ namespace TP_Tankopedia_ASP.Controllers
             {
                 filteredTanks = await _context.Tanks
                    .Where(t => t.NationID == nationId && (roleId == 0 || t.StrategicRoleId == roleId))
-                   .Include(x => x.Nation)
+                   .Include(x => x.Nation).OrderBy(x=>x.TypeTank)
                    .ToListAsync();
-
+                if(filteredTanks.Count == 0)
+                    return StatusCode(StatusCodes.Status404NotFound, new { Message = $"We can't find tanks that match the criteria we are looking for. Search result: {filteredTanks.Count} tanks" });
             }
             else
                 return StatusCode(StatusCodes.Status404NotFound, new { Message = "We couldn't find any tanks in our library!" });
@@ -78,9 +80,10 @@ namespace TP_Tankopedia_ASP.Controllers
             {
                 filteredTanks = await _context.Tanks
                    .Where(t => t.TypeID == typeId && (roleId == 0 || t.StrategicRoleId == roleId))
-                   .Include(x => x.TypeTank)
+                   .Include(x => x.TypeTank).OrderBy(x=>x.NationID)
                    .ToListAsync();
-
+                if (filteredTanks.Count == 0)
+                    return StatusCode(StatusCodes.Status404NotFound, new { Message = $"We can't find tanks that match the criteria we are looking for. \n Search result: {filteredTanks.Count} tanks" });
             }
             else
                 return StatusCode(StatusCodes.Status404NotFound, new { Message = "We couldn't find any tanks in our library!" });
@@ -129,8 +132,14 @@ namespace TP_Tankopedia_ASP.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, new { Message = "New tank data is invalid or required fields are not filled in. Try again but complete all the required" });
             }
             if (_context.Tanks == null)
-          {
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Entity set 'TankopediaDbContext.Tanks' is null." });
+            }
+            var nation = _context.Nations.Find(tank.NationID);
+            if (nation.Tanks.Count() >= 3) //Contrainte TP2
+            {
+                return StatusCode(StatusCodes.Status403Forbidden, new { Message = $"Maximum tank limit for this nation: \"{nation.Name}\" is restricted to 3 " });
+
             }
             _context.Tanks.Add(tank);
             await _context.SaveChangesAsync();

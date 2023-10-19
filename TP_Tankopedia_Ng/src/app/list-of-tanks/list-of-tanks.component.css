@@ -61,6 +61,18 @@ a:hover{
 a:active{
     color: #FFC920;
 }
+.dropdown-menu li a {
+    text-decoration: none;
+    color: #8C4535;
+}
+
+.dropdown-menu li a:hover {
+    color: #FFC920;
+}
+
+.dropdown-menu li a:active {
+    color: #F22248;
+}
 /* 
 img{
     position: absolute;
@@ -76,3 +88,25 @@ img{
   img:hover{
     transform: translateX(-40%) translateY(-70%) rotatez(25deg);
   } */
+/* Style de base pour l'élément <i> */
+a[data-mdb-ripple-color="dark"] i {
+    display: inline-block;
+    padding: 10px;
+    color: #fbf5b6; 
+    transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
+  }
+  
+  /* Effet de survol pour l'élément <i> */
+  a[data-mdb-ripple-color="dark"]:hover i {
+    color: #fff; 
+    transform: translateX(5px); 
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Effet d'activation pour l'élément <i> (click) */
+  a[data-mdb-ripple-color="dark"]:active i {
+    color: #e3db8a; 
+    transform: translateY(3px); 
+    text-shadow: none;
+  }
+  
