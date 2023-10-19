@@ -48,6 +48,45 @@ namespace TP_Tankopedia_ASP.Controllers
             }
             return tank;
         }
+        //GET : api/Tanks/{nationID}/{roleID}
+        [HttpGet("{nationId}/{roleId?}")]
+        public async Task<ActionResult<List<Tank>>> GetTanksFileredByNationAndRole(int nationId, int? roleId)
+        {
+
+            List<Tank> filteredTanks = new List<Tank>();
+            if (_context.Tanks != null)
+            {
+                filteredTanks = await _context.Tanks
+                   .Where(t => t.NationID == nationId && (roleId == 0 || t.StrategicRoleId == roleId))
+                   .Include(x => x.Nation)
+                   .ToListAsync();
+
+            }
+            else
+                return StatusCode(StatusCodes.Status404NotFound, new { Message = "We couldn't find any tanks in our library!" });
+
+            return filteredTanks;
+        }
+
+        //GET : api/Tanks/{nationID}/{roleID}
+        [HttpGet("{typeId}/{roleId?}")]
+        public async Task<ActionResult<List<Tank>>> GetTanksFileredByTypeTankAndRole(int typeId, int? roleId)
+        {
+
+            List<Tank> filteredTanks = new List<Tank>();
+            if (_context.Tanks != null)
+            {
+                filteredTanks = await _context.Tanks
+                   .Where(t => t.TypeID == typeId && (roleId == 0 || t.StrategicRoleId == roleId))
+                   .Include(x => x.TypeTank)
+                   .ToListAsync();
+
+            }
+            else
+                return StatusCode(StatusCodes.Status404NotFound, new { Message = "We couldn't find any tanks in our library!" });
+
+            return filteredTanks;
+        }
 
         // PUT: api/Tanks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

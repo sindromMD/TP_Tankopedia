@@ -70,11 +70,11 @@ export class DataApiService {
   //     })
   //   );
   // }
-    //Sous-requêtes HTTP
-    getListOfTanksByNation(nationId: number, roleId:number): Observable<Nation> {
-      return this.http.get<Nation>(`http://localhost:5145/api/Nations/GetNation/${nationId}/${roleId}`).pipe(
+    //Sous-requêtes HTTP + 2 parametre
+    getTanksFileredByNationAndOrRole(nationId: number, roleId:number): Observable<Tank[]> {
+      return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanksFileredByNationAndRole/${nationId}/${roleId}`).pipe(
         switchMap(n => {
-          let listTanksWithRole = n.tanks.map(tank => {
+          let listTanksWithRole = n.map(tank => {
             return this.getTankById(tank.id).pipe(
               map(t => {
                 tank = t;              // Ajouter un objet strategicRole à chaque tank
@@ -84,7 +84,7 @@ export class DataApiService {
           });
           return forkJoin(listTanksWithRole).pipe(        // forkJoin pour attendre toutes les demandes S.Role
             map(tl => {
-              n.tanks = tl; // Mise à jour de la liste des tank
+              n = tl; // Mise à jour de la liste des tank
               return n;
             })
           );
@@ -92,27 +92,50 @@ export class DataApiService {
       );
     }
 
-   //Sous-requêtes HTTP
-  getListOfTanksByType(typeId:number):Observable<TypeTank>{
-    return this.http.get<TypeTank>(`http://localhost:5145/api/TypeTanks/GetTypeTank/`+typeId).pipe(
-      switchMap(n => {
-        let listTanksWithRole = n.tanks.map(tank => {
-          return this.getTankById(tank.id).pipe(
-            map(t => {
-              tank = t;              // Ajouter un objet strategicRole à chaque tank
-              return tank;
+        //Sous-requêtes HTTP + 2 parametre
+        getTanksFileredByTypeAndOrRole(typeId: number, roleId:number): Observable<Tank[]> {
+          return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanksFileredByTypeTankAndRole/${typeId}/${roleId}`).pipe(
+            switchMap(n => {
+              let listTanksWithRole = n.map(tank => {
+                return this.getTankById(tank.id).pipe(
+                  map(t => {
+                    tank = t;              // Ajouter un objet strategicRole à chaque tank
+                    return tank;
+                  })
+                );
+              });
+              return forkJoin(listTanksWithRole).pipe(        // forkJoin pour attendre toutes les demandes S.Role
+                map(tl => {
+                  n = tl; // Mise à jour de la liste des tank
+                  return n;
+                })
+              );
             })
           );
-        });
-        return forkJoin(listTanksWithRole).pipe(        // forkJoin pour attendre toutes les demandes S.Role
-          map(tl => {
-            n.tanks = tl; // Mise à jour de la liste des tank
-            return n;
-          })
-        );
-      })
-    );
-  }
+        }
+    
+
+   //Sous-requêtes HTTP
+  // getListOfTanksByType(typeId:number):Observable<TypeTank>{
+  //   return this.http.get<TypeTank>(`http://localhost:5145/api/Tanks/GetTanksFileredByTypeTankAndRole/`+typeId).pipe(
+  //     switchMap(n => {
+  //       let listTanksWithRole = n.tanks.map(tank => {
+  //         return this.getTankById(tank.id).pipe(
+  //           map(t => {
+  //             tank = t;              // Ajouter un objet strategicRole à chaque tank
+  //             return tank;
+  //           })
+  //         );
+  //       });
+  //       return forkJoin(listTanksWithRole).pipe(        // forkJoin pour attendre toutes les demandes S.Role
+  //         map(tl => {
+  //           n.tanks = tl; // Mise à jour de la liste des tank
+  //           return n;
+  //         })
+  //       );
+  //     })
+  //   );
+  // }
 
   getAllTanks():Observable<Tank[]>{
     return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanks`).pipe(

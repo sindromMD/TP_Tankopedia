@@ -1,11 +1,11 @@
 <div class="row justify-content-around  mb-3  marginTop">
     <div class="col col-xl-10 marge_top_titre_favoris " id="favoris">
-        <h1 class="d-inline" *ngIf="nation; else allouTypeTanksTitle">
-            Nation : {{nation.name}}
+        <h1 class="d-inline" *ngIf="listOfTanksNation; else allTanksTypeTanks">
+            Nation : {{listOfTanksNation[0].nation?.name}}
            </h1>
-                <ng-template #allouTypeTanksTitle>
-                    <h1 class="d-inline" *ngIf="typeTank else allTanksTitle">
-                        Type : {{ typeTank.name }}</h1>
+                <ng-template #allTanksTypeTanks>
+                    <h1 class="d-inline" *ngIf="listOfTanksType else allTanksTitle">
+                        Type : {{ listOfTanksType[0].typeTank?.name }}</h1>
                         <ng-template #allTanksTitle>
                             <h1 class="d-inline">All the tanks in our library :</h1>
                         </ng-template>
@@ -113,8 +113,8 @@
                           <th><!--btn retirer--></th>
                       </tr>
                     </thead>
-                        <tbody class="p1" *ngIf="nation; else typeTankTable">
-                               <tr *ngFor="let tank of nation.tanks">
+                        <tbody class="p1" *ngIf="listOfTanksNation; else typeTankTable">
+                               <tr *ngFor="let tank of listOfTanksNation">
                                     <td class="w-20">
                                         <div class="">
                                             <a [routerLink]="['', tank.id]">
@@ -180,8 +180,8 @@
                                 </tr>                
                         </tbody>
                         <ng-template #typeTankTable> 
-                            <tbody class="p1" *ngIf="typeTank else allTanksTitle">
-                                <tr *ngFor="let tank of typeTank?.tanks">
+                            <tbody class="p1" *ngIf="listOfTanksType; else allTanksTitle">
+                                <tr *ngFor="let tank of listOfTanksType">
                                     <td class="w-20">
                                         <div class="">
                                             <a [routerLink]="['', tank.id]">

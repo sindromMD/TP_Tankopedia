@@ -16,7 +16,9 @@ export class ListOfTanksComponent implements OnInit {
   
   // nationId! : number;
   nation ?: Nation;
-  typeTank ?: TypeTank;
+  // typeTank ?: TypeTank;
+  listOfTanksNation:Tank[]=[]
+  listOfTanksType:Tank[]=[]
   allTanks: Tank[]=[];
   allNations: Nation[] = [];
   allTypesOfTanks: TypeTank[] = [];
@@ -44,11 +46,11 @@ export class ListOfTanksComponent implements OnInit {
   async ngOnInit(): Promise<void>{
     this.route.params.subscribe(async(params : Params)=>{
       console.log('params',params['nationId'], params['typeId'], params['roleId']);
-      (params['nationId'] === undefined && params['typeId'] === undefined)
+      (params['nationId'] === undefined && params['typeId'] === undefined && params['roleId'] ===undefined)
       ? await this.getAllTanksRequest()
       : (params['nationId'] !== undefined && params['roleId'] !== undefined)
       ? await this.getNationWithListOfTanksRequest(params['nationId'], params['roleId'])
-      : await this.getTypeWithListOfTanksRequest(params['typeId']);
+      : await this.getTypeWithListOfTanksRequest(params['typeId'], params['roleId']||0);
       //Récupération des données pour les 3 listes de sélection du formulaire modal CreateNewTank
       await this.getAllNationRequest();
       await this.getAllTypesOfTanksRequest();
@@ -59,18 +61,19 @@ export class ListOfTanksComponent implements OnInit {
 
 
   async getNationWithListOfTanksRequest(nationId:number, roleId:number):Promise<void> {
-    await this.dataApiService.getListOfTanksByNation(nationId, roleId).subscribe(n => {
+    await this.dataApiService.getTanksFileredByNationAndOrRole(nationId, roleId).subscribe(n => {
       console.log('nation :',n);
-      this.nation = n;
-      this.counter = n.tanks.length;
+      this.listOfTanksNation = n;
+      this.counter = n.length;
     })
   }
 
-  async getTypeWithListOfTanksRequest(typeId:number):Promise<void> {
-    await this.dataApiService.getListOfTanksByType(typeId).subscribe(t => {
+  async getTypeWithListOfTanksRequest(typeId:number, roleId:number):Promise<void> {
+ 
+    await this.dataApiService.getTanksFileredByTypeAndOrRole(typeId, roleId).subscribe(t => {
       console.log('type : ',t);
-      this.typeTank = t;
-      this.counter = t.tanks.length;
+      this.listOfTanksType = t;
+      this.counter = t.length;
     })
   }
   async getAllTanksRequest():Promise<void>{

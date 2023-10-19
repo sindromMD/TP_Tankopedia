@@ -50,30 +50,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         //    return nation;
         //}
-        [HttpGet("{nationId}/{roleId?}")]
-        public async Task<ActionResult<Nation>> GetNation(int nationId, int? roleId)
-        {
-            if (_context.Nations == null)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, new { Message = "Our library contains no nation" });
-            }
-            var nation =  await _context.Nations.FindAsync(nationId);
-            if (nation == null)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, new { Message = "The nation wasn't found" });
-            }
-            if(_context.Tanks != null)
-            {
-                var filteredTanks = await _context.Tanks
-                 .Where(t => t.NationID == nationId && (t.StrategicRoleId == roleId))
-                 .ToListAsync();
 
-                nation.Tanks = filteredTanks;
-            }
-
-
-            return nation;
-        }
 
         // PUT: api/Nations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
