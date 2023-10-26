@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TP_Tankopedia_ASP.Data;
 
@@ -11,13 +12,14 @@ using TP_Tankopedia_ASP.Data;
 namespace TP_Tankopedia_ASP.Migrations
 {
     [DbContext(typeof(TankopediaDbContext))]
-    partial class TankopediaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231026035841_AjoutPictureClass")]
+    partial class AjoutPictureClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.23")
+                .HasAnnotation("ProductVersion", "6.0.22")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -239,12 +241,7 @@ namespace TP_Tankopedia_ASP.Migrations
                         .HasMaxLength(25)
                         .HasColumnType("nvarchar(25)");
 
-                    b.Property<int?>("pictureId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("pictureId");
 
                     b.ToTable("Nations");
 
@@ -252,68 +249,57 @@ namespace TP_Tankopedia_ASP.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "U.S.A.",
-                            pictureId = 1
+                            Name = "U.S.A."
                         },
                         new
                         {
                             Id = 2,
-                            Name = "U.S.S.R",
-                            pictureId = 2
+                            Name = "U.S.S.R"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Germany",
-                            pictureId = 3
+                            Name = "Germany"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "China",
-                            pictureId = 4
+                            Name = "China"
                         },
                         new
                         {
                             Id = 5,
-                            Name = "France",
-                            pictureId = 5
+                            Name = "France"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "U.K.",
-                            pictureId = 6
+                            Name = "U.K."
                         },
                         new
                         {
                             Id = 7,
-                            Name = "Japan",
-                            pictureId = 7
+                            Name = "Japan"
                         },
                         new
                         {
                             Id = 8,
-                            Name = "Czechoslovakia",
-                            pictureId = 8
+                            Name = "Czechoslovakia"
                         },
                         new
                         {
                             Id = 9,
-                            Name = "Sweden",
-                            pictureId = 9
+                            Name = "Sweden"
                         },
                         new
                         {
                             Id = 10,
-                            Name = "Poland",
-                            pictureId = 10
+                            Name = "Poland"
                         },
                         new
                         {
                             Id = 11,
-                            Name = "Italy",
-                            pictureId = 11
+                            Name = "Italy"
                         });
                 });
 
@@ -339,169 +325,6 @@ namespace TP_Tankopedia_ASP.Migrations
                     b.HasKey("pictureId");
 
                     b.ToTable("Picture");
-
-                    b.HasData(
-                        new
-                        {
-                            pictureId = 1,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8148),
-                            FileName = "9bdcc69e-9b0a-4aaf-b79a-8c8e5537f4b5.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 2,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8191),
-                            FileName = "984bf917-4720-4011-8d12-854f1015a33f.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 3,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8195),
-                            FileName = "253a6bfd-ccbb-4296-bff3-b655b6599ebd.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 4,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8197),
-                            FileName = "8737e698-b5da-4aef-b0dc-55d8eccaf61d.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 5,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8199),
-                            FileName = "7a1e115a-b107-4637-b2c0-1e1a86ffed7d.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 6,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8202),
-                            FileName = "fe0afbdf-9fb4-4fd8-b09a-7977dbd77bc0.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 7,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8204),
-                            FileName = "00c84d4d-a645-44f2-8b1a-eabf0e3c62d4.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 8,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8206),
-                            FileName = "c5d1102f-34bd-46a0-9e6a-ab2544cb9621.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 9,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8208),
-                            FileName = "b360c5ac-dc5e-4310-a833-15a0af7a1929.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 10,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8210),
-                            FileName = "5a428329-03db-458b-b882-5192fbd9ebe9.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 11,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8212),
-                            FileName = "8876fef9-7f61-4f1b-b2ed-aa1c03a7eb23.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 12,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8217),
-                            FileName = "0cdd4032-0352-4254-9161-5d8f5fc33287.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 13,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8219),
-                            FileName = "b6f2b7c6-1914-4ecf-8271-791089c22b1c.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 14,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8222),
-                            FileName = "0a66050b-617b-426d-8d01-1cfdc53f6a9c.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 15,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8224),
-                            FileName = "9e04a735-2cdf-4151-81aa-f9319e5ab21a.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 16,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8264),
-                            FileName = "f90f830b-0acb-4ae3-8bfe-aee7622be9a5.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 17,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8266),
-                            FileName = "333249ff-b0a1-479b-a988-89caa173e1dc.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 18,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8268),
-                            FileName = "564e8122-f919-4b3e-a248-c5f572be4b60.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 19,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8271),
-                            FileName = "5ff17622-d961-432c-be99-66a58024a72f.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 20,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8273),
-                            FileName = "c721c906-08a7-4f73-af0d-fbf4984ad193.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 21,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8275),
-                            FileName = "4136038d-1213-4646-8d74-4bd152fa0e93.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 22,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8277),
-                            FileName = "590fbeff-440c-44c7-ac82-cdd8b879be67.png",
-                            MimeType = "image/png"
-                        },
-                        new
-                        {
-                            pictureId = 23,
-                            DateOfAddition = new DateTime(2023, 10, 26, 13, 27, 7, 557, DateTimeKind.Local).AddTicks(8280),
-                            FileName = "152499c3-41c5-460f-92e0-330b4462895e.png",
-                            MimeType = "image/png"
-                        });
                 });
 
             modelBuilder.Entity("TP_Tankopedia_ASP.Models.StrategicRole", b =>
@@ -659,8 +482,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 2,
                             StrategicRoleId = 4,
                             TypeID = 2,
-                            YearOfCreation = 1961,
-                            pictureId = 12
+                            YearOfCreation = 1961
                         },
                         new
                         {
@@ -670,8 +492,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 1,
                             StrategicRoleId = 10,
                             TypeID = 3,
-                            YearOfCreation = 1957,
-                            pictureId = 13
+                            YearOfCreation = 1957
                         },
                         new
                         {
@@ -681,8 +502,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 3,
                             StrategicRoleId = 5,
                             TypeID = 2,
-                            YearOfCreation = 1965,
-                            pictureId = 14
+                            YearOfCreation = 1965
                         },
                         new
                         {
@@ -692,8 +512,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 4,
                             StrategicRoleId = 12,
                             TypeID = 4,
-                            YearOfCreation = 1960,
-                            pictureId = 15
+                            YearOfCreation = 1960
                         },
                         new
                         {
@@ -703,8 +522,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 5,
                             StrategicRoleId = 15,
                             TypeID = 5,
-                            YearOfCreation = 1960,
-                            pictureId = 16
+                            YearOfCreation = 1960
                         },
                         new
                         {
@@ -713,8 +531,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             Name = "MANTICORE ",
                             NationID = 6,
                             StrategicRoleId = 1,
-                            TypeID = 1,
-                            pictureId = 17
+                            TypeID = 1
                         },
                         new
                         {
@@ -724,8 +541,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 7,
                             StrategicRoleId = 7,
                             TypeID = 3,
-                            YearOfCreation = 1939,
-                            pictureId = 18
+                            YearOfCreation = 1939
                         },
                         new
                         {
@@ -735,8 +551,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 8,
                             StrategicRoleId = 9,
                             TypeID = 3,
-                            YearOfCreation = 1950,
-                            pictureId = 19
+                            YearOfCreation = 1950
                         },
                         new
                         {
@@ -746,8 +561,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 9,
                             StrategicRoleId = 13,
                             TypeID = 4,
-                            YearOfCreation = 1971,
-                            pictureId = 20
+                            YearOfCreation = 1971
                         },
                         new
                         {
@@ -757,8 +571,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 10,
                             StrategicRoleId = 8,
                             TypeID = 3,
-                            YearOfCreation = 1950,
-                            pictureId = 21
+                            YearOfCreation = 1950
                         },
                         new
                         {
@@ -767,8 +580,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             Name = "PROGETTO M40 MOD. 65",
                             NationID = 11,
                             StrategicRoleId = 6,
-                            TypeID = 2,
-                            pictureId = 22
+                            TypeID = 2
                         },
                         new
                         {
@@ -778,8 +590,7 @@ namespace TP_Tankopedia_ASP.Migrations
                             NationID = 5,
                             StrategicRoleId = 2,
                             TypeID = 1,
-                            YearOfCreation = 1964,
-                            pictureId = 23
+                            YearOfCreation = 1964
                         });
                 });
 
@@ -1271,15 +1082,6 @@ namespace TP_Tankopedia_ASP.Migrations
                         .IsRequired();
 
                     b.Navigation("Tank");
-                });
-
-            modelBuilder.Entity("TP_Tankopedia_ASP.Models.Nation", b =>
-                {
-                    b.HasOne("TP_Tankopedia_ASP.Models.Picture", "Picture")
-                        .WithMany()
-                        .HasForeignKey("pictureId");
-
-                    b.Navigation("Picture");
                 });
 
             modelBuilder.Entity("TP_Tankopedia_ASP.Models.Tank", b =>

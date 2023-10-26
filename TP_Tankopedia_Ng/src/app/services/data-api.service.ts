@@ -8,6 +8,8 @@ import { TypeTank } from 'src/models/TypeTank';
 import { ToastrService } from 'ngx-toastr';
 import { Characteristics } from 'src/models/Characteristics';
 
+const apiURL = "http://localhost:5145/api/"
+
 @Injectable({
   providedIn: 'root'
 })
@@ -24,34 +26,34 @@ export class DataApiService {
   tank ?: Tank;
 
   getNations():Observable<Nation[]>{
-    return this.http.get<Nation[]>(`http://localhost:5145/api/Nations/GetNations`).pipe(map(x => {
+    return this.http.get<Nation[]>(apiURL + `Nations/GetNations`).pipe(map(x => {
     return this.nations = x;
     }));
   };
 
   getTankTypes():Observable<TypeTank[]>{
-    return this.http.get<TypeTank[]>(`http://localhost:5145/api/TypeTanks/GetTypeTanks`).pipe(map(x => {
+    return this.http.get<TypeTank[]>(apiURL + `TypeTanks/GetTypeTanks`).pipe(map(x => {
       return this.typeTanks = x;
     }));
   }
   getStrategicRoleById(strategicRoleIdId:number):Observable<StrategicRole>{
-    return this.http.get<StrategicRole>(`http://localhost:5145/api/StrategicRoles/GetStrategicRole/`+strategicRoleIdId).pipe(map(st => {
+    return this.http.get<StrategicRole>(apiURL + `StrategicRoles/GetStrategicRole/`+strategicRoleIdId).pipe(map(st => {
       return this.stratecRole = st;
     }));
   }
   getNationById(nationId:number):Observable<Nation>{
-    return this.http.get<Nation>(`http://localhost:5145/api/Nations/GetNation/`+ nationId).pipe(map(t =>{
+    return this.http.get<Nation>(apiURL + `Nations/GetNation/`+ nationId).pipe(map(t =>{
       return this.nation = t;
     }));
   }
   getTypeTankById(typeId:number):Observable<TypeTank>{
-    return this.http.get<TypeTank>(`http://localhost:5145/api/TypeTanks/GetTypeTank/`+typeId).pipe(map(t => {
+    return this.http.get<TypeTank>(apiURL + `TypeTanks/GetTypeTank/`+typeId).pipe(map(t => {
       return this.typeTank = t;
     }));
   }
     //Sous-requêtes HTTP + 2 parametre
     getTanksFileredByNationAndOrRole(nationId: number, roleId:number): Observable<Tank[]> {
-      return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanksFileredByNationAndRole/${nationId}/${roleId}`).pipe(
+      return this.http.get<Tank[]>(apiURL + `Tanks/GetTanksFileredByNationAndRole/${nationId}/${roleId}`).pipe(
         switchMap(n => {
           let listTanksWithRole = n.map(tank => {
             return this.getTankById(tank.id).pipe(
@@ -73,7 +75,7 @@ export class DataApiService {
 
         //Sous-requêtes HTTP + 2 parametre
         getTanksFileredByTypeAndOrRole(typeId: number, roleId:number): Observable<Tank[]> {
-          return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanksFileredByTypeTankAndRole/${typeId}/${roleId}`).pipe(
+          return this.http.get<Tank[]>(apiURL + `Tanks/GetTanksFileredByTypeTankAndRole/${typeId}/${roleId}`).pipe(
             switchMap(n => {
               let listTanksWithRole = n.map(tank => {
                 return this.getTankById(tank.id).pipe(
@@ -94,7 +96,7 @@ export class DataApiService {
         }
         //Sous-requêtes HTTP
   getAllTanks():Observable<Tank[]>{
-    return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanks`).pipe(
+    return this.http.get<Tank[]>(apiURL + `Tanks/GetTanks`).pipe(
       switchMap(all => {
       let listTanksWithRole = all.map(tank => {
         return this.getTankById(tank.id).pipe(
@@ -120,12 +122,12 @@ export class DataApiService {
   );
 }
   getAllTanksBasic ():Observable<Tank[]>{
-    return this.http.get<Tank[]>(`http://localhost:5145/api/Tanks/GetTanks`).pipe(map(t=>{
+    return this.http.get<Tank[]>(apiURL + `Tanks/GetTanks`).pipe(map(t=>{
     return this.tanks = t;
     }));
   }
   getTankById(tankId:number):Observable<Tank>{
-    return this.http.get<Tank>(`http://localhost:5145/api/Tanks/GetTank/` + tankId).pipe(map(t => {
+    return this.http.get<Tank>(apiURL + `Tanks/GetTank/` + tankId).pipe(map(t => {
       return this.tank = t;
     }),
     catchError((error:HttpErrorResponse)=>{
@@ -134,13 +136,13 @@ export class DataApiService {
     );
   }
   getAllStrategicRoles():Observable<StrategicRole[]>{
-    return this.http.get<StrategicRole[]>(`http://localhost:5145/api/StrategicRoles/GetStrategicRoles`).pipe(map(sr=>{
+    return this.http.get<StrategicRole[]>(apiURL + `StrategicRoles/GetStrategicRoles`).pipe(map(sr=>{
       return this.strategicRoles = sr;
     }));
   }
   //Edit
   editTank(tankId:number, editedTank:Tank):Observable<Tank>{
-    return this.http.put<Tank>(`http://localhost:5145/api/Tanks/PutTank/`+ tankId, editedTank).pipe(
+    return this.http.put<Tank>(apiURL + `Tanks/PutTank/`+ tankId, editedTank).pipe(
       catchError((error:HttpErrorResponse)=>{
         this.toastr.error( `Unable to edit tank with id : ${tankId}`, `Required fields not completed` );
         return throwError(() => new Error(error.error.message),
@@ -155,7 +157,7 @@ export class DataApiService {
 
   //Delete
   deleteTank(tankId:number):Observable<Tank>{
-    return this.http.delete<Tank>(`http://localhost:5145/api/Tanks/DeleteTank/`+tankId).pipe(
+    return this.http.delete<Tank>(apiURL + `Tanks/DeleteTank/`+tankId).pipe(
       tap(() => {
         // Affichage d'un message de succès avec Toastr lorsque le DELETE est terminé avec succès
         this.toastr.success(`Tank deleted successfully`, `Success`);
@@ -165,7 +167,7 @@ export class DataApiService {
 
     //Delete
   deleteNation(selectedNation:Nation):Observable<Nation>{
-    return this.http.delete<Nation>(`http://localhost:5145/api/Nations/DeleteNation/`+ selectedNation.id).pipe(
+    return this.http.delete<Nation>(apiURL + `Nations/DeleteNation/`+ selectedNation.id).pipe(
       catchError((error:HttpErrorResponse)=>{
         this.toastr.error( error.error.message ,error.statusText );
         return throwError(() => new Error(error.error.message),
@@ -179,7 +181,7 @@ export class DataApiService {
 
     //Create
     addNation(newNation:Nation):Observable<Nation>{
-      return this.http.post<Nation>(`http://localhost:5145/api/Nations/PostNation`, newNation).pipe(
+      return this.http.post<Nation>(apiURL + `Nations/PostNation`, newNation).pipe(
         catchError((error:HttpErrorResponse)=>{
           this.toastr.error( error.error.message ,error.statusText);
           return throwError(() => new Error(error.error.message),
@@ -193,7 +195,7 @@ export class DataApiService {
     }
   //Create
   addTank(newTank:Tank):Observable<Tank>{
-    return this.http.post<Tank>(`http://localhost:5145/api/Tanks/PostTank`, newTank).pipe(
+    return this.http.post<Tank>(apiURL + `Tanks/PostTank`, newTank).pipe(
       catchError((error:HttpErrorResponse)=>{
         this.toastr.error( error.error.message ,error.statusText );
         return throwError(() => new Error(error.error.message),
@@ -208,7 +210,7 @@ export class DataApiService {
 
   //Create
 addTankCharacteristics(newInfo:Characteristics):Observable<Characteristics>{
-  return this.http.post<Characteristics>(`http://localhost:5145/api/Characteristics/PostCharacteristics`, newInfo).pipe(
+  return this.http.post<Characteristics>(apiURL + `Characteristics/PostCharacteristics`, newInfo).pipe(
     catchError((error:HttpErrorResponse)=>{
       this.toastr.error( error.error.message ,error.statusText );
       return throwError(() => new Error(error.error.message),

@@ -14,6 +14,7 @@ namespace TP_Tankopedia_ASP.Data
         public DbSet<StrategicRole> StrategicRoles { get; set; }
         public DbSet<TankModule> TankModules { get; set; }
         public DbSet<Characteristics> Characteristics { get; set; }
+        public DbSet<Picture>? Picture { get; set; }
 
         //parcourir toutes les entités et leurs propriétés pour trouver toutes les propriétés décimales et les définir (6,2)
         protected override void OnModelCreating(ModelBuilder modelBuilder)
