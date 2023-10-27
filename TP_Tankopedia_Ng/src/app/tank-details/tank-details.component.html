@@ -25,14 +25,14 @@
               <div class="main-profile ">
                 <div class="row">
                   <div class="col-lg-4">
-                    <img src="assets\image\tanks\T-62A.png" alt="" style="border-radius: 23px;">
+                    <img [src]="tank.pictureId ? 'http://localhost:5145/api/Pictures/GetPicture/original/' + tank.pictureId : 'assets/imagetopSecret.png'" alt="{{tank.name}}" style="border-radius: 23px;">
                     <div class="row justify-content-center ">
                             <div class="col-lg-10">
                                 <div class="right-info" >
                                   <ul>
                                     <li *ngIf="tank.nation"><i class="fa-solid fa-flag ms-2 ps-1"></i> &nbsp; Nation :  {{tank.nation.name}}</li>
-                                    <li *ngIf="tank.typeTank" > <img src="assets\image\typeTank\{{tank.typeID}}_type.png" alt="" class="chevron"> Type : {{tank.typeTank.name}} </li>
-                                    <li *ngIf="tank.strategicRole" ><img src="assets\image\role\support.svg" alt="" class="chevronRole ms-2"> &nbsp; Role : {{tank.strategicRole.name}}</li>
+                                    <li *ngIf="tank.typeTank" > <img src="assets\image\typeTank\{{tank.typeTank.name}}.png" alt="" class="chevron"> Type : {{tank.typeTank.name}} </li>
+                                    <li *ngIf="tank.strategicRole" ><img src="{{tank.strategicRole.imageURL}}" alt="" class="chevronRole"> &nbsp; Role : {{tank.strategicRole.name}}</li>
                                   </ul>
                                 </div>
                               </div>
@@ -64,7 +64,7 @@
                                     </div>
 
                                     <!-- Modal Edit-->
-                                    <form class="pInput" #tankDetailForm="ngForm" method="post" (ngSubmit)="ConfirmUpdate()">
+                                    <form class="pInput" #tankDetailForm="ngForm" method="post" (ngSubmit)="uploadViewChild()">
                                     <div class="modal fade" id="tankEditModal" tabindex="-1" aria-labelledby="tankEditModalLabel" aria-hidden="true">
                                       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                                         <div class="modal-content">
@@ -129,13 +129,28 @@
                                                 </div>
                                               <!-- Submit button -->
                                               <!-- <button type="submit" class="btn btn-primary btn-block mb-4">Send</button> -->
-                                            
+                                              <div class="text-center mb-4">
+                                                <img [src]="tank.pictureId ? 'http://localhost:5145/api/Pictures/GetPicture/lg/' + tank.pictureId : 'assets/image/tanks/PlaceHolderTank.png'" alt="{{tank.name}}" style="width: 300px;"/>
+                                                <input #image type="file" name="image" accept="image/*" required >
+                                                <div *ngIf="!tank.pictureId" class="form-helper p3">Image is required*</div>
+                                                <!-- <button (click)="changeModImg()">Modifier l'image</button> -->                       
+                                              </div>
+                                              <div class="progress m-5">
+                                                <div
+                                                  class="progress-bar progress-bar-striped"
+                                                  role="progressbar"
+                                                  [style.width.%]="progress"
+                                                  [attr.aria-valuenow]="progress"
+                                                  aria-valuemin="0"
+                                                  aria-valuemax="100"
+                                                ></div>
+                                              </div>     
                                           
                                           </div>
                                           <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
                                             <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss='modal'
-                                            [disabled]="tankDetailForm.invalid || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0" >
+                                            [disabled]="tankDetailForm.invalid || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0 ||  !tank.pictureId" >
                                             Save changes</button>                                          
                                           </div>
                                           <!-- [disabled]="name.invalid || description.invalid  || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0"  -->

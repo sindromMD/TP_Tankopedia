@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { DataApiService } from '../services/data-api.service';
 import { Tank } from 'src/models/Tank';
 import { Nation } from 'src/models/Nation';
 import { TypeTank } from 'src/models/TypeTank';
 import { StrategicRole } from 'src/models/StrategicRole';
+import { HttpEventType } from '@angular/common/http';
 // import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -13,7 +14,9 @@ import { StrategicRole } from 'src/models/StrategicRole';
   styleUrls: ['./list-of-tanks.component.css']
 })
 export class ListOfTanksComponent implements OnInit {
+  @ViewChild("image", {static:false}) image?:ElementRef;
   
+  fileupload:any;
   nation ?: Nation;
   listOfTanksNation:Tank[]=[]
   listOfTanksType:Tank[]=[]
@@ -23,6 +26,8 @@ export class ListOfTanksComponent implements OnInit {
   allStrategicRoles : StrategicRole[] = [];
   counter : number=0;
   errorMessage: string='';
+  varPictureId?:number; //Id image ajoutée
+  progress: number=0; //progress bar
   newTank:Tank = new Tank(0,'','',0,0,0);
   // formCreate = this.formBuilder.group(this.formBuilder.group({
   //   name:[null,[Validators.required,Validators.maxLength(25)]],
@@ -152,5 +157,27 @@ export class ListOfTanksComponent implements OnInit {
   }
   navigateToTankDetails(tankId:number):void {
     this.router.navigate(['/tank-details/', tankId])
+  }
+
+  //upload image
+  uploadViewChild():void{
+    if(this.image != undefined){
+      let file = this.image.nativeElement.files[0];
+      this.dataApiService.uploadImage(file).subscribe(
+          p=>{
+              if(p !=undefined){
+              if(p.type===HttpEventType.UploadProgress && p.total !=undefined){
+                this.progress = Math.round(100*p.loaded / p.total);
+              }
+              else if (p.type===HttpEventType.Response){
+                console.log("photo chargée !", p.body);
+                this.progress = 100;
+                this.varPictureId = p.body.pictureId;
+                  this.newTank.pictureId = this.varPictureId;
+                  this.addNewTank(this.newTank);
+              }
+            }
+      });    
+    }
   }
 }

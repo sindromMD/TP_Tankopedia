@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, forkJoin, map, mergeMap, switchMap, tap, throwError } from 'rxjs';
 import { Nation } from 'src/models/Nation';
@@ -177,6 +177,7 @@ export class DataApiService {
         this.toastr.success(`Nation ${selectedNation.name} deleted successfully`, `Success`);
       })
     );
+    
   }
 
     //Create
@@ -223,4 +224,29 @@ addTankCharacteristics(newInfo:Characteristics):Observable<Characteristics>{
   );
 }
 
+  uploadImage(file: File): Observable<any> {
+    let formData = new FormData();
+    formData.append('image', file, file.name);
+    
+    return this.http.post<any>(apiURL + 'Pictures/PostPicture', formData, { reportProgress: true, observe: 'events' });
+  }
+
+  // deleteOldImage(oldPictureID:number):Observable<any>{
+  //   return this.http.delete<any>(`http://localhost:5145/api/Pictures/DeletePicture/`+ oldPictureID).pipe(
+  //     catchError((error:HttpErrorResponse)=>{
+  //       this.toastr.error( error.error.message ,error.statusText );
+  //       return throwError(() => new Error(error.error.message),
+  //       )
+  //     }),
+  //     tap(() => {
+  //       this.toastr.success(`the old image of this nation has been erased successfully`, `Success`);
+  //     })
+  //   )
+  // }
+  deleteOldImage(oldPictureID:number){
+    this.http.delete<any>(apiURL + `Pictures/DeletePicture/`+ oldPictureID).subscribe(v=>{
+      console.log('old picture deleted id:', oldPictureID)
+      this.toastr.success(`The old image of the edited or suppressed entity has been deleted from the BD`, `Success`);
+    })
+  }
 }

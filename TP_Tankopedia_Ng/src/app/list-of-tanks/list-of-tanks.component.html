@@ -20,7 +20,7 @@
         <div class="divider-1 mb-3 "></div>
         
          <!-- Modal Create-->
-         <form class="pInput" #newTankForm="ngForm" method="post" (ngSubmit)="addNewTank(newTank)">
+         <form class="pInput" #newTankForm="ngForm" method="post" (ngSubmit)="uploadViewChild()">
             <div class="modal fade" id="creatTankModal" tabindex="-1" aria-labelledby="creatTankModalLabel" aria-hidden="true">
                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                  <div class="modal-content">
@@ -88,13 +88,29 @@
                            <div *ngIf="strategicRoleId.value==0 && (strategicRoleId.dirty || strategicRoleId.touched)" class="form-helper p3">Role is required*</div>
                            <div  class="p3" *ngIf="strategicRoleId.value==0">You must choose a strategic role of tank.</div>
                          </div>
-                         
+                         <!-- Image input -->
+                     <div class="text-center mb-4">
+                        <img [src]="newTank.pictureId ? 'http://localhost:5145/api/Pictures/GetPicture/lg/' + newTank.pictureId : 'assets/image/tanks/PlaceHolderTank.png'" alt="{{newTank.name}}" style="width: 300px;"/>
+                        <input #image type="file" name="image" accept="image/*" required [(ngModel)]="fileupload">
+                        <div *ngIf="!fileupload" class="form-helper p3">Image is required*</div>
+                        <!-- <button (click)="changeModImg()">Modifier l'image</button> -->                       
+                      </div>
+                      <div class="progress m-5">
+                        <div
+                          class="progress-bar progress-bar-striped"
+                          role="progressbar"
+                          [style.width.%]="progress"
+                          [attr.aria-valuenow]="progress"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
+                      </div>     
                        <!-- Submit button -->
                    </div>
                    <div class="modal-footer">
                      <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
                      <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss='modal'
-                     [disabled]="newTankForm.invalid || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0" >
+                     [disabled]="newTankForm.invalid || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0 || image===undefined " >
                      Create new tank</button>
                    </div>
                    <!-- [disabled]="name.invalid || description.invalid  || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0"  -->
@@ -127,22 +143,24 @@
                                <tr *ngFor="let tank of listOfTanksNation">
                                     <td class="w-20">
                                         <div class="">
-                                            <a [routerLink]="['', tank.id]">
+                                            <a [routerLink]="['/list-of-tanks-by-nation/',tank.nationID, 0]">
                                                 <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
-                                                <img src="assets\image\nation\usa_small.png" alt="test"style="width: 40px;">
+
+                                                <img [src]="tank.nation?.pictureId? 'http://localhost:5145/api/Pictures/GetPicture/sm/' + tank.nation?.pictureId : 'assets\image\nation\placeholder_flag_mercenary.png'" alt="Image {{tank.nation?.name}}" class="flag-sm"/>
                                             </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <a [routerLink]="['', tank.id]" class="">
-                                            <img src="assets\image\typeTank\{{tank.typeID}}_type.png" alt="" class="chevron">{{tank.typeID}}
+                                        <a [routerLink]="['/list-of-tanks-by-type/', tank.typeID, 0]" class="">
+                                            <img src="assets\image\typeTank\{{tank.typeTank?.name}}.png" alt="type tank {{tank.typeTank?.name}}" class="chevron">
+                                            <!-- <p>{{tank.typeTank?.name}}</p> -->
                                         </a>
                                    </td>
                                    <td class="">
                                         <div class="">
                                             <a [routerLink]="['/tank-details/', tank.id]">
                                                 <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
-                                                <img src="assets\image\tanks\T-62A.png" alt="test" style="width: 100px;">
+                                                <img [src]="tank.pictureId ? 'http://localhost:5145/api/Pictures/GetPicture/lg/' + tank.pictureId : 'assets/image/tanks/PlaceHolderTank.png'" alt="{{tank.name}}" style="width: 100px;"/>
                                             </a>
                                         </div>
                                     </td>
@@ -179,22 +197,23 @@
                                 <tr *ngFor="let tank of listOfTanksType">
                                     <td class="w-20">
                                         <div class="">
-                                            <a [routerLink]="['', tank.id]">
+                                            <a [routerLink]="['/list-of-tanks-by-nation/',tank.nationID, 0]">
                                                 <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
-                                                <img src="assets\image\nation\usa_small.png" alt="test"style="width: 40px;">
+                                                <img [src]="tank.nation?.pictureId? 'http://localhost:5145/api/Pictures/GetPicture/sm/' + tank.nation?.pictureId : 'assets\image\nation\placeholder_flag_mercenary.png'" alt="Image {{tank.nation?.name}}" class="flag-sm"/>
                                             </a>
                                         </div>
                                     </td>
                                     <td>
-                                        <a [routerLink]="['', tank.id]" class="">
-                                            <img src="assets\image\typeTank\{{tank.typeID}}_type.png" alt="" class="chevron">{{tank.typeID}}
+                                        <a [routerLink]="['/list-of-tanks-by-type/', tank.typeID, 0]" class="">
+                                            <img src="assets\image\typeTank\{{tank.typeTank?.name}}.png" alt="type tank {{tank.typeTank?.name}}" class="chevron">
+                                            <!-- {{tank.typeTank?.name}} -->
                                         </a>
                                     </td>
                                     <td class="">
                                         <div class="">
                                             <a [routerLink]="['/tank-details/', tank.id]">
                                                 <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
-                                                <img src="assets\image\tanks\T-62A.png" alt="test" style="width: 100px;">
+                                                <img [src]="tank.pictureId ? 'http://localhost:5145/api/Pictures/GetPicture/sm/' + tank.pictureId : 'assets/image/tanks/PlaceHolderTank.png'" alt="{{tank.name}}" style="width: 100px;"/>
                                             </a>
                                         </div>
                                     </td>
@@ -233,22 +252,23 @@
                                     <tr *ngFor="let tank of allTanks">
                                         <td class="w-20">
                                             <div class="">
-                                                <a [routerLink]="['', tank.id]">
+                                                <a [routerLink]="['/list-of-tanks-by-nation/',tank.nationID, 0]">
                                                     <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
-                                                    <img src="assets\image\nation\usa_small.png" alt="test"style="width: 40px;">
+                                                    <img [src]="tank.nation?.pictureId? 'http://localhost:5145/api/Pictures/GetPicture/sm/' + tank.nation?.pictureId : 'assets\image\nation\placeholder_flag_mercenary.png'" alt="Image {{tank.nation?.name}}" class="flag-sm"/>
                                                 </a>
                                             </div>
                                         </td>
                                         <td>
-                                            <a [routerLink]="['', tank.id]" class="">
-                                                <img src="assets\image\typeTank\{{tank.typeID}}_type.png" alt="" class="chevron">{{tank.typeID}}
+                                            <a [routerLink]="['/list-of-tanks-by-type/', tank.typeID, 0]" class="">
+                                                <img src="assets\image\typeTank\{{tank.typeTank?.name}}.png" alt="type tank {{tank.typeTank?.name}}" class="chevron">
+                                                <!-- {{tank.typeTank?.name}} -->
                                             </a>
                                         </td>
                                         <td class="">
                                             <div class="">
                                                 <a [routerLink]="['/tank-details/', tank.id]">
-                                                    <!-- <img [src]="book.cover ? 'https://covers.openlibrary.org/b/id/' + book.cover + '-M.jpg' : 'assets/image/genericCoverBook.jpg'" alt="{{book.title}}" class="card-img img-fluid shadowStyle rounded-start"> -->
-                                                    <img src="assets\image\tanks\T-62A.png" alt="test" style="width: 100px;">
+                                                    <img [src]="tank.pictureId ? 'http://localhost:5145/api/Pictures/GetPicture/sm/' + tank.pictureId : 'assets/image/tanks/PlaceHolderTank.png'" alt="{{tank.name}}" style="width: 100px;"/>
+                                                    <!-- <img src="http://localhost:5145/api/Pictures/GetPicture/sm/{{tank.pictureId}}" alt="test" > -->
                                                 </a>
                                             </div>
                                         </td>
