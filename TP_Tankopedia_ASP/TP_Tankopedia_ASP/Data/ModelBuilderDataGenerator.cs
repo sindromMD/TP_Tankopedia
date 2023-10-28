@@ -10,17 +10,17 @@ namespace TP_Tankopedia_ASP.Data
         {
             #region Nation
             builder.Entity<Nation>().HasData(
-                new Nation() { Id = 1, Name = "U.S.A." },
-                new Nation() { Id = 2, Name = "U.S.S.R" },
-                new Nation() { Id = 3, Name = "Germany" },
-                new Nation() { Id = 4, Name = "China" },
-                new Nation() { Id = 5, Name = "France" },
-                new Nation() { Id = 6, Name = "U.K." },
-                new Nation() { Id = 7, Name = "Japan" },
-                new Nation() { Id = 8, Name = "Czechoslovakia" },
-                new Nation() { Id = 9, Name = "Sweden" },
-                new Nation() { Id = 10, Name = "Poland" },
-                new Nation() { Id = 11, Name = "Italy" }
+                new Nation() { Id = 1, Name = "U.S.A." , pictureId = 1 },
+                new Nation() { Id = 2, Name = "U.S.S.R", pictureId = 2 },
+                new Nation() { Id = 3, Name = "Germany", pictureId = 3 },
+                new Nation() { Id = 4, Name = "China", pictureId = 4 },
+                new Nation() { Id = 5, Name = "France", pictureId = 5 },
+                new Nation() { Id = 6, Name = "U.K.", pictureId = 6 },
+                new Nation() { Id = 7, Name = "Japan", pictureId = 7 },
+                new Nation() { Id = 8, Name = "Czechoslovakia", pictureId = 8 },
+                new Nation() { Id = 9, Name = "Sweden", pictureId = 9 },
+                new Nation() { Id = 10, Name = "Poland", pictureId = 10 },
+                new Nation() { Id = 11, Name = "Italy", pictureId = 11 }
               );
             #endregion
             #region TypeTank
@@ -53,18 +53,18 @@ namespace TP_Tankopedia_ASP.Data
             #endregion
             #region Tank
             builder.Entity<Tank>().HasData(
-                new Tank() { Id = 1, Name = "T-62A", NationID = 2, TypeID = 2, StrategicRoleId = 4, YearOfCreation =  1961, Description = "Development of the first Soviet post-war medium tank started in 1951. In 1961, the T-62 tank with a smoothbore gun was deployed. At the same time a variant, the T-62A, with a rifled gun was also deployed. In March 1962, mass production of the T-62A was discontinued. The T-62 tank was mass-produced from 1961 through 1975, with a total of twenty thousand vehicles manufactured. Later modifications of the vehicle are still in service." },
-                new Tank() { Id = 2, Name = "T57 HEAVY TANK", NationID =1, TypeID = 3, StrategicRoleId = 10, YearOfCreation =  1957, Description = "A project for a heavy tank with an oscillating turret and automatic loader, developed from 1951. Experimental turrets for 120 mm and 155 mm guns were manufactured by 1957. However, the project was deemed unsuccessful and development was discontinued." },
-                new Tank() { Id = 3, Name = "LEOPARD 1", NationID = 3, TypeID = 2, StrategicRoleId = 5, YearOfCreation =  1965, Description = "Main battle tank of the Federal Republic of Germany. Development was started in 1956. The first prototypes were built in 1965 at the Krauss-Maffei factory. The Leopard 1 saw service in the armies of more than 10 countries." },
-                new Tank() { Id = 4, Name = "WZ-111G FT", NationID = 4, TypeID = 4, StrategicRoleId = 12, YearOfCreation =  1960, Description = "A self-propelled gun developed on the basis of the WZ-111 heavy tank in the first half of the 1960s. The development of the WZ-111 was discontinued, and all activity on the vehicle was canceled. No prototypes were built." },
-                new Tank() { Id = 5, Name = "BAT.-CHÂTILLON 155 58", NationID = 5, TypeID = 5, StrategicRoleId = 15, YearOfCreation =  1960, Description = "An experimental project for an SPG that used some elements of the U.S. M47 chassis. As compared to the Bat.-Châtillon 155 55, the vehicle had a different turret and featured the magazine loading system. Existed only in blueprints." },
-                new Tank() { Id = 6, Name = "MANTICORE ", NationID = 6, TypeID = 1, StrategicRoleId = 1, YearOfCreation = null, Description = "A light tank project with an oscillating turret for providing anti-tank defense behind infantry positions. No prototypes were built, and it existed only in blueprints." },
-                new Tank() { Id = 7, Name = "O-I ", NationID = 7, TypeID = 3, StrategicRoleId = 7, YearOfCreation =  1939, Description = "Development of the superheavy tank was started after the Battles of Khalkhyn Gol in 1939. The vehicle was designed as a maneuverable fire unit that was unprecedented in scale—its hull alone weighed 100 tons. Only one prototype was built, without a turret and made of construction steel. Trials were discontinued due to the unreliable engine; at the end of 1944, the prototype was scrapped. The 15 cm howitzer was to be mounted on the tank after its assembly." },
-                new Tank() { Id = 8, Name = "TNH T VZ. 51", NationID = 8, TypeID = 3, StrategicRoleId = 9, YearOfCreation =  1950, Description = "In the early 1950s, the ČKD company developed a project of a heavy tank for the Czechoslovakian Army based on concepts of the Soviet and German tank-building schools combined with its own ideas. The project was discontinued due to the unification of armament of Warsaw Pact countries. No prototypes were ever built." },
-                new Tank() { Id = 9, Name = "STRV 103B", NationID = 9, TypeID = 4, StrategicRoleId = 13, YearOfCreation =  1971, Description = "Developed from 1969 through 1971 as a modernization of the Strv 103. Unlike the previous Strv 103A version, the Strv 103B was equipped with a more powerful gas-turbine engine, laser rangefinder, and infrared devices. The vehicle also accommodated the mounting of amphibious add-on equipment. In 1970, 220 vehicles went into service. At the same time, the vehicles of the previous modification were converted to the Strv 103B, which resulted in a total of 290 vehicles by 1971." },
-                new Tank() { Id = 10, Name = "56TP", NationID = 10, TypeID = 3, StrategicRoleId = 8, YearOfCreation =  1950, Description = "The vehicle was developed in the 1950s. Using the scaling method, Polish engineers took the elements of a medium tank chassis as the base and adjusted those elements to a different weight category. They were guided by the Soviet T-54, which meant that some of the vehicle's components were similar to the first versions of the Soviet medium tank. As a result, it was an extremely interesting design with a rather low silhouette. However, it existed only in blueprints. Such a heavy vehicle would require too many resources of the Polish industry." },
-                new Tank() { Id = 11, Name = "PROGETTO M40 MOD. 65", NationID = 11, TypeID = 2, StrategicRoleId = 6, YearOfCreation = null, Description = "In 1969, the Italian military delegation visited Germany to discuss the purchase of Leopard tanks. However, not all members of the delegation agreed with the acquisition of foreign vehicles. The Italian military experts and engineers specified the main requirements for the future tank: the slope angle of armor plates, the cast turret and gun mantlet, as well as the powerful engine from Mitsubishi that allowed production of a small, light, maneuverable, but perfectly-armored vehicle. The British and Soviet design plans collected by SIFAR-SID were taken into account. Development of the project was discontinued at the drafting and modelling stage." },
-                new Tank() { Id = 12, Name = "PANHARD EBR 90", NationID = 5, TypeID = 1, StrategicRoleId = 2, YearOfCreation =  1964, Description = "In the early 1960s, the 75 mm caliber guns were deemed outdated. During 1963 and 1964, a total of 650 vehicles with FL 11 turrets were re-equipped with 90 mm guns to improve their firepower. The other vehicles with the same turret and \"outdated\" guns were removed from service in the French Army." }
+                new Tank() { Id = 1, Name = "T-62A", NationID = 2, TypeID = 2, StrategicRoleId = 4, YearOfCreation =  1961, pictureId = 12, Description = "Development of the first Soviet post-war medium tank started in 1951. In 1961, the T-62 tank with a smoothbore gun was deployed. At the same time a variant, the T-62A, with a rifled gun was also deployed. In March 1962, mass production of the T-62A was discontinued. The T-62 tank was mass-produced from 1961 through 1975, with a total of twenty thousand vehicles manufactured. Later modifications of the vehicle are still in service." },
+                new Tank() { Id = 2, Name = "T57 HEAVY TANK", NationID =1, TypeID = 3, StrategicRoleId = 10, YearOfCreation =  1957, pictureId = 13, Description = "A project for a heavy tank with an oscillating turret and automatic loader, developed from 1951. Experimental turrets for 120 mm and 155 mm guns were manufactured by 1957. However, the project was deemed unsuccessful and development was discontinued." },
+                new Tank() { Id = 3, Name = "LEOPARD 1", NationID = 3, TypeID = 2, StrategicRoleId = 5, YearOfCreation =  1965, pictureId = 14, Description = "Main battle tank of the Federal Republic of Germany. Development was started in 1956. The first prototypes were built in 1965 at the Krauss-Maffei factory. The Leopard 1 saw service in the armies of more than 10 countries." },
+                new Tank() { Id = 4, Name = "WZ-111G FT", NationID = 4, TypeID = 4, StrategicRoleId = 12, YearOfCreation =  1960, pictureId = 15, Description = "A self-propelled gun developed on the basis of the WZ-111 heavy tank in the first half of the 1960s. The development of the WZ-111 was discontinued, and all activity on the vehicle was canceled. No prototypes were built." },
+                new Tank() { Id = 5, Name = "BAT.-CHÂTILLON 155 58", NationID = 5, TypeID = 5, StrategicRoleId = 15, YearOfCreation =  1960, pictureId = 16, Description = "An experimental project for an SPG that used some elements of the U.S. M47 chassis. As compared to the Bat.-Châtillon 155 55, the vehicle had a different turret and featured the magazine loading system. Existed only in blueprints." },
+                new Tank() { Id = 6, Name = "MANTICORE ", NationID = 6, TypeID = 1, StrategicRoleId = 1, YearOfCreation = null, pictureId = 17, Description = "A light tank project with an oscillating turret for providing anti-tank defense behind infantry positions. No prototypes were built, and it existed only in blueprints." },
+                new Tank() { Id = 7, Name = "O-I ", NationID = 7, TypeID = 3, StrategicRoleId = 7, YearOfCreation =  1939, pictureId = 18, Description = "Development of the superheavy tank was started after the Battles of Khalkhyn Gol in 1939. The vehicle was designed as a maneuverable fire unit that was unprecedented in scale—its hull alone weighed 100 tons. Only one prototype was built, without a turret and made of construction steel. Trials were discontinued due to the unreliable engine; at the end of 1944, the prototype was scrapped. The 15 cm howitzer was to be mounted on the tank after its assembly." },
+                new Tank() { Id = 8, Name = "TNH T VZ. 51", NationID = 8, TypeID = 3, StrategicRoleId = 9, YearOfCreation =  1950, pictureId = 19, Description = "In the early 1950s, the ČKD company developed a project of a heavy tank for the Czechoslovakian Army based on concepts of the Soviet and German tank-building schools combined with its own ideas. The project was discontinued due to the unification of armament of Warsaw Pact countries. No prototypes were ever built." },
+                new Tank() { Id = 9, Name = "STRV 103B", NationID = 9, TypeID = 4, StrategicRoleId = 13, YearOfCreation =  1971, pictureId = 20, Description = "Developed from 1969 through 1971 as a modernization of the Strv 103. Unlike the previous Strv 103A version, the Strv 103B was equipped with a more powerful gas-turbine engine, laser rangefinder, and infrared devices. The vehicle also accommodated the mounting of amphibious add-on equipment. In 1970, 220 vehicles went into service. At the same time, the vehicles of the previous modification were converted to the Strv 103B, which resulted in a total of 290 vehicles by 1971." },
+                new Tank() { Id = 10, Name = "56TP", NationID = 10, TypeID = 3, StrategicRoleId = 8, YearOfCreation =  1950, pictureId = 21, Description = "The vehicle was developed in the 1950s. Using the scaling method, Polish engineers took the elements of a medium tank chassis as the base and adjusted those elements to a different weight category. They were guided by the Soviet T-54, which meant that some of the vehicle's components were similar to the first versions of the Soviet medium tank. As a result, it was an extremely interesting design with a rather low silhouette. However, it existed only in blueprints. Such a heavy vehicle would require too many resources of the Polish industry." },
+                new Tank() { Id = 11, Name = "PROGETTO M40 MOD. 65", NationID = 11, TypeID = 2, StrategicRoleId = 6, YearOfCreation = null, pictureId = 22, Description = "In 1969, the Italian military delegation visited Germany to discuss the purchase of Leopard tanks. However, not all members of the delegation agreed with the acquisition of foreign vehicles. The Italian military experts and engineers specified the main requirements for the future tank: the slope angle of armor plates, the cast turret and gun mantlet, as well as the powerful engine from Mitsubishi that allowed production of a small, light, maneuverable, but perfectly-armored vehicle. The British and Soviet design plans collected by SIFAR-SID were taken into account. Development of the project was discontinued at the drafting and modelling stage." },
+                new Tank() { Id = 12, Name = "PANHARD EBR 90", NationID = 5, TypeID = 1, StrategicRoleId = 2, YearOfCreation =  1964, pictureId = 23, Description = "In the early 1960s, the 75 mm caliber guns were deemed outdated. During 1963 and 1964, a total of 650 vehicles with FL 11 turrets were re-equipped with 90 mm guns to improve their firepower. The other vehicles with the same turret and \"outdated\" guns were removed from service in the French Army." }
 
               );
             #endregion
@@ -144,6 +144,35 @@ namespace TP_Tankopedia_ASP.Data
                 new Characteristics() { Id = 11, TankId = 11, Weight = 40.10M, EnginePower = 750, TopSpeed = 65, HullArmor = 40, AmoCapacity = 35, ReloadTime = 10.00M, AimingTime = 2.50M, RateOfFire = 4.32M },
                 new Characteristics() { Id = 12, TankId = 12, Weight = 14.83M, EnginePower = 500, TopSpeed = 83, HullArmor = 40, AmoCapacity = 43, ReloadTime = 8.00M, AimingTime = 1.60M, RateOfFire = 7.50M }
 
+              );
+            #endregion
+            #region Picture
+            builder.Entity<Picture>().HasData(
+                //drapeaux
+                new Picture() { pictureId = 1, FileName = "9bdcc69e-9b0a-4aaf-b79a-8c8e5537f4b5.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 2, FileName = "984bf917-4720-4011-8d12-854f1015a33f.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 3, FileName = "253a6bfd-ccbb-4296-bff3-b655b6599ebd.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 4, FileName = "8737e698-b5da-4aef-b0dc-55d8eccaf61d.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 5, FileName = "7a1e115a-b107-4637-b2c0-1e1a86ffed7d.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 6, FileName = "fe0afbdf-9fb4-4fd8-b09a-7977dbd77bc0.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 7, FileName = "00c84d4d-a645-44f2-8b1a-eabf0e3c62d4.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 8, FileName = "c5d1102f-34bd-46a0-9e6a-ab2544cb9621.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 9, FileName = "b360c5ac-dc5e-4310-a833-15a0af7a1929.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 10, FileName = "5a428329-03db-458b-b882-5192fbd9ebe9.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 11,FileName = "8876fef9-7f61-4f1b-b2ed-aa1c03a7eb23.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                //tanks
+                new Picture() { pictureId = 12, FileName = "0cdd4032-0352-4254-9161-5d8f5fc33287.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 13, FileName = "b6f2b7c6-1914-4ecf-8271-791089c22b1c.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 14, FileName = "0a66050b-617b-426d-8d01-1cfdc53f6a9c.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 15, FileName = "9e04a735-2cdf-4151-81aa-f9319e5ab21a.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 16, FileName = "f90f830b-0acb-4ae3-8bfe-aee7622be9a5.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 17, FileName = "333249ff-b0a1-479b-a988-89caa173e1dc.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 18, FileName = "564e8122-f919-4b3e-a248-c5f572be4b60.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 19, FileName = "5ff17622-d961-432c-be99-66a58024a72f.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 20, FileName = "c721c906-08a7-4f73-af0d-fbf4984ad193.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 21, FileName = "4136038d-1213-4646-8d74-4bd152fa0e93.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 22, FileName = "590fbeff-440c-44c7-ac82-cdd8b879be67.png", MimeType = "image/png", DateOfAddition = DateTime.Now },
+                new Picture() { pictureId = 23, FileName = "152499c3-41c5-460f-92e0-330b4462895e.png", MimeType = "image/png", DateOfAddition = DateTime.Now }
               );
             #endregion
 

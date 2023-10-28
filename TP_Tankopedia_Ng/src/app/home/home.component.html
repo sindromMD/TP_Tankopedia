@@ -7,7 +7,7 @@
             <i class="fa-solid fa-circle-plus fa-sm" style="color: #3caa3e;"></i>
           </a>
                      <!-- Modal Create-->
-         <form class="pInput text-start" #newTankForm="ngForm" method="post" (ngSubmit)="addNewNation(newNation)">
+         <form class="pInput text-start" #newTankForm="ngForm" method="post" (ngSubmit)="uploadViewChild()"  enctype="multipart/form-data">
           <div class="modal fade" id="createNation" tabindex="-1" aria-labelledby="createNationLabel" aria-hidden="true">
              <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                <div class="modal-content">
@@ -29,18 +29,34 @@
                        <div class="p3" *ngIf="name.errors?.['minlength']">Name must be at least 2 characters long.</div>
                      </div>
                      <!-- Image input -->
-
-                     <div class="mb-4">
+                     <div class="text-center mb-4">
+                      <img class="mainImg img-fluid" *ngIf="newNation.pictureId == null" src="assets\image\nation\placeholder_flag_mercenary.png">
+                      <img class="mainImg  img-fluid" *ngIf="newNation.pictureId != null" src="http://localhost:5096/api/Pictures/original/{{newNation.pictureId}}">
+                      <input #image type="file" name="image" accept="image/*" required [(ngModel)]="fileupload">
+                      <div *ngIf="!fileupload" class="form-helper p3">Image is required*</div>
+                      <!-- <button (click)="changeModImg()">Modifier l'image</button> -->
+                    </div>
+                    <div class="progress m-5">
+                      <div
+                        class="progress-bar progress-bar-striped"
+                        role="progressbar"
+                        [style.width.%]="progress"
+                        [attr.aria-valuenow]="progress"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                      ></div>
+                    </div>     
+                     <!-- <div class="mb-4">
                       <label class="form-label" for="imageURL">Image</label>
                       <input type="text" name="imageURL" id="imageURL" class="form-control" [(ngModel)]="newNation.imageURL" #imageURL="ngModel"/>
-                    </div>
+                    </div> -->
                    
                      <!-- Submit button -->
                  </div>
                  <div class="modal-footer">
                    <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
                    <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss='modal'
-                   [disabled]="newTankForm.invalid" >
+                   [disabled]="newTankForm.invalid || image===undefined" >
                    Add new nation</button>
                  </div>
                  <!-- [disabled]="name.invalid || description.invalid  || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0"  -->
@@ -54,7 +70,8 @@
                     <li class="nation-list_item positionRelative" *ngFor="let nation of nations">
                         <a [routerLink]="['/list-of-tanks-by-nation/', nation.id, strategicRoleId]" class="nation-list_holder">
                             <div class="nation-list_img-holder">
-                                <img class="nation-list_img img-fluid" src="assets\image\nation\usa_small.png" alt="">
+                                <img [src]="nation.pictureId? 'http://localhost:5145/api/Pictures/GetPicture/sm/' + nation?.pictureId : 'assets/image/nation/placeholder_flag_mercenary.png'" 
+                                 alt="Image {{nation.name}}" class="nation-list_img img-fluid"/>
                             </div>
                             <span class="">{{nation.name}}</span>
                         </a>
@@ -69,10 +86,73 @@
                                 
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <li><a class="dropdown-item" href="#">Edit</a></li>
+                                <!-- <li><a class="dropdown-item"  data-mdb-toggle="modal" [attr.data-mdb-target]="'#editNation' + nation.id">Edit</a></li> -->
                                 <li><a type="button" class="dropdown-item" data-mdb-toggle="modal" [attr.data-mdb-target]="'#deleteNationModal' + nation.id" >Delete</a></li>
                             </ul>
                             </div>
+
+          
+                            
+                           
+                            <!-- <form class="pInput text-start" #editNationForm="ngForm" method="post" (ngSubmit)="uploadViewChild()"  enctype="multipart/form-data">
+                              <div class="modal fade" id="editNation{{nation.id}}" tabindex="-1" [attr.data-mdb-target]="'editNation' + nation.id+'Label'" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                  <div class="modal-content">
+                                    <div class="modal-header bg-success bg-gradient">
+                                      <h5 class="modal-title p1 text-dark" id="editNationLabel">
+                                        Edit Nation : {{nation.name}}
+                                        <i *ngIf="editNationForm.valid" class="fa-solid fa-circle-check fa-bounce fa-lg" style="color: #d2ebc7;"></i> </h5>
+                                      <button type="button" class="btn-close mx-2" data-mdb-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body text-dark"> -->
+                                      
+                                        <!-- Name input -->
+
+                                        <!-- <div class="mb-4">
+                                          <label class="form-label" for="name">Name*</label>
+                                          <input type="text" name="name" id="name" class="form-control" required minlength="2" maxlength="25" [(ngModel)]="nation.name" #name="ngModel"/>
+                                          <div *ngIf="name.invalid && (name.dirty || name.touched)" class="form-helper p3">Name is required*</div>
+                                          <div  class="p3" *ngIf="name.errors?.['required']">A Nation must have a name</div>
+                                          <div class="p3" *ngIf="name.errors?.['minlength']">Name must be at least 2 characters long.</div>
+                                        </div> -->
+                                        <!-- Image input -->
+                                        <!-- <div class="text-center mb-4">
+                                          <img class="mainImg img-fluid" [src]="nation.pictureId? 'http://localhost:5145/api/Pictures/GetPicture/original/' + nation?.pictureId : 'assets/image/nation/placeholder_flag_mercenary.png'" >
+                                          <input #image type="file" name="image" accept="image/*"> -->
+                                          <!-- <button (click)="changeModImg()">Modifier l'image</button> -->
+                                        <!-- </div>
+                                        <div class="progress m-5">
+                                          <div
+                                            class="progress-bar progress-bar-striped"
+                                            role="progressbar"
+                                            [style.width.%]="progress"
+                                            [attr.aria-valuenow]="progress"
+                                            aria-valuemin="0"
+                                            aria-valuemax="100"
+                                          ></div>
+                                        </div>      -->
+                                        <!-- <div class="mb-4">
+                                          <label class="form-label" for="imageURL">Image</label>
+                                          <input type="text" name="imageURL" id="imageURL" class="form-control" [(ngModel)]="newNation.imageURL" #imageURL="ngModel"/>
+                                        </div> -->
+                                      
+                                        <!-- Submit button -->
+                                    <!-- </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">Close</button>
+                                      <button type="button" type="submit" class="btn btn-success pInput" data-mdb-dismiss='modal'
+                                      [disabled]="editNationForm.invalid" >
+                                      Add new nation</button>
+                                    </div> -->
+                                    <!-- [disabled]="name.invalid || description.invalid  || nationID.value==0 || typeID.value==0 || strategicRoleId.value==0"  -->
+                                  <!-- </div>
+                                </div>
+                              </div>
+                          </form> -->
+
+
+                            <!--Edit Nation End-->
+
                             <!-- Modal delete-->
                             <div class="modal fade" id="deleteNationModal{{nation.id}}" tabindex="-1" [attr.data-mdb-target]="'deleteNationModal' + nation.id+'Label'" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -108,7 +188,8 @@
                       <li class="type-list_item positionRelative" *ngFor="let type of typeTanks">
                           <a [routerLink]="['/list-of-tanks-by-type/', type.id, strategicRoleId]" class="nation-list_holder">
                               <div class="type-list_link">
-                                  <img class="type-list_img img-fluid" src="assets\image\heavytank.png" alt="">
+                                <img src="assets/image/typeTank/typeTankImg/{{type.name}}_img.png" 
+                                 alt="Image {{type.name}}" class="type-list_img img-fluid"/>
                               </div>
                               <span class="">{{type.name}}</span>
                           </a>

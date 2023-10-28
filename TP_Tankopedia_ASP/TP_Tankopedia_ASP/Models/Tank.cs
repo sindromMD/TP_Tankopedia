@@ -43,5 +43,10 @@ namespace TP_Tankopedia_ASP.Models
 
         [JsonIgnore]
         public virtual Characteristics? Characteristics { get; set; }
+
+        [ForeignKey(nameof(Picture))]
+        public int? pictureId { get; set; }
+        [JsonIgnore]
+        public virtual Picture? Picture { get; set; }
     }
 }

@@ -19,6 +19,7 @@ export class Tank {
         public nation ?: Nation,
         public typeTank ?: TypeTank,
         public strategicRole ?: StrategicRole,
-        public characteristics ?: Characteristics
+        public characteristics ?: Characteristics,
+        public pictureId ?:number
     ){}
   }
