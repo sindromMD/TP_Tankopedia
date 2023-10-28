@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using TP_Tankopedia_ASP.Data;
+using TP_Tankopedia_ASP.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,19 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<TankopediaDbContext>(options =>
  options.UseSqlServer(builder.Configuration.GetConnectionString("Tankopedia") ?? throw new InvalidOperationException("Connection string 'Tankopedia' not found."))
     .UseLazyLoadingProxies());
+//Identity/Role
+builder.Services.AddIdentity<User, IdentityRole>()
+    .AddEntityFrameworkStores<TankopediaDbContext>();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequiredLength = 5;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+});
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -40,7 +55,7 @@ if (app.Environment.IsDevelopment())
 app.UseRouting();
 app.UseCors("Allow all");
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 //app.MapControllers();
 app.UseEndpoints(endpoints =>

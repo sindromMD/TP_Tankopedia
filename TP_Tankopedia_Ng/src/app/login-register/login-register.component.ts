@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataApiService } from '../services/data-api.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { User } from 'src/models/User';
+import { IdentityService } from '../services/identity.service';
 
 @Component({
   selector: 'app-login-register',
@@ -8,10 +10,13 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./login-register.component.css']
 })
 export class LoginRegisterComponent implements OnInit{
+  
 
   constructor(
     public route: ActivatedRoute,
-    private dataApiService: DataApiService
+    public router: Router,
+    private dataApiService: DataApiService,
+    private identityService :IdentityService
   ){}
   async ngOnInit(): Promise<void> {
     this.route.params.subscribe(async(params:Params)=>{
@@ -25,6 +30,8 @@ export class LoginRegisterComponent implements OnInit{
   password:string = "";
   passwordConfirm:string = "";
   loginOuRegistration :string = '';
+  user : User =new User();
+  errorMessage: string = '';
 
 
   loginActive : boolean = false;
@@ -35,5 +42,24 @@ export class LoginRegisterComponent implements OnInit{
   public changeLoginOnClick(): void{
     this.loginActive = !this.loginActive;
   }
-
+  async registerNewUser(newUser:User):Promise<void>{
+    await this.identityService.registerUser(newUser).subscribe(
+      { next:(nu) =>{
+      // console.log('User:', nu,newUser);
+      this.navigateToLogin()
+    },
+    error:(err) => {
+        console.error('We have an error :' + err.error.message , err);
+        if(err && err.message){
+          this.errorMessage = err.error.message;
+        }else{
+          this.errorMessage="Unknown error"
+        }
+      }
+    })
+  }
+  navigateToLogin():void {
+    this.router.navigate(['/app-login/', 'login'])
+  }
+  
 }
