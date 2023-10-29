@@ -61,7 +61,7 @@ namespace TP_Tankopedia_ASP.Controllers
                 SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
                     "AiciEunSirDeCaractereCareVaFiFolositPentruACodaCheia"));
                 JwtSecurityToken token = new JwtSecurityToken(
-                    issuer: "https://localhost:44386",
+                    issuer: "http://localhost:5145",
                     audience: "http://localhost:4200",
                     claims: authClaims,
                     expires: DateTime.Now.AddMinutes(30),

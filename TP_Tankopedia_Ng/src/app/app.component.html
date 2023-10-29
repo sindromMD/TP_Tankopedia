@@ -41,7 +41,7 @@
             </div>
         
         </div>
-        <div class="col-md-4 col-lg-4 col-xl-3 d-none d-md-block ">
+        <div class="col-md-4 col-lg-4 col-xl-3 d-none d-md-block " *ngIf="!token; else UserNameAndDisconnect">
           <!-- <div class="d6">
               <input type="search" (keydown.enter)="onKeyDownEvent($event)" id="inputSearch" placeholder="Rechercher ici..." [(ngModel)]="inputSearch">
               <button ></button>
@@ -57,8 +57,22 @@
                     </a>
             </li>
         </ul>
-            
+        
         </div> 
+        <ng-template #UserNameAndDisconnect>
+          <div class="col-md-4 col-lg-4 col-xl-3 d-none d-md-block " >
+            <ul class="me-auto mb-2 mb-lg-0">
+              Welcome 
+              <li class="nav-item login">
+                <a type="button" class="btn-menu p1" id="logOut"  (click)="onLogout()">
+                  Disconnect
+                  <!-- <i class="fa-solid fa-right-to-bracket"></i> -->
+                  </a>
+              </li>
+            </ul>
+          </div>
+          
+      </ng-template>
   
     </nav>
     <!-- Navbar -->
