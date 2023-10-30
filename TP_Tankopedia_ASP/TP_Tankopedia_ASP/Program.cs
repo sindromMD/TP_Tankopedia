@@ -1,11 +1,14 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+//using TP_Tankopedia_ASP.DbInitializer;
 using TP_Tankopedia_ASP.Data;
 using TP_Tankopedia_ASP.Models;
+using TP_Tankopedia_ASP.Services;
+using TP_Tankopedia_ASP.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +37,7 @@ builder.Services.AddAuthentication(options =>
 }).AddJwtBearer(options =>
 {
     options.SaveToken = true;
-    options.RequireHttpsMetadata = false; //Lors du d�veloppement
+    options.RequireHttpsMetadata = false; //Lors du développement
     options.TokenValidationParameters = new TokenValidationParameters()
     {
         ValidateAudience = true,
@@ -44,7 +47,7 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("AiciEunSirDeCaractereCareVaFiFolositPentruACodaCheia"))
     };
 });
-
+builder.Services.AddScoped<ITankopediaUsersService, TankopediaUsersService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -63,6 +66,7 @@ builder.Services.AddCors(options =>
     });
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -78,6 +82,17 @@ app.UseCors("Allow all");
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var initUserRole = scope.ServiceProvider.GetRequiredService<ITankopediaUsersService>();
+        initUserRole.AssignRolesToUser("admin@tankopedia.ca", AppConstants.AdminRole);
+    }
+}
+SeedDatabase();
+
+//CreateRoles(ServiceProvider);
 //app.MapControllers();
 app.UseEndpoints(endpoints =>
 {

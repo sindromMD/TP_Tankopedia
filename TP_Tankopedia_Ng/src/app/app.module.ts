@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClient, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 // import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +14,7 @@ import { TankDetailsComponent } from './tank-details/tank-details.component';
 import { LoginRegisterComponent } from './login-register/login-register.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthentificationInterceptor } from './authentification.interceptor';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ])
   ],
   providers: [
-    DatePipe
+    DatePipe,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}
   ],
   bootstrap: [AppComponent]
 })

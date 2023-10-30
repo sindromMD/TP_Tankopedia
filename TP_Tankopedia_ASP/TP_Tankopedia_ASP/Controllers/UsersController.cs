@@ -6,6 +6,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using TP_Tankopedia_ASP.Models;
+using TP_Tankopedia_ASP.Utility;
 
 namespace TP_Tankopedia_ASP.Controllers
 {
@@ -42,6 +43,7 @@ namespace TP_Tankopedia_ASP.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,
                     new { Message = "User creation failed." });
             }
+            await UserManager.AddToRoleAsync(user, AppConstants.Visitor);
             return Ok();
         }
 

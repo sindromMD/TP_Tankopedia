@@ -13,7 +13,7 @@ export class LoginRegisterComponent implements OnInit{
  
   // registerActive : boolean = false;
   // loginActive : boolean = false;
-  
+
   loginOuRegistration :string = '';
   user : User =new User();
   errorMessage: string = '';
@@ -84,5 +84,4 @@ export class LoginRegisterComponent implements OnInit{
   navigateToHome():void {
     this.router.navigate(['home'])
   }
-  
 }
