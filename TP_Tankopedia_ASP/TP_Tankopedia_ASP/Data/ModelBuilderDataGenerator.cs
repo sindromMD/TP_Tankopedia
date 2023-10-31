@@ -179,6 +179,8 @@ namespace TP_Tankopedia_ASP.Data
                 new Picture() { pictureId = 23, FileName = "152499c3-41c5-460f-92e0-330b4462895e.png", MimeType = "image/png", DateOfAddition = DateTime.Now }
               );
             #endregion
+            #region Rôles
+            // Rôles de base
             builder.Entity<IdentityRole>().HasData(
                 new IdentityRole
                 {
@@ -197,19 +199,50 @@ namespace TP_Tankopedia_ASP.Data
                       NormalizedName = AppConstants.Visitor.ToUpper()
                   }
                 );
+            #endregion
+            #region Users
+            // Création des rôles initiaux
+            //Administrator
             PasswordHasher<User> hasher = new PasswordHasher<User>();
-            User user1 = new User
+            User admin = new User
             {
-                Id = "14515123-1066-8113-4317-561132168147",
+                Id = Guid.NewGuid().ToString(),
                 UserName = "Admin",
                 Email = "admin@tankopedia.ca",
                 NormalizedEmail = "ADMIN@TANKOPEDIA.COM",
                 NormalizedUserName = "ADMIN"
             };
-            user1.PasswordHash = hasher.HashPassword(user1, AppConstants.testInitPassword);
-            builder.Entity<User>().HasData(user1);
+            admin.PasswordHash = hasher.HashPassword(admin, AppConstants.testInitPassword);//Test123!
+
+            //Moderator
+            User tankCommander = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "Commander",
+                Email = "commander@tankopedia.ca",
+                NormalizedEmail = "COMMANDER@TANKOPEDIA.COM",
+                NormalizedUserName = "COMMANDER"
+            };
+            tankCommander.PasswordHash = hasher.HashPassword(tankCommander, AppConstants.testInitPassword);//Test123!
+
+            //Visiteur
+            User visitor = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "Visitor",
+                Email = "visitor@tankopedia.ca",
+                NormalizedEmail = "VISITOR@TANKOPEDIA.COM",
+                NormalizedUserName = "VISITOR"
+            };
+            visitor.PasswordHash = hasher.HashPassword(visitor, AppConstants.testInitPassword);//Test123!
+
+            //SEED
+            builder.Entity<User>().HasData(admin, tankCommander, visitor);
+
             //Nous attribuons le rôle d'administrateur à l'aide de ITankopediaUserService et program.cs
             //Attribuer des rôles à tout nouvel utilisateur = "Visiteur" dans l'action Register/UsersController
+
+            #endregion
         }
     }
 }

@@ -180,7 +180,7 @@ export class DataApiService {
     
   }
 
-    //Create
+    //Create Nation
     addNation(newNation:Nation):Observable<Nation>{
       return this.http.post<Nation>(apiURL + `Nations/PostNation`, newNation).pipe(
         catchError((error:HttpErrorResponse)=>{
@@ -194,7 +194,7 @@ export class DataApiService {
         })
       );
     }
-  //Create
+  //Create Tank
   addTank(newTank:Tank):Observable<Tank>{
     return this.http.post<Tank>(apiURL + `Tanks/PostTank`, newTank).pipe(
       catchError((error:HttpErrorResponse)=>{
@@ -209,7 +209,7 @@ export class DataApiService {
     );
   }
 
-  //Create
+  //Create Charactersitcs
 addTankCharacteristics(newInfo:Characteristics):Observable<Characteristics>{
   return this.http.post<Characteristics>(apiURL + `Characteristics/PostCharacteristics`, newInfo).pipe(
     catchError((error:HttpErrorResponse)=>{
@@ -223,26 +223,14 @@ addTankCharacteristics(newInfo:Characteristics):Observable<Characteristics>{
     })
   );
 }
-
+// chargement des images
   uploadImage(file: File): Observable<any> {
     let formData = new FormData();
     formData.append('image', file, file.name);
     
     return this.http.post<any>(apiURL + 'Pictures/PostPicture', formData, { reportProgress: true, observe: 'events' });
   }
-
-  // deleteOldImage(oldPictureID:number):Observable<any>{
-  //   return this.http.delete<any>(`http://localhost:5145/api/Pictures/DeletePicture/`+ oldPictureID).pipe(
-  //     catchError((error:HttpErrorResponse)=>{
-  //       this.toastr.error( error.error.message ,error.statusText );
-  //       return throwError(() => new Error(error.error.message),
-  //       )
-  //     }),
-  //     tap(() => {
-  //       this.toastr.success(`the old image of this nation has been erased successfully`, `Success`);
-  //     })
-  //   )
-  // }
+//suppression de l'ancienne image
   deleteOldImage(oldPictureID:number){
     this.http.delete<any>(apiURL + `Pictures/DeletePicture/`+ oldPictureID).subscribe(v=>{
       console.log('old picture deleted id:', oldPictureID)

@@ -31,7 +31,7 @@
                      <!-- Image input -->
                      <div class="text-center mb-4">
                       <img class="mainImg img-fluid" *ngIf="newNation.pictureId == null" src="assets\image\nation\placeholder_flag_mercenary.png">
-                      <img class="mainImg  img-fluid" *ngIf="newNation.pictureId != null" src="http://localhost:5096/api/Pictures/original/{{newNation.pictureId}}">
+                      <img class="mainImg  img-fluid" *ngIf="newNation.pictureId != null" src="http://localhost:5145/api/Pictures/original/{{newNation.pictureId}}">
                       <input #image type="file" name="image" accept="image/*" required [(ngModel)]="fileupload">
                       <div *ngIf="!fileupload" class="form-helper p3">Image is required*</div>
                       <!-- <button (click)="changeModImg()">Modifier l'image</button> -->

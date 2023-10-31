@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Humanizer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TP_Tankopedia_ASP.Data;
 using TP_Tankopedia_ASP.Models;
+using TP_Tankopedia_ASP.Utility;
 
 namespace TP_Tankopedia_ASP.Controllers
 {
@@ -24,6 +26,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         // GET: api/Tanks
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Tank>>> GetTanks()
         {
           if (_context.Tanks == null)
@@ -35,6 +38,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         // GET: api/Tanks/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Tank>> GetTank(int id)
         {
           if (_context.Tanks == null)
@@ -51,6 +55,7 @@ namespace TP_Tankopedia_ASP.Controllers
         }
         //GET : api/Tanks/{nationID}/{roleID}
         [HttpGet("{nationId}/{roleId?}")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<Tank>>> GetTanksFileredByNationAndRole(int nationId, int? roleId)
         {
 
@@ -72,6 +77,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         //GET : api/Tanks/{nationID}/{roleID}
         [HttpGet("{typeId}/{roleId?}")]
+        [AllowAnonymous]
         public async Task<ActionResult<List<Tank>>> GetTanksFileredByTypeTankAndRole(int typeId, int? roleId)
         {
 
@@ -94,6 +100,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // PUT: api/Tanks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = AppConstants.AdminRole + "," + AppConstants.TankCommander)]
         public async Task<IActionResult> PutTank(int id, Tank tank)
         {
             if (id != tank.Id)
@@ -125,6 +132,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // POST: api/Tanks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = AppConstants.AdminRole + "," + AppConstants.TankCommander)]
         public async Task<ActionResult<Tank>> PostTank(Tank tank)
         {
             if (!ModelState.IsValid)
@@ -149,6 +157,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         // DELETE: api/Tanks/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<IActionResult> DeleteTank(int id)
         {
             if (_context.Tanks == null)

@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using SixLabors.ImageSharp.Processing;
 using TP_Tankopedia_ASP.Data;
 using TP_Tankopedia_ASP.Models;
+using TP_Tankopedia_ASP.Utility;
 
 namespace TP_Tankopedia_ASP.Controllers
 {
@@ -26,6 +27,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         // GET: api/Pictures
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Picture>>> GetPicture()
         {
           if (_context.Picture == null)
@@ -37,7 +39,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         // GET: api/Pictures/5
         [HttpGet("{size}/{id}")]
-        //[AllowAnonymous]
+        [AllowAnonymous]
         public async Task<ActionResult<Picture>> GetPicture(string size, int id)
         {
             var picture = await _context.Picture.FindAsync(id);
@@ -62,6 +64,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         [HttpPut]   //(Pour les tests) Ajout d'une image via Swagger
         [DisableRequestSizeLimit]
+        [Authorize(Roles = AppConstants.AdminRole + "," + AppConstants.TankCommander)]
         public async Task<ActionResult<Picture>> PostPictureSwagger(IFormFile file)
         {
             try
@@ -111,6 +114,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         [HttpPost]
         [DisableRequestSizeLimit]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<ActionResult<Picture>> PostPicture()
         {
             try
@@ -164,6 +168,7 @@ namespace TP_Tankopedia_ASP.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<IActionResult> DeletePicture(int id)
         {
             var picture = await _context.Picture.FindAsync(id);

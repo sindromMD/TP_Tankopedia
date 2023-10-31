@@ -42,9 +42,9 @@ builder.Services.AddAuthentication(options =>
     {
         ValidateAudience = true,
         ValidateIssuer = true,
-        ValidAudience = "http://localhost:4200",
-        ValidIssuer = "http://localhost:5145",
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("AiciEunSirDeCaractereCareVaFiFolositPentruACodaCheia"))
+        ValidAudience = builder.Configuration["JWT:ValidAudience"],
+        ValidIssuer = builder.Configuration["JWT:ValidIssuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SecretKey"]))
     };
 });
 builder.Services.AddScoped<ITankopediaUsersService, TankopediaUsersService>();
@@ -88,6 +88,8 @@ void SeedDatabase()
     {
         var initUserRole = scope.ServiceProvider.GetRequiredService<ITankopediaUsersService>();
         initUserRole.AssignRolesToUser("admin@tankopedia.ca", AppConstants.AdminRole);
+        initUserRole.AssignRolesToUser("commander@tankopedia.ca", AppConstants.TankCommander);
+        initUserRole.AssignRolesToUser("visitor@tankopedia.ca", AppConstants.Visitor);
     }
 }
 SeedDatabase();

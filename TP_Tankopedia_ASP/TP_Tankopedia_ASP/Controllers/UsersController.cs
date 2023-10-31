@@ -54,25 +54,33 @@ namespace TP_Tankopedia_ASP.Controllers
             if (user != null && await UserManager.CheckPasswordAsync(user, login.Password))
             {
                 IList<string> roles = await UserManager.GetRolesAsync(user);
-                List<Claim> authClaims = new List<Claim>();
+                var authClaims = new List<Claim>
+                {
+                   new Claim(ClaimTypes.Name, user.UserName),
+                   new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                };
+
                 foreach (string role in roles)
                 {
                     authClaims.Add(new Claim(ClaimTypes.Role, role));
                 }
                 authClaims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
-                SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                    "AiciEunSirDeCaractereCareVaFiFolositPentruACodaCheia"));
-                JwtSecurityToken token = new JwtSecurityToken(
-                    issuer: "http://localhost:5145",
-                    audience: "http://localhost:4200",
-                    claims: authClaims,
-                    expires: DateTime.Now.AddMinutes(30),
-                    signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256)
-                    );
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SecretKey"]));
+
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Issuer = _config["JWT:ValidIssuer"],
+                    Audience = _config["JWT:ValidAudience"],
+                    Expires = DateTime.UtcNow.AddHours(3),
+                    SigningCredentials = new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256),
+                    Subject = new ClaimsIdentity(authClaims)
+                };
+                SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SecretKey"]));
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var token = tokenHandler.CreateToken(tokenDescriptor);
                 return Ok(new
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    validTo = token.ValidTo
+                    token = new JwtSecurityTokenHandler().WriteToken(tokenHandler.CreateToken(tokenDescriptor)),
                 });
             }
             else
@@ -80,7 +88,7 @@ namespace TP_Tankopedia_ASP.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest,
                     new { Message = "The user name or password is invalid." });
             }
-
         }
+
     }
 }

@@ -58,7 +58,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // PUT: api/Nations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        //[Authorize(Roles = AppConstants.AdminRole)]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<IActionResult> PutNation(int id, Nation nation)
         {
             if (id != nation.Id)
@@ -92,7 +92,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // POST: api/Nations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        //[Authorize(Roles = AppConstants.AdminRole)]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<ActionResult<Nation>> PostNation(Nation nation)
         {
             if (_context.Nations == null)
@@ -112,7 +112,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         // DELETE: api/Nations/5
         [HttpDelete("{id}")]
-        //[Authorize(Roles = AppConstants.AdminRole)]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<IActionResult> DeleteNation(int id)
         {
             if (_context.Nations == null)
