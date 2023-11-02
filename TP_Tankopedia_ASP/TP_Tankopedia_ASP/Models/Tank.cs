@@ -48,5 +48,8 @@ namespace TP_Tankopedia_ASP.Models
         public int? pictureId { get; set; }
         [JsonIgnore]
         public virtual Picture? Picture { get; set; }
+
+        [JsonIgnore]
+        public virtual List<User>? Users { get; set; }
     }
 }

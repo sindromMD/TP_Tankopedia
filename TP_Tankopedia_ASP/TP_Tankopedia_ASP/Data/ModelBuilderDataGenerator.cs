@@ -1,15 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
+using System.Reflection.Emit;
 using TP_Tankopedia_ASP.Models;
+using TP_Tankopedia_ASP.Utility;
 
 namespace TP_Tankopedia_ASP.Data
 {
     public static class ModelBuilderDataGenerator
-    {
+    { 
         public static void GenerateData(this ModelBuilder builder)
-        {
-            #region Nation
-            builder.Entity<Nation>().HasData(
+        {    
+        #region Nation
+        builder.Entity<Nation>().HasData(
                 new Nation() { Id = 1, Name = "U.S.A." , pictureId = 1 },
                 new Nation() { Id = 2, Name = "U.S.S.R", pictureId = 2 },
                 new Nation() { Id = 3, Name = "Germany", pictureId = 3 },
@@ -175,7 +179,70 @@ namespace TP_Tankopedia_ASP.Data
                 new Picture() { pictureId = 23, FileName = "152499c3-41c5-460f-92e0-330b4462895e.png", MimeType = "image/png", DateOfAddition = DateTime.Now }
               );
             #endregion
+            #region Rôles
+            // Rôles de base
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Name = AppConstants.AdminRole
+                    ,
+                    NormalizedName = AppConstants.AdminRole.ToUpper()
+                },
+                 new IdentityRole
+                 {
+                     Name = AppConstants.TankCommander,
+                     NormalizedName = AppConstants.TankCommander.ToUpper()
+                 },
+                  new IdentityRole
+                  {
+                      Name = AppConstants.Visitor,
+                      NormalizedName = AppConstants.Visitor.ToUpper()
+                  }
+                );
+            #endregion
+            #region Users
+            // Création des rôles initiaux
+            //Administrator
+            PasswordHasher<User> hasher = new PasswordHasher<User>();
+            User admin = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "Admin",
+                Email = "admin@tankopedia.ca",
+                NormalizedEmail = "ADMIN@TANKOPEDIA.COM",
+                NormalizedUserName = "ADMIN"
+            };
+            admin.PasswordHash = hasher.HashPassword(admin, AppConstants.testInitPassword);//Test123!
 
+            //Moderator
+            User tankCommander = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "Commander",
+                Email = "commander@tankopedia.ca",
+                NormalizedEmail = "COMMANDER@TANKOPEDIA.COM",
+                NormalizedUserName = "COMMANDER"
+            };
+            tankCommander.PasswordHash = hasher.HashPassword(tankCommander, AppConstants.testInitPassword);//Test123!
+
+            //Visiteur
+            User visitor = new User
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "Visitor",
+                Email = "visitor@tankopedia.ca",
+                NormalizedEmail = "VISITOR@TANKOPEDIA.COM",
+                NormalizedUserName = "VISITOR"
+            };
+            visitor.PasswordHash = hasher.HashPassword(visitor, AppConstants.testInitPassword);//Test123!
+
+            //SEED
+            builder.Entity<User>().HasData(admin, tankCommander, visitor);
+
+            //Nous attribuons le rôle d'administrateur à l'aide de ITankopediaUserService et program.cs
+            //Attribuer des rôles à tout nouvel utilisateur = "Visiteur" dans l'action Register/UsersController
+
+            #endregion
         }
     }
 }

@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TP_Tankopedia_ASP.Models;
 
 namespace TP_Tankopedia_ASP.Data
 {
-    public class TankopediaDbContext : DbContext
+    public class TankopediaDbContext : IdentityDbContext<User>
     {
         public TankopediaDbContext(DbContextOptions<TankopediaDbContext> options)
             : base(options) { }

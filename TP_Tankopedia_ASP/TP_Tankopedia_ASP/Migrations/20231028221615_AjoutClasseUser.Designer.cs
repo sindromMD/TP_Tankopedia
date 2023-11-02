@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TP_Tankopedia_ASP.Data;
 
@@ -11,9 +12,10 @@ using TP_Tankopedia_ASP.Data;
 namespace TP_Tankopedia_ASP.Migrations
 {
     [DbContext(typeof(TankopediaDbContext))]
-    partial class TankopediaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231028221615_AjoutClasseUser")]
+    partial class AjoutClasseUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,29 +49,6 @@ namespace TP_Tankopedia_ASP.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "40e70e4c-4b65-417b-a26f-317a2e99c93e",
-                            ConcurrencyStamp = "ddf60701-902e-4fdb-890e-7f954a661bb3",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "2c913f9e-1fad-4a08-81ba-505fc006a08e",
-                            ConcurrencyStamp = "bde0b98f-a359-4685-b8c9-6393a8df6047",
-                            Name = "TankCommander",
-                            NormalizedName = "TANKCOMMANDER"
-                        },
-                        new
-                        {
-                            Id = "4fb20c39-8ae1-4e27-80f8-01bbb0c311c5",
-                            ConcurrencyStamp = "becafbe8-0f2d-468a-83a7-defb9ac7cf18",
-                            Name = "Visitor",
-                            NormalizedName = "VISITOR"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -515,161 +494,161 @@ namespace TP_Tankopedia_ASP.Migrations
                         new
                         {
                             pictureId = 1,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9934),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4515),
                             FileName = "9bdcc69e-9b0a-4aaf-b79a-8c8e5537f4b5.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 2,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9968),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4550),
                             FileName = "984bf917-4720-4011-8d12-854f1015a33f.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 3,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9971),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4553),
                             FileName = "253a6bfd-ccbb-4296-bff3-b655b6599ebd.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 4,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9973),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4555),
                             FileName = "8737e698-b5da-4aef-b0dc-55d8eccaf61d.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 5,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9976),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4558),
                             FileName = "7a1e115a-b107-4637-b2c0-1e1a86ffed7d.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 6,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9978),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4560),
                             FileName = "fe0afbdf-9fb4-4fd8-b09a-7977dbd77bc0.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 7,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9980),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4562),
                             FileName = "00c84d4d-a645-44f2-8b1a-eabf0e3c62d4.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 8,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9983),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4564),
                             FileName = "c5d1102f-34bd-46a0-9e6a-ab2544cb9621.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 9,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9985),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4566),
                             FileName = "b360c5ac-dc5e-4310-a833-15a0af7a1929.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 10,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9988),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4569),
                             FileName = "5a428329-03db-458b-b882-5192fbd9ebe9.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 11,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9990),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4571),
                             FileName = "8876fef9-7f61-4f1b-b2ed-aa1c03a7eb23.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 12,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9992),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4573),
                             FileName = "0cdd4032-0352-4254-9161-5d8f5fc33287.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 13,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9994),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4575),
                             FileName = "b6f2b7c6-1914-4ecf-8271-791089c22b1c.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 14,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9996),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4577),
                             FileName = "0a66050b-617b-426d-8d01-1cfdc53f6a9c.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 15,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 817, DateTimeKind.Local).AddTicks(9999),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4579),
                             FileName = "9e04a735-2cdf-4151-81aa-f9319e5ab21a.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 16,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 818, DateTimeKind.Local).AddTicks(1),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4582),
                             FileName = "f90f830b-0acb-4ae3-8bfe-aee7622be9a5.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 17,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 818, DateTimeKind.Local).AddTicks(3),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4584),
                             FileName = "333249ff-b0a1-479b-a988-89caa173e1dc.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 18,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 818, DateTimeKind.Local).AddTicks(6),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4586),
                             FileName = "564e8122-f919-4b3e-a248-c5f572be4b60.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 19,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 818, DateTimeKind.Local).AddTicks(8),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4588),
                             FileName = "5ff17622-d961-432c-be99-66a58024a72f.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 20,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 818, DateTimeKind.Local).AddTicks(10),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4590),
                             FileName = "c721c906-08a7-4f73-af0d-fbf4984ad193.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 21,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 818, DateTimeKind.Local).AddTicks(12),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4592),
                             FileName = "4136038d-1213-4646-8d74-4bd152fa0e93.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 22,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 818, DateTimeKind.Local).AddTicks(14),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4594),
                             FileName = "590fbeff-440c-44c7-ac82-cdd8b879be67.png",
                             MimeType = "image/png"
                         },
                         new
                         {
                             pictureId = 23,
-                            DateOfAddition = new DateTime(2023, 10, 31, 13, 40, 8, 818, DateTimeKind.Local).AddTicks(17),
+                            DateOfAddition = new DateTime(2023, 10, 28, 18, 16, 15, 1, DateTimeKind.Local).AddTicks(4596),
                             FileName = "152499c3-41c5-460f-92e0-330b4462895e.png",
                             MimeType = "image/png"
                         });
@@ -1496,56 +1475,6 @@ namespace TP_Tankopedia_ASP.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "a3b02db3-a70c-4cad-8940-84bb4b37ed30",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "068c48f0-b03a-4826-bcbf-a1662780071a",
-                            Email = "admin@tankopedia.ca",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "ADMIN@TANKOPEDIA.COM",
-                            NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAEAACcQAAAAECPrXqnmTU6XvqZn3Z6M709VEC337RPK3oaE+LTY8pKXvlRL18bz9YT8Y9frICigug==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "c00c401c-e006-4b18-8c87-e4723e475311",
-                            TwoFactorEnabled = false,
-                            UserName = "Admin"
-                        },
-                        new
-                        {
-                            Id = "5ee110b5-3ca6-462f-8bde-886d1c6e827d",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "b45a4044-29dd-422c-af6b-351759e086d5",
-                            Email = "commander@tankopedia.ca",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "COMMANDER@TANKOPEDIA.COM",
-                            NormalizedUserName = "COMMANDER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEI+IWdzBrr21AXgRyBvUofrW+MXq2soMRvOFtoFR8nIS4jzUy/IqJFq2sLQaX+w6Rw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "92224d65-000e-4f96-85a3-4b0c0fec5abd",
-                            TwoFactorEnabled = false,
-                            UserName = "Commander"
-                        },
-                        new
-                        {
-                            Id = "f6c880eb-13ba-49c7-a763-79f9d3bff5b1",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "89888b5b-75ec-4fae-9526-a27b9a578a19",
-                            Email = "visitor@tankopedia.ca",
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "VISITOR@TANKOPEDIA.COM",
-                            NormalizedUserName = "VISITOR",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJ5/Qafq4hy3nbN/Us4I9Kc/P8P4lzDBn/5Gqrohr/UsgpyD0L23ioWPaWKqnkFOZw==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "c7aee4da-6033-4f2a-a0d7-8667f052c260",
-                            TwoFactorEnabled = false,
-                            UserName = "Visitor"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

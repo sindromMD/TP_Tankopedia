@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TP_Tankopedia_ASP.Data;
 using TP_Tankopedia_ASP.Models;
+using TP_Tankopedia_ASP.Utility;
 
 namespace TP_Tankopedia_ASP.Controllers
 {
@@ -23,6 +25,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         // GET: api/TypeTanks
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<TypeTank>>> GetTypeTanks()
         {
           if (_context.TypeTanks == null)
@@ -34,6 +37,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         // GET: api/TypeTanks/5
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<TypeTank>> GetTypeTank(int id)
         {
           if (_context.TypeTanks == null)
@@ -53,6 +57,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // PUT: api/TypeTanks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<IActionResult> PutTypeTank(int id, TypeTank typeTank)
         {
             if (id != typeTank.Id)
@@ -84,6 +89,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // POST: api/TypeTanks
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<ActionResult<TypeTank>> PostTypeTank(TypeTank typeTank)
         {
           if (_context.TypeTanks == null)
@@ -98,6 +104,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         // DELETE: api/TypeTanks/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<IActionResult> DeleteTypeTank(int id)
         {
             if (_context.TypeTanks == null)

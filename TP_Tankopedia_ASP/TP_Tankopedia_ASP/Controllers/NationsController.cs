@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using TP_Tankopedia_ASP.Data;
 using TP_Tankopedia_ASP.Models;
+using TP_Tankopedia_ASP.Utility;
 
 namespace TP_Tankopedia_ASP.Controllers
 {
@@ -56,6 +58,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // PUT: api/Nations/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<IActionResult> PutNation(int id, Nation nation)
         {
             if (id != nation.Id)
@@ -89,6 +92,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // POST: api/Nations
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<ActionResult<Nation>> PostNation(Nation nation)
         {
             if (_context.Nations == null)
@@ -96,7 +100,12 @@ namespace TP_Tankopedia_ASP.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, new { Message = "We can't find any nation in our library" });
 
             }
-            if (_context.Nations.Count() == 12) //Limite fixée par le développeur
+            if (_context.Nations.Any(existingNation => existingNation.Name.ToLower() == nation.Name.ToLower()))
+            {
+                return StatusCode(StatusCodes.Status409Conflict, new { Message = "A nation with the same name already exists." });
+            }
+
+            if (_context.Nations.Count() >= 12) //Limite fixée par le développeur
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new { Message = "Adding more than 12 nations is impossible at the moment : restriction " });
             }
@@ -108,6 +117,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         // DELETE: api/Nations/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<IActionResult> DeleteNation(int id)
         {
             if (_context.Nations == null)

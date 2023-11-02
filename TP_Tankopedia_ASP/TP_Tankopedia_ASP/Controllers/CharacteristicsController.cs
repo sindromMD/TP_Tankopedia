@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TP_Tankopedia_ASP.Data;
 using TP_Tankopedia_ASP.Models;
+using TP_Tankopedia_ASP.Utility;
 
 namespace TP_Tankopedia_ASP.Controllers
 {
@@ -53,6 +56,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // PUT: api/Characteristics/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
+        [Authorize(Roles = AppConstants.AdminRole + "," + AppConstants.TankCommander)]
         public async Task<IActionResult> PutCharacteristics(int id, Characteristics characteristics)
         {
             if (id != characteristics.Id)
@@ -84,6 +88,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // POST: api/Characteristics
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
+        [Authorize(Roles = AppConstants.AdminRole + "," + AppConstants.TankCommander)]
         public async Task<ActionResult<Characteristics>> PostCharacteristics(Characteristics characteristics)
         {
           if (_context.Characteristics == null)
@@ -98,6 +103,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         // DELETE: api/Characteristics/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = AppConstants.AdminRole)]
         public async Task<IActionResult> DeleteCharacteristics(int id)
         {
             if (_context.Characteristics == null)

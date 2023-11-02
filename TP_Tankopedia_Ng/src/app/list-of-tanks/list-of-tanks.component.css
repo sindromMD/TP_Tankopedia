@@ -1,22 +1,22 @@
-
-.marginTop{
+.marginTop {
     margin-top: 140px;
 }
-.marginBot{
+
+.marginBot {
     margin-bottom: 140px;
 }
 
-caption{
+caption {
     caption-side: top;
     text-align: end;
-        font-family: 'Libre Baskerville', serif;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 22px;
-        color: #cac5c5;
-        text-decoration: none;
-    
+    font-family: 'Libre Baskerville', serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    color: #cac5c5;
+    text-decoration: none;
+
 }
 
 thead {
@@ -28,12 +28,15 @@ thead {
     color: #ece8a4;
     text-decoration: none;
 }
-.th_special{
+
+.th_special {
     width: 220px;
 }
-.td_special{
+
+.td_special {
     width: 180px;
 }
+
 .p1 {
     font-family: 'Gabarito', serif;
     font-style: normal;
@@ -43,24 +46,30 @@ thead {
     color: #ffffff;
     text-decoration: none;
 }
-.p3{
+
+.p3 {
     color: #4d4d4d;
 }
+
 h3 {
 
     color: #e01c1c;
 }
+
 a {
     text-decoration: none;
     color: rgb(216, 230, 90);
 }
-a:hover{
+
+a:hover {
     color: #898585;
-   
+
 }
-a:active{
+
+a:active {
     color: #FFC920;
 }
+
 .dropdown-menu li a {
     text-decoration: none;
     color: #8C4535;
@@ -73,6 +82,7 @@ a:active{
 .dropdown-menu li a:active {
     color: #F22248;
 }
+
 /* 
 img{
     position: absolute;
@@ -92,24 +102,24 @@ img{
 a[data-mdb-ripple-color="dark"] i {
     display: inline-block;
     padding: 10px;
-    color: #fbf5b6; 
+    color: #fbf5b6;
     transition: transform 0.3s ease, color 0.3s ease, text-shadow 0.3s ease;
-  }
-  
-  /* Effet de survol pour l'élément <i> */
-  a[data-mdb-ripple-color="dark"]:hover i {
-    color: #fff; 
-    transform: translateX(5px); 
+}
+
+/* Effet de survol pour l'élément <i> */
+a[data-mdb-ripple-color="dark"]:hover i {
+    color: #fff;
+    transform: translateX(5px);
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  }
-  
-  /* Effet d'activation pour l'élément <i> (click) */
-  a[data-mdb-ripple-color="dark"]:active i {
-    color: #e3db8a; 
-    transform: translateY(3px); 
+}
+
+/* Effet d'activation pour l'élément <i> (click) */
+a[data-mdb-ripple-color="dark"]:active i {
+    color: #e3db8a;
+    transform: translateY(3px);
     text-shadow: none;
-  }
-  .flag-sm{
+}
+
+.flag-sm {
     width: 55px;
-  }
-  
+}
