@@ -15,8 +15,12 @@
                 </ng-template>
 
                 <!--triggerModalCreate-->
-                <a href="" class="mx-3" data-mdb-toggle="modal" data-mdb-target="#creatTankModal">
-                    <i class="fa-solid fa-circle-plus fa-2xl" style="color: #3caa3e; vertical-align: 0;"></i></a>      
+                <ng-container *ngIf="role == 'Admin' || role === 'TankCommander'">
+                    <a href="" class="mx-3" data-mdb-toggle="modal" data-mdb-target="#creatTankModal">
+                        <i class="fa-solid fa-circle-plus fa-2xl" style="color: #3caa3e; vertical-align: 0;"></i>
+                    </a>  
+                </ng-container>
+ 
         <div class="divider-1 mb-3 "></div>
         
          <!-- Modal Create-->
@@ -170,7 +174,7 @@
                                         </a>
                                     </td>
                                    <td>
-                                        <a [routerLink]="['', tank.strategicRoleId ]" class=""*ngIf="tank.strategicRole">
+                                        <a  class=""*ngIf="tank.strategicRole">
                                          {{tank.strategicRole.name}}
                                         </a>
                                    </td>
@@ -223,7 +227,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a [routerLink]="['', tank.strategicRoleId ]" class=""*ngIf="tank.strategicRole">
+                                        <a  class=""*ngIf="tank.strategicRole">
                                             {{tank.strategicRole.name}}
                                            </a>
                                     </td>
@@ -278,7 +282,7 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a [routerLink]="['', tank.strategicRoleId ]" class=""*ngIf="tank.strategicRole">
+                                            <a  class=""*ngIf="tank.strategicRole">
                                                 {{tank.strategicRole.name}}
                                                </a>
                                         </td>

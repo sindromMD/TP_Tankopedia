@@ -46,7 +46,7 @@
                                 <div class="divider-1 mb-3 "></div>
                             </div>
                             <div class="col-2">
-                                <div class="dropdown">
+                                <div *ngIf="role == 'Admin' || role === 'TankCommander'" class="dropdown">
                                     <button
                                         class="btn btn-outline-success btn-floating dropdown-toggle" style="width: 20px; height: 20px;"
                                         type="button"
@@ -59,7 +59,7 @@
                                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="background-color: white;">
                                        <!-- Button trigger modal EDIT -->
                                         <li><button type="button" class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#tankEditModal" >Edit</button></li>
-                                        <li><button type="button" class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#deleteTankModal" >Delete</button></li>
+                                        <li *ngIf="role == 'Admin'"><button type="button" class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#deleteTankModal" >Delete</button></li>
                                     </ul>
                                     </div>
 
@@ -187,8 +187,8 @@
                   </div>
                   <div class="col-lg-4 align-self-center">
                     
-                    <ul>
-                      <li *ngIf="!tank.characteristics" style="border-bottom: 0px;"><span><a href="" data-mdb-toggle="modal" data-mdb-target="#characteristicsModal" class="margeZero text-end"><i class="fa-solid fa-circle-plus fa-lg" style="color: #3caa3e;"></i></a></span></li>
+                    <ul >
+                      <li *ngIf="!tank.characteristics && (role === 'Admin' || role === 'TankCommander')" style="border-bottom: 0px;"><span><a href="" data-mdb-toggle="modal" data-mdb-target="#characteristicsModal" class="margeZero text-end"><i class="fa-solid fa-circle-plus fa-lg" style="color: #3caa3e;"></i></a></span></li>
                       <li >Weight<span>{{tank.characteristics?.weight}} t</span></li>
                       <li>EnginePower <span>{{tank.characteristics?.enginePower}} hp</span></li>
                       <li>TopSpeed <span>{{tank.characteristics?.topSpeed}} km/h</span></li>

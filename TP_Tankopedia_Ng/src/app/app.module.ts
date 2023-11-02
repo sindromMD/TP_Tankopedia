@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 // import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -39,21 +39,21 @@ import { AuthentificationInterceptor } from './authentification.interceptor';
       preventDuplicates: true,
     }), // ToastrModule added
     RouterModule.forRoot([
-      {path: "", redirectTo : "/home", pathMatch:"full"},
-      {path: "home", component: HomeComponent},
-      {path: "list-of-tanks-by-nation/:nationId/:roleId", component: ListOfTanksComponent },
-      {path: "list-of-tanks-by-nation/:nationId", component: ListOfTanksComponent },
-      {path: "list-of-tanks-by-type/:typeId/:roleId", component: ListOfTanksComponent },
-      {path: "list-of-tanks-by-type/:typeId", component: ListOfTanksComponent },
-      {path: "list-of-all-tanks", component: ListOfTanksComponent },
-      {path: "tank-details/:tankId", component: TankDetailsComponent},
-      {path: "app-register/:register", component: LoginRegisterComponent},
-      {path: "app-login/:login", component: LoginRegisterComponent}
+      { path: "", redirectTo: "/home", pathMatch: "full" },
+      { path: "home", component: HomeComponent },
+      { path: "list-of-tanks-by-nation/:nationId/:roleId", component: ListOfTanksComponent },
+      { path: "list-of-tanks-by-nation/:nationId", component: ListOfTanksComponent },
+      { path: "list-of-tanks-by-type/:typeId/:roleId", component: ListOfTanksComponent },
+      { path: "list-of-tanks-by-type/:typeId", component: ListOfTanksComponent },
+      { path: "list-of-all-tanks", component: ListOfTanksComponent },
+      { path: "tank-details/:tankId", component: TankDetailsComponent },
+      { path: "app-register/:register", component: LoginRegisterComponent },
+      { path: "app-login/:login", component: LoginRegisterComponent }
     ])
   ],
   providers: [
     DatePipe,
-    {provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi:true}
+    { provide: HTTP_INTERCEPTORS, useClass: AuthentificationInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

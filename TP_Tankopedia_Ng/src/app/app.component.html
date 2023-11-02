@@ -1,127 +1,109 @@
-
-
 <header>
-    <!-- Navbar -->
-    <nav class=" row  navbar navbar-expand-lg navbar-light my-nav-bar fixed-top">
-        <div class="col-sm-2 col-md-1 d-none d-sm-block">
-          <div class="text-end">
-           <a href="/home" > <img class=" logoSize img-fluid" src="assets\image\LogoTankopedia.png" alt=""></a>
-           
-          </div>
-        </div>
-        <div class="col-sm-4 col-md-3 col-lg-2 col-xl-2 d-none d-md-block">
-            <h2 class="d-md-inline title animated-text">TANKOPEDIA</h2>
-        </div>
-        <div class="col-sm-10 col-md-4 col-lg-6 col-xl-6">    
-        
-          <button
-            class="navbar-toggler "
-            type="button"
-            data-mdb-toggle="collapse"
-            data-mdb-target="#navbar01"
-            aria-controls="navbarExample01"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <i class="fas fa-bars" style="color: #ffffff;"></i>
-          </button>
-            <div class="collapse navbar-collapse " id="navbar01">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="active">
-                  <a class="header-text btn-menu" aria-current="page" [routerLink]="['home']" >HOME</a>
-                </li>
-                <li class="nav-item">
-                  <a class="header-text btn-menu" [routerLink]="['list-of-all-tanks']">ALL TANKS</a>
-                </li>
-                <!-- <li class="nav-item">
+  <!-- Navbar -->
+  <nav class=" row  navbar navbar-expand-lg navbar-light my-nav-bar fixed-top">
+    <div class="col-sm-2 col-md-1 d-none d-sm-block">
+      <div class="text-end">
+        <a href="/home"> <img class=" logoSize img-fluid" src="assets\image\LogoTankopedia.png" alt=""></a>
+
+      </div>
+    </div>
+    <div class="col-sm-4 col-md-3 col-lg-2 col-xl-2 d-none d-md-block">
+      <h2 class="d-md-inline title animated-text">TANKOPEDIA</h2>
+    </div>
+    <div class="col-sm-10 col-md-4 col-lg-6 col-xl-6">
+
+      <button class="navbar-toggler " type="button" data-mdb-toggle="collapse" data-mdb-target="#navbar01"
+        aria-controls="navbarExample01" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars" style="color: #ffffff;"></i>
+      </button>
+      <div class="collapse navbar-collapse " id="navbar01">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="active">
+            <a class="header-text btn-menu" aria-current="page" [routerLink]="['home']">HOME</a>
+          </li>
+          <li class="nav-item">
+            <a class="header-text btn-menu" [routerLink]="['list-of-all-tanks']">ALL TANKS</a>
+          </li>
+          <!-- <li class="nav-item">
                   <a class="header-text btn-menu" >ABOUT</a>
                 </li> -->
-                <!-- <button class="btn btn-dark buttonLang" translate >app.button_lang <i class="fa-solid fa-language fa-bounce fa-2xl ms-2" style="color: #dbd41f;"></i></button> -->
-              </ul>
-            </div>
-        
-        </div>
-        <div class="col-md-4 col-lg-4 col-xl-3 d-none d-md-block " *ngIf="!token; else UserNameAndDisconnect">
-          <!-- <div class="d6">
+          <!-- <button class="btn btn-dark buttonLang" translate >app.button_lang <i class="fa-solid fa-language fa-bounce fa-2xl ms-2" style="color: #dbd41f;"></i></button> -->
+        </ul>
+      </div>
+
+    </div>
+    <div class="col-md-4 col-lg-4 col-xl-3 d-none d-md-block " *ngIf="!token; else UserNameAndDisconnect">
+      <!-- <div class="d6">
               <input type="search" (keydown.enter)="onKeyDownEvent($event)" id="inputSearch" placeholder="Rechercher ici..." [(ngModel)]="inputSearch">
               <button ></button>
             </div> -->
-            <ul class="me-auto mb-2 mb-lg-0">
-                <li class="nav-item login">
-                <a class=" btn-menu p1" id="register" [routerLink]="['/app-register/', 'register']">Register</a>
-            </li>
-            <li class="nav-item login">
-                <a class="btn-menu p1" id="login" [routerLink]="['/app-login/', 'login']" >
-                    IN
-                    <i class="fa-solid fa-right-to-bracket"></i>
-                    </a>
-            </li>
+      <ul class="me-auto mb-2 mb-lg-0">
+        <li class="nav-item login">
+          <a class=" btn-menu p1" id="register" [routerLink]="['/app-register/', 'register']">Register</a>
+        </li>
+        <li class="nav-item login">
+          <a class="btn-menu p1" id="login" [routerLink]="['/app-login/', 'login']">
+            IN
+            <i class="fa-solid fa-right-to-bracket"></i>
+          </a>
+        </li>
+      </ul>
+
+    </div>
+    <ng-template #UserNameAndDisconnect>
+      <div class="col-md-4 col-lg-4 col-xl-3 d-none d-md-block ">
+        <ul class="me-auto mb-2 mb-lg-0 ">
+          <span class="text-warning">Welcome {{name}}</span>
+          <!-- <span class="p3">[{{role}}]</span> -->
+          <li class="nav-item login">
+            <a type="button" class="btn-menu p1" id="logOut" (click)="onLogout()">
+              Disconnect
+              <!-- <i class="fa-solid fa-right-to-bracket"></i> -->
+            </a>
+          </li>
         </ul>
-        
-        </div> 
-        <ng-template #UserNameAndDisconnect>
-          <div class="col-md-4 col-lg-4 col-xl-3 d-none d-md-block " >
-            <ul class="me-auto mb-2 mb-lg-0">
-              Welcome 
-              <li class="nav-item login">
-                <a type="button" class="btn-menu p1" id="logOut"  (click)="onLogout()">
-                  Disconnect
-                  <!-- <i class="fa-solid fa-right-to-bracket"></i> -->
-                  </a>
-              </li>
-            </ul>
-          </div>
-          
-      </ng-template>
-  
-    </nav>
-    <!-- Navbar -->
-  </header>
-  <main >
-    
-    <router-outlet></router-outlet>
-  
-    <div class="progress-wrap">
-      <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-          <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-      </svg>
+      </div>
+
+    </ng-template>
+
+  </nav>
+  <!-- Navbar -->
+</header>
+<main>
+
+  <router-outlet></router-outlet>
+
+  <div class="progress-wrap">
+    <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+      <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+    </svg>
   </div>
-  </main>
-  <footer class="text-center text-white" >
-    <!-- Grid container -->
-    <div class="container pt-4">
-      <!-- Section: Social media -->
-      <section class="mb-4">
-  
-        <!-- Linkedin -->
-        <a
-          class="btn btn-dark  btn-floating btn-lg text-light m-1"
-          href="https://www.linkedin.com/in/alexei-culaxiz/"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-linkedin"></i
-        ></a>
-        <!-- Github -->
-        <a
-          class="btn btn-dark btn-floating btn-lg text-light m-1"
-          href="https://github.com/sindromMD"
-          role="button"
-          data-mdb-ripple-color="dark"
-          ><i class="fab fa-github"></i
-        ></a>
-      </section>
-      <!-- Section: Social media -->
-    </div>
-    <!-- Grid container -->
-  
-    <!-- Copyright -->
-    <div class="text-secondary  p-3 p2" style="background-color: rgba(0, 0, 0, 0.2);">
-      Projet réalisé par:
-      <br>
-      <a class="p1 " href="https://github.com/sindromMD">Culaxiz Alexei</a>
-     
-      <p class="p2">© 2023 Cégep Édouard-Montpetit</p>
-    </div>
-  
-    <!-- Copyright -->
-  </footer>
+</main>
+<footer class="text-center text-white">
+  <!-- Grid container -->
+  <div class="container pt-4">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+
+      <!-- Linkedin -->
+      <a class="btn btn-dark  btn-floating btn-lg text-light m-1" href="https://www.linkedin.com/in/alexei-culaxiz/"
+        role="button" data-mdb-ripple-color="dark"><i class="fab fa-linkedin"></i></a>
+      <!-- Github -->
+      <a class="btn btn-dark btn-floating btn-lg text-light m-1" href="https://github.com/sindromMD" role="button"
+        data-mdb-ripple-color="dark"><i class="fab fa-github"></i></a>
+    </section>
+    <!-- Section: Social media -->
+  </div>
+  <!-- Grid container -->
+
+  <!-- Copyright -->
+  <div class="text-secondary  p-3 p2" style="background-color: rgba(0, 0, 0, 0.2);">
+    Projet réalisé par:
+    <br>
+    <a class="p1 " href="https://github.com/sindromMD">Culaxiz Alexei</a>
+
+    <p class="p2">© 2023 Cégep Édouard-Montpetit</p>
+  </div>
+
+  <!-- Copyright -->
+</footer>
