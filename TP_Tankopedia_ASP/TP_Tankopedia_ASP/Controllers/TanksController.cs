@@ -143,6 +143,10 @@ namespace TP_Tankopedia_ASP.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "Entity set 'TankopediaDbContext.Tanks' is null." });
             }
+            if (_context.Tanks.Any(existingTank => existingTank.Name.ToLower() == tank.Name.ToLower()))
+            {
+                return StatusCode(StatusCodes.Status409Conflict, new { Message = "A tank with the same name already exists." });
+            }
             var nation = _context.Nations.Find(tank.NationID);
             if (nation.Tanks.Count() >= 3) //Contrainte TP2
             {

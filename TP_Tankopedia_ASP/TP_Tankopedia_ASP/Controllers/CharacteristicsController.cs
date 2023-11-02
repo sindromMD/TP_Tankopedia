@@ -56,7 +56,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // PUT: api/Characteristics/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        [Authorize(Roles = AppConstants.AdminRole)]
+        [Authorize(Roles = AppConstants.AdminRole + "," + AppConstants.TankCommander)]
         public async Task<IActionResult> PutCharacteristics(int id, Characteristics characteristics)
         {
             if (id != characteristics.Id)
@@ -88,7 +88,7 @@ namespace TP_Tankopedia_ASP.Controllers
         // POST: api/Characteristics
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        [Authorize(Roles = AppConstants.AdminRole)]
+        [Authorize(Roles = AppConstants.AdminRole + "," + AppConstants.TankCommander)]
         public async Task<ActionResult<Characteristics>> PostCharacteristics(Characteristics characteristics)
         {
           if (_context.Characteristics == null)

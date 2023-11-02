@@ -7,6 +7,7 @@ import { TypeTank } from 'src/models/TypeTank';
 import { StrategicRole } from 'src/models/StrategicRole';
 import { Characteristics } from 'src/models/Characteristics';
 import { HttpEventType } from '@angular/common/http';
+import { IdentityService } from '../services/identity.service';
 
 @Component({
   selector: 'app-tank-details',
@@ -31,10 +32,13 @@ export class TankDetailsComponent implements OnInit{
   allStrategicRoles : StrategicRole[] = [];
   errorMessage: string='';
   characteristics: Characteristics = new Characteristics(0,0,0,0,0,0,0,0,0,0)
+  role : string = '';
 
   constructor(public route: ActivatedRoute,
     public router : Router,
-    private dataApiService: DataApiService){}
+    private dataApiService: DataApiService,
+    private identityService:IdentityService
+    ){}
 
   async ngOnInit(): Promise<void> {
     this.route.params.subscribe(async(params:Params)=>{
@@ -44,11 +48,11 @@ export class TankDetailsComponent implements OnInit{
         {next:(t) =>{
         console.log(`Tank with id=${params['tankId']}`, t);
         this.tank = t;
-        if(this.tank.strategicRole)
-        this.tank.strategicRole.imageURL = `assets/image/role/${t.strategicRole?.name.split(' ')[0]}.svg`;
+          if(this.tank.strategicRole)
+          this.tank.strategicRole.imageURL = `assets/image/role/${t.strategicRole?.name.split(' ')[0]}.svg`;
       },
       error: (err) => {
-        console.error(err.message, err);
+        console.error('We have an error :', err.message);
         if (err && err.message) {
           this.errorMessage = err.message;
         } else {
@@ -60,6 +64,8 @@ export class TankDetailsComponent implements OnInit{
       await this.getAllNationRequest();
       await this.getAllTypesOfTanksRequest();
       await this.getAllStrategicRolesRequest();
+
+      this.role = this.identityService.getRoleFromToken();
     });
   }
 

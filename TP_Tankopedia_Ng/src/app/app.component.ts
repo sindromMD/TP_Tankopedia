@@ -7,17 +7,26 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'TP_Tankopedia_Ng';
-  token:any;
-
+  token: any;
+  public name: string = "";
+  public role: string = "";
   constructor(
-    private identityService : IdentityService, 
+    private identityService: IdentityService,
     public route: ActivatedRoute,
-    public router: Router,){}
-    
-  ngOnInit(): void {
+    public router: Router,) { }
+
+  ngOnInit() {
     this.token = this.identityService.getToken();
+    this.identityService.getNameFromTankopedia().subscribe(val => {
+      let nameFromToken = this.identityService.getNameFromToken();
+      this.name = val || nameFromToken;
+    });
+    this.identityService.getRoleFromTankopedia().subscribe(val => {
+      const roleFromToken = this.identityService.getRoleFromToken()
+      this.role = val || roleFromToken;
+    })
   }
 
   onLogout() {
@@ -25,8 +34,11 @@ export class AppComponent implements OnInit{
     this.identityService.disconnectUser();
     this.token = this.identityService.getToken();
     this.navigateToHome();
+    setTimeout(function () {
+      location.reload();
+    }, 2000);
   }
-  navigateToHome():void {
+  navigateToHome(): void {
     this.router.navigate(['home/'])
   }
 }

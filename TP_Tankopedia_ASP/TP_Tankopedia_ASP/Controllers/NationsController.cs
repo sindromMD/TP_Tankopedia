@@ -100,7 +100,12 @@ namespace TP_Tankopedia_ASP.Controllers
                 return StatusCode(StatusCodes.Status404NotFound, new { Message = "We can't find any nation in our library" });
 
             }
-            if (_context.Nations.Count() == 12) //Limite fixée par le développeur
+            if (_context.Nations.Any(existingNation => existingNation.Name.ToLower() == nation.Name.ToLower()))
+            {
+                return StatusCode(StatusCodes.Status409Conflict, new { Message = "A nation with the same name already exists." });
+            }
+
+            if (_context.Nations.Count() >= 12) //Limite fixée par le développeur
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new { Message = "Adding more than 12 nations is impossible at the moment : restriction " });
             }

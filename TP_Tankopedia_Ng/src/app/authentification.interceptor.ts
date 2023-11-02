@@ -11,29 +11,34 @@ import { IdentityService } from './services/identity.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
+const ApiUrl = 'http://localhost:5145'
 @Injectable()
 export class AuthentificationInterceptor implements HttpInterceptor {
 
   constructor(private identityService: IdentityService, public route: ActivatedRoute,
-    public router: Router,private toastr: ToastrService) {}
+    public router: Router, private toastr: ToastrService) { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    // let url: URL = new URL(request.url);    
-    if(request.url.startsWith('http://localhost:5145') &&  request.url != 'http://localhost:5145/api/Users/Register'){
-          request = request.clone ({
-            setHeaders: {
-              // 'Content-Type' : 'application/json', // J'ai commenté pour permettre la fonctionnalité dataForm que j'utilise lors du téléchargement d'images.
-              'Authorization' : 'Bearer ' + this.identityService.getToken()
-            }
-          });
+
+    if (request.url.startsWith(ApiUrl) && !request.url.match(ApiUrl + '/api/Users/.*')) {
+      request = request.clone({
+        setHeaders: {
+          // 'Content-Type' : 'application/json', // J'ai commenté pour permettre la fonctionnalité dataForm que j'utilise lors du téléchargement d'images.
+          'Authorization': 'Bearer ' + this.identityService.getToken()
         }
-        console.log("MON INTERCEPTOR FONCTIONNE :", request, this.identityService.getToken());
-        return next.handle(request).pipe(
-          catchError((error: HttpErrorResponse) => {
-            this.toastr.error('You do not have the rights to perform this operation' ,  error.statusText);
-            return throwError(() => new Error(error.error.message))
-          })
-        );
-        
-      }
+      });
+      console.log("MON INTERCEPTOR FONCTIONNE :", request);
+    }
+
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401) {
+          this.toastr.error('You do not have the rights to perform this operation', error.statusText);
+        }
+        else this.toastr.error(error.error.message, error.statusText);
+        return throwError(() => new Error(error.error.message))
+      })
+    );
+
+  }
 }

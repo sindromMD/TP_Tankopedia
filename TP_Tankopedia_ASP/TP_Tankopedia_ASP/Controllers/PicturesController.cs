@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using SixLabors.ImageSharp.Processing;
 using TP_Tankopedia_ASP.Data;
 using TP_Tankopedia_ASP.Models;
+using TP_Tankopedia_ASP.Services;
 using TP_Tankopedia_ASP.Utility;
 
 namespace TP_Tankopedia_ASP.Controllers
@@ -19,10 +20,12 @@ namespace TP_Tankopedia_ASP.Controllers
     public class PicturesController : ControllerBase
     {
         private readonly TankopediaDbContext _context;
+        private IUploadImageService _uploadImageService;
 
-        public PicturesController(TankopediaDbContext context)
+        public PicturesController(TankopediaDbContext context, IUploadImageService uploadImageService)
         {
             _context = context;
+            _uploadImageService = uploadImageService;
         }
 
         // GET: api/Pictures
@@ -64,7 +67,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         [HttpPut]   //(Pour les tests) Ajout d'une image via Swagger
         [DisableRequestSizeLimit]
-        [Authorize(Roles = AppConstants.AdminRole + "," + AppConstants.TankCommander)]
+        //[Authorize(Roles = AppConstants.AdminRole + "," + AppConstants.TankCommander)]
         public async Task<ActionResult<Picture>> PostPictureSwagger(IFormFile file)
         {
             try
@@ -76,34 +79,7 @@ namespace TP_Tankopedia_ASP.Controllers
                 picture.MimeType = file.ContentType;
                 picture.DateOfAddition = DateTime.Now;
 
-                // Enregistrer l'image originale dans le dossier "original".
-                originalImage.Save(Directory.GetCurrentDirectory() + "/images/original/" + picture.FileName);
-
-                // Créer une copie de l'image à redimensionner(large)
-                Image lgImage = originalImage;
-                // Redimensionne l'image - large
-                lgImage.Mutate(i =>
-                    i.Resize(new ResizeOptions()
-                    {
-                        Mode = ResizeMode.Min,
-                        Size = new Size() { Height = 300 }
-                    })
-                    );
-                // Enregistrer une large image dans le dossier "lg"
-                lgImage.Save(Directory.GetCurrentDirectory() + "/images/lg/" + picture.FileName);
-
-                // Créer une copie de l'image à redimensionner(small)
-                Image smImage = lgImage;
-                // Redimensionne la petite image
-                smImage.Mutate(i =>
-                    i.Resize(new ResizeOptions()
-                    {
-                        Mode = ResizeMode.Min,
-                        Size = new Size() { Height = 150 }
-                    })
-                    );
-                // Enregistrer la petite image dans le dossier "sm".
-                smImage.Save(Directory.GetCurrentDirectory() + "/images/sm/" + picture.FileName);
+                _uploadImageService.ConvertPicture(originalImage, picture);
 
                 _context.Picture.Add(picture);
                 await _context.SaveChangesAsync();
@@ -114,7 +90,7 @@ namespace TP_Tankopedia_ASP.Controllers
 
         [HttpPost]
         [DisableRequestSizeLimit]
-        [Authorize(Roles = AppConstants.AdminRole)]
+        [Authorize(Roles = AppConstants.AdminRole + "," + AppConstants.TankCommander)]
         public async Task<ActionResult<Picture>> PostPicture()
         {
             try
@@ -128,35 +104,8 @@ namespace TP_Tankopedia_ASP.Controllers
                 picture.MimeType = file.ContentType;
                 picture.DateOfAddition = DateTime.Now;
 
-                // Enregistrer l'image originale dans le dossier "original".
-                originalImage.Save(Directory.GetCurrentDirectory() + "/images/original/" + picture.FileName);
-
-                // Créer une copie de l'image à redimensionner(large)
-                Image lgImage = originalImage;
-                // Redimensionne l'image - large
-                lgImage.Mutate(i =>
-                    i.Resize(new ResizeOptions()
-                    {
-                        Mode = ResizeMode.Min,
-                        Size = new Size() { Height = 300 }
-                    })
-                    );
-                // Enregistrer une large image dans le dossier "lg"
-                lgImage.Save(Directory.GetCurrentDirectory() + "/images/lg/" + picture.FileName);
-
-                // Créer une copie de l'image à redimensionner(small)
-                Image smImage = lgImage;
-                // Redimensionne la petite image
-                smImage.Mutate(i =>
-                    i.Resize(new ResizeOptions()
-                    {
-                        Mode = ResizeMode.Min,
-                        Size = new Size() { Height = 150 }
-                    })
-                    );
-                // Enregistrer la petite image dans le dossier "sm".
-                smImage.Save(Directory.GetCurrentDirectory() + "/images/sm/" + picture.FileName);
-
+                _uploadImageService.ConvertPicture(originalImage, picture);
+                
                 _context.Picture.Add(picture);
                 await _context.SaveChangesAsync();
                 return picture;
@@ -168,7 +117,7 @@ namespace TP_Tankopedia_ASP.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = AppConstants.AdminRole)]
+        [Authorize(Roles = AppConstants.AdminRole + "," + AppConstants.TankCommander)]
         public async Task<IActionResult> DeletePicture(int id)
         {
             var picture = await _context.Picture.FindAsync(id);
