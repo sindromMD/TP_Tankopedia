@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Microsoft.VisualBasic;
 using System;
 using System.Reflection.Emit;
@@ -11,9 +12,10 @@ namespace TP_Tankopedia_ASP.Data
     public static class ModelBuilderDataGenerator
     { 
         public static void GenerateData(this ModelBuilder builder)
-        {    
-        #region Nation
-        builder.Entity<Nation>().HasData(
+        {
+            #region Nation
+            var nations = new List<Nation>
+            {
                 new Nation() { Id = 1, Name = "U.S.A." , pictureId = 1 },
                 new Nation() { Id = 2, Name = "U.S.S.R", pictureId = 2 },
                 new Nation() { Id = 3, Name = "Germany", pictureId = 3 },
@@ -25,7 +27,14 @@ namespace TP_Tankopedia_ASP.Data
                 new Nation() { Id = 9, Name = "Sweden", pictureId = 9 },
                 new Nation() { Id = 10, Name = "Poland", pictureId = 10 },
                 new Nation() { Id = 11, Name = "Italy", pictureId = 11 }
-              );
+            };
+            foreach (var nation in nations)
+            {
+                nation.Created = DateTime.Now;
+            }
+
+            builder.Entity<Nation>().HasData(nations);
+
             #endregion
             #region TypeTank
             builder.Entity<TypeTank>().HasData(
