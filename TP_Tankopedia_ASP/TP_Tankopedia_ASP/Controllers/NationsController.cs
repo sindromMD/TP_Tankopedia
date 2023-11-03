@@ -93,14 +93,14 @@ namespace TP_Tankopedia_ASP.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize(Roles = AppConstants.AdminRole)]
-        public async Task<ActionResult<Nation>> PostNation(Nation nation)
+        public async Task<ActionResult<Nation>> PostNation(NationDTO nationDTO)
         {
             if (_context.Nations == null)
             {
                 return StatusCode(StatusCodes.Status404NotFound, new { Message = "We can't find any nation in our library" });
 
             }
-            if (_context.Nations.Any(existingNation => existingNation.Name.ToLower() == nation.Name.ToLower()))
+            if (_context.Nations.Any(existingNation => existingNation.Name.ToLower() == nationDTO.Name.ToLower()))
             {
                 return StatusCode(StatusCodes.Status409Conflict, new { Message = "A nation with the same name already exists." });
             }
@@ -109,6 +109,10 @@ namespace TP_Tankopedia_ASP.Controllers
             {
                 return StatusCode(StatusCodes.Status403Forbidden, new { Message = "Adding more than 12 nations is impossible at the moment : restriction " });
             }
+            Nation nation = new Nation();
+            nation.Name = nationDTO.Name;
+            nation.pictureId = nationDTO.pictureId;
+            nation.Created = DateTime.Now;
             _context.Nations.Add(nation);
             await _context.SaveChangesAsync();
 
